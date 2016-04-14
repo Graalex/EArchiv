@@ -81,10 +81,6 @@
   <ItemGroup>
     <Compile Include="FinderModule.cs" />
     <Compile Include="FinderService.cs" />
-    <Compile Include="FinderView.xaml.cs">
-      <DependentUpon>FinderView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FinderViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -95,12 +91,6 @@
       <Project>{cda1f982-6d97-4e29-bd9b-cbd05aebb60d}</Project>
       <Name>Mariupolgaz.EArchiv.Common</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="FinderView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

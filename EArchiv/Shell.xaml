@@ -18,38 +18,11 @@
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
     <StackPanel Grid.Column="0" Orientation="Vertical">
-      <Border BorderThickness="1" BorderBrush="Black" Margin="10" Padding="5" CornerRadius="5">
-				<ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.FinderRegion}"/>
-      </Border>
-      <ListBox ItemsSource="{Binding Abonents}"
-							 SelectedItem="{Binding CurrentAbonent}" 
-							 SelectedIndex="0" Margin="0 5"
-				>
-        <ListBox.ItemTemplate>
-          <DataTemplate>
-            <TextBlock Text="{Binding FullName}" />
-          </DataTemplate>
-        </ListBox.ItemTemplate>
-      </ListBox>
-      <Border BorderBrush="Black" BorderThickness="1" Margin="10 5" Padding="5" CornerRadius="5">
-        <Grid DataContext="{Binding CurrentAbonent}">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="107"/>
-            <ColumnDefinition/>
-          </Grid.ColumnDefinitions>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="13*"/>
-            <RowDefinition Height="18*"/>
-            <RowDefinition Height="8*"/>
-          </Grid.RowDefinitions>
-          <Label Grid.Column="0" Grid.Row="0" Content="Лицевой счет" VerticalAlignment="Center" Height="26"/>
-          <Label Grid.Column="0" Grid.Row="1" Content="Абонент" VerticalAlignment="Center" Height="26"/>
-          <Label Grid.Column="0" Grid.Row="2" Content="Адрес" VerticalAlignment="Center" Height="26"/>
-          <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding LS}" VerticalAlignment="Center" Height="16" Margin="0,5"/>
-          <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Family}" VerticalAlignment="Center" Height="16" Margin="0,5"/>
-          <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Address}" VerticalAlignment="Center" Height="16" Margin="0,5"/>
-        </Grid>
-      </Border>
+      
+			<ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.AbonentRegion}"/>
+      
+      
+      
       <Border BorderBrush="Black" BorderThickness="1" Margin="10" Padding="5" CornerRadius="5">
         <StackPanel Orientation="Vertical">
           <ListBox ItemsSource="{Binding DocumentKinds}" SelectedItem="{Binding CurrentKind}" />

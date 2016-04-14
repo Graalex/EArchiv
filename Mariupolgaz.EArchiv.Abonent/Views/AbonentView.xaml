@@ -1,0 +1,148 @@
+﻿<UserControl x:Class="Mariupolgaz.EArchiv.Abonent.Views.AbonentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Mariupolgaz.EArchiv.Abonent.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="230">
+  <StackPanel Orientation="Vertical">
+    <!-- Блок поиска абонентов -->
+		<GroupBox Header="Поиск абонентов">
+      <Grid>
+        <Grid.ColumnDefinitions>
+					<ColumnDefinition Width="100" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+					<RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+
+				<Label
+					Grid.Row="0"
+					Grid.Column="0"
+					Content="№ Лиц. счета:"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+				/>
+        <Label
+					Grid.Row="1"
+					Grid.Column="0"
+					Content="Абонент:"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+				/>
+				<TextBox
+					Grid.Row="0"
+					Grid.Column="1"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					HorizontalContentAlignment="Right"
+					Width="60"
+					TabIndex="0"
+					Text="{Binding}"
+				/>
+        <TextBox
+					Grid.Row="1"
+					Grid.Column="1"
+					HorizontalAlignment="Stretch"
+					VerticalAlignment="Center"
+					HorizontalContentAlignment="Left"
+					TabIndex="1"
+					Text="{Binding}"
+				/>
+				<Button
+					Grid.Row="2"
+					Grid.ColumnSpan="2"
+					Content="Поиск"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Right"
+					Width="70"
+					TabIndex="2"
+					Command="{Binding}"
+				/>
+      </Grid>
+		</GroupBox>
+    <!-- Конец блока поиска абонентов -->
+    
+		<!-- Блок результата поиска абонетов -->
+		<GroupBox 
+			Header="Результаты поиска"
+			Visibility="{Binding}"
+		>
+			<ListView
+				ItemsSource="{Binding}"
+				SelectedItem="{Binding}"
+				SelectedIndex="0"
+			/>
+		</GroupBox>
+		<!-- Конец блока результатов поиска абонентов -->
+
+		<!-- Блок с информацией об абоненте -->
+    <GroupBox 
+			Header="Абонент"
+			Visibility="{Binding}"
+		>
+      <Grid>
+        <Grid.ColumnDefinitions>
+					<ColumnDefinition Width="100" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+					<RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+
+				<Label
+					Grid.Row="0"
+					Grid.Column="0"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Left"
+					Content="Лицевой счет:"
+				/>
+        <Label
+					Grid.Row="1"
+					Grid.Column="0"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Left"
+					Content="Абонент:"
+				/>
+        <Label
+					Grid.Row="2"
+					Grid.Column="0"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Left"
+					Content="Адрес:"
+				/>
+				<TextBlock
+					Grid.Row="0"
+					Grid.Column="1"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Stretch"
+					TextAlignment="Left"
+					Text="{Binding}"
+				/>
+        <TextBlock
+					Grid.Row="1"
+					Grid.Column="1"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Stretch"
+					TextAlignment="Left"
+					Text="{Binding}"
+				/>
+        <TextBlock
+					Grid.Row="2"
+					Grid.Column="1"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Stretch"
+					TextAlignment="Left"
+					Text="{Binding}"
+				/>
+      </Grid>
+		</GroupBox>
+    <!-- Коней блока с информацией об абоненте -->
+  </StackPanel>
+</UserControl>
