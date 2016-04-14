@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EArchiv", "EArchiv\EArchiv.csproj", "{BE0335AD-BE19-4DB1-BD24-70445CBABEAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mariupolgaz.EArchiv.Finder", "mariupolgaz.earchiv.finder\Mariupolgaz.EArchiv.Finder.csproj", "{694544AD-8A9D-42F1-B427-ED2625225EB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mariupolgaz.EArchiv.Abonent", "Mariupolgaz.EArchiv.Abonent\Mariupolgaz.EArchiv.Abonent.csproj", "{925AF364-2A74-4110-9920-8B346A16F329}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mariupolgaz.EArchiv.Document", "Mariupolgaz.EArchiv.Document\Mariupolgaz.EArchiv.Document.csproj", "{EEFB5BF6-8CCD-4AE9-A3AA-9A5CCCA73C86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mariupolgaz.EArchiv.Common", "Mariupolgaz.EArchiv.Common\Mariupolgaz.EArchiv.Common.csproj", "{CDA1F982-6D97-4E29-BD9B-CBD05AEBB60D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mariupolgaz.EArchiv.Authorize", "Mariupolgaz.EArchiv.Authorize\Mariupolgaz.EArchiv.Authorize.csproj", "{E34AAE10-B09D-4C93-B62C-B00305007FFF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE0335AD-BE19-4DB1-BD24-70445CBABEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE0335AD-BE19-4DB1-BD24-70445CBABEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE0335AD-BE19-4DB1-BD24-70445CBABEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE0335AD-BE19-4DB1-BD24-70445CBABEAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{694544AD-8A9D-42F1-B427-ED2625225EB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{694544AD-8A9D-42F1-B427-ED2625225EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{694544AD-8A9D-42F1-B427-ED2625225EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{694544AD-8A9D-42F1-B427-ED2625225EB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{925AF364-2A74-4110-9920-8B346A16F329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{925AF364-2A74-4110-9920-8B346A16F329}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{925AF364-2A74-4110-9920-8B346A16F329}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{925AF364-2A74-4110-9920-8B346A16F329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEFB5BF6-8CCD-4AE9-A3AA-9A5CCCA73C86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEFB5BF6-8CCD-4AE9-A3AA-9A5CCCA73C86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEFB5BF6-8CCD-4AE9-A3AA-9A5CCCA73C86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEFB5BF6-8CCD-4AE9-A3AA-9A5CCCA73C86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDA1F982-6D97-4E29-BD9B-CBD05AEBB60D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDA1F982-6D97-4E29-BD9B-CBD05AEBB60D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDA1F982-6D97-4E29-BD9B-CBD05AEBB60D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDA1F982-6D97-4E29-BD9B-CBD05AEBB60D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E34AAE10-B09D-4C93-B62C-B00305007FFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E34AAE10-B09D-4C93-B62C-B00305007FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E34AAE10-B09D-4C93-B62C-B00305007FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E34AAE10-B09D-4C93-B62C-B00305007FFF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
+	EndGlobalSection
+EndGlobal
