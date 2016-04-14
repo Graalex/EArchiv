@@ -75,30 +75,31 @@ namespace Mariupolgaz.EArchiv
 				if(_kind != value) {
 					_kind = value;
 					RaisePropertyChanged(() => CurrentKind);
-					changeDocument();
+					//changeDocument();
 				}
 			}
 		}
 
 		public ICommand FindAbonent {
-			get { return new DelegateCommand(onFindAbonent, canFindAbonent); }
+			get { return new DelegateCommand(onFindAbonent /*, canFindAbonent*/); }
 		}
 
 		public ICommand AddDocument {
-			get { return new DelegateCommand(onAddDocument); }
+			get { return null /*new DelegateCommand(onAddDocument)*/; }
 		}
 
 		private void onFindAbonent()
 		{
-			if (this.LS != 0) {
+			/*if (this.LS != 0) {
 				Finder finder = new Finder();
 				Abonent ab = finder.FindAbonent((int)this.LS);
 				if(ab != null)
 					this.Abonents.Add(ab);
-			}
+					*/
+			
 
 		}
-
+		/*
 		private bool canFindAbonent()
 		{
 			return true;
@@ -106,7 +107,8 @@ namespace Mariupolgaz.EArchiv
 
 		private void onAddDocument() 
 		{
-			OpenFileDialog dlg = new OpenFileDialog();
+		
+		OpenFileDialog dlg = new OpenFileDialog();
 			string fname;
 			dlg.Multiselect = false;
 			dlg.Filter = "Изображения (jpeg)|*.jpg;(tiff)|*.tif;(bmp)|*.bmp";
@@ -172,48 +174,51 @@ namespace Mariupolgaz.EArchiv
 				
       }
 
+			*/
+		
+	/*
+	private void changeDocument()
+	{
 
-		}
+	var root = XElement.Load("base.dat");
+		//var els =
+		//from el in root.Elements("abonent")
+		//where (int)el.Attribute("ls") == CurrentAbonent.LS
+		//select el;
 
-		private void changeDocument()
-		{
-			var root = XElement.Load("base.dat");
-			var els =
-			from el in root.Elements("abonent")
-			where (int)el.Attribute("ls") == CurrentAbonent.LS
-			select el;
+		//var cab = els.ToList();
+		if (cab.Count != 0) {
+			var dls =
+			from dl in cab[0].Elements("document")
+			where (string)dl.Attribute("type") == this.CurrentKind
+			select dl;
 
-			var cab = els.ToList();
-			if (cab.Count != 0) {
-				var dls =
-				from dl in cab[0].Elements("document")
-				where (string)dl.Attribute("type") == this.CurrentKind
-				select dl;
+			var dab = dls.ToList();
+			if (dab.Count != 0) {
+				string src = dab[0].Attribute("src").Value;
 
-				var dab = dls.ToList();
-				if (dab.Count != 0) {
-					string src = dab[0].Attribute("src").Value;
+				BitmapImage bi = new BitmapImage();
 
-					BitmapImage bi = new BitmapImage();
-					
-					bi.BeginInit();
-					FileStream fs = new FileStream(src, FileMode.Open, FileAccess.Read);
+				bi.BeginInit();
+				FileStream fs = new FileStream(src, FileMode.Open, FileAccess.Read);
 
-					//bi.UriSource = new Uri(src, UriKind.Relative);
-					bi.StreamSource = fs;
-					bi.EndInit();
-					
-					//Uri uri = new Uri(src, UriKind.Relative);
- 					string fname = (new FileInfo(src)).Name;
-					this.CurrentDocument = new Document(fname, bi);
-				}
-				else {
-					this.CurrentDocument = null;
-				}
+				//bi.UriSource = new Uri(src, UriKind.Relative);
+				bi.StreamSource = fs;
+				bi.EndInit();
+
+				//Uri uri = new Uri(src, UriKind.Relative);
+				string fname = (new FileInfo(src)).Name;
+				//this.CurrentDocument = new Document(fname, bi);
 			}
 			else {
-				this.CurrentDocument = null;
+				//this.CurrentDocument = null;
 			}
 		}
-  }
+		else {
+			//this.CurrentDocument = null;
+		}
+		*/
+
+		
+	}
 }

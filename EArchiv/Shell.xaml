@@ -3,6 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:prism="http://www.codeplex.com/prism"
+				xmlns:common="clr-namespace:Mariupolgaz.EArchiv.Common;assembly=mariupolgaz.earchiv.common"
         xmlns:l="clr-namespace:Mariupolgaz.EArchiv"
         mc:Ignorable="d"
         Title="ПАО Мариупольгаз Электронный архив" Height="711.419" Width="1130"
@@ -17,39 +19,18 @@
     </Grid.ColumnDefinitions>
     <StackPanel Grid.Column="0" Orientation="Vertical">
       <Border BorderThickness="1" BorderBrush="Black" Margin="10" Padding="5" CornerRadius="5">
-        <StackPanel Orientation="Vertical">
-          <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition/>
-              <RowDefinition/>
-              <RowDefinition/>
-              <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="98"/>
-              <ColumnDefinition Width="auto" MinWidth="250"/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Grid.Row="0" Content="Лицевой счет" VerticalAlignment="Center" Height="26" Margin="0,2"/>
-            <Label Grid.Column="0" Grid.Row="1" Content="Абонент" VerticalAlignment="Center" Height="26" Margin="0,2"/>
-            <Label Grid.Column="0" Grid.Row="2" Content="Адрес" VerticalAlignment="Center" Height="26" Margin="0,2"/>
-            <Button Grid.Row="3" Content="Поиск" Command="{Binding FindAbonent}" 
-									HorizontalAlignment="Right" Width="75" Height="23" VerticalAlignment="Center" Margin="0,4,28,6" Grid.Column="1" TabIndex="1"/>
-            <TextBox HorizontalContentAlignment="Right" Grid.Column="1" Grid.Row="0" Text="{Binding LS}" Width="75" Height="20" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,5" TabIndex="0" />
-            <TextBox Grid.Column="1" Grid.Row="1" Text="" Width="222" Height="20" VerticalAlignment="Center" IsEnabled="False" HorizontalAlignment="Left" Margin="0,5"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Text="" Width="222" Height="20" VerticalAlignment="Center" IsEnabled="False"  HorizontalAlignment="Left" Margin="0,5"/>
-          </Grid>
-          <ListBox ItemsSource="{Binding Abonents}"
+				<prism:RegionManager.RegionName="{x:static common:RegionNames.FinderRegion}"
+      </Border>
+      <ListBox ItemsSource="{Binding Abonents}"
 							 SelectedItem="{Binding CurrentAbonent}" 
 							 SelectedIndex="0" Margin="0 5"
 				>
-            <ListBox.ItemTemplate>
-              <DataTemplate>
-                <TextBlock Text="{Binding FullName}" />
-              </DataTemplate>
-            </ListBox.ItemTemplate>
-          </ListBox>
-        </StackPanel>
-      </Border>
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding FullName}" />
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
       <Border BorderBrush="Black" BorderThickness="1" Margin="10 5" Padding="5" CornerRadius="5">
         <Grid DataContext="{Binding CurrentAbonent}">
           <Grid.ColumnDefinitions>
