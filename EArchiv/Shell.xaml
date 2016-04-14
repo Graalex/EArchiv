@@ -19,7 +19,7 @@
     </Grid.ColumnDefinitions>
     <StackPanel Grid.Column="0" Orientation="Vertical">
       <Border BorderThickness="1" BorderBrush="Black" Margin="10" Padding="5" CornerRadius="5">
-				<prism:RegionManager.RegionName="{x:static common:RegionNames.FinderRegion}"
+				<ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.FinderRegion}"/>
       </Border>
       <ListBox ItemsSource="{Binding Abonents}"
 							 SelectedItem="{Binding CurrentAbonent}" 
