@@ -5,8 +5,96 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Mariupolgaz.EArchiv.DocsAbon.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="600" d:DesignWidth="800">
+  <Grid>
+    <Grid.ColumnDefinitions>
+			<ColumnDefinition Width="250" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="50" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="50" />
+    </Grid.RowDefinitions>
+    <StackPanel
+			Grid.Row="0"
+			Grid.Column="0"
+			Orientation="Horizontal"
+			HorizontalAlignment="Right"
+		>
+			<Button
+				VerticalAlignment="Center"
+				Width="70"
+				Content="Добавить"
+				Command="{Binding}"
+			/>
+      <Button
+				VerticalAlignment="Center"
+				Width="70"
+				Content="Изменить"
+				Command="{Binding}"
+			/>
+      <Button
+				VerticalAlignment="Center"
+				Width="70"
+				Content="Удалить"
+				Command="{Binding}"
+			/>
+      
+    </StackPanel>
+    <TreeView
+			Grid.Column="0"
+			Grid.Row="1"
+			Grid.RowSpan="2"
+			ItemsSource="{Binding}"
+		/>
+    <StackPanel
+			Grid.Row="0"
+			Grid.Column="1"
+			Orientation="Horizontal"
+			HorizontalAlignment="Right"
+		>
+			<Button
+				VerticalAlignment="Center"
+				Width="70"
+				Content="Добавить"
+				Command="{Binding}"
+			/>
+      <Button
+				VerticalAlignment="Center"
+				Width="70"
+				Content="Заменить"
+				Command="{Binding}"
+			/>
+      <Button
+				VerticalAlignment="Center"
+				Width="70"
+				Content="Удалить"
+				Command="{Binding}"
+			/>
+    </StackPanel>
+		<Image
+			Grid.Column="1"
+			Grid.Row="1"
+			Source="{Binding}"
+		/>
+    <StackPanel
+			Grid.Row="2"
+			Grid.Column="1"
+			Orientation="Horizontal"
+		>
+			<TextBlock
+				VerticalAlignment="Center"
+				Width="400"
+				Text="{Binding}"
+			/>
+			<Button
+				VerticalAlignment="Center"
+				Width="80"
+				Content="Копировать"
+				Command="{Binding}"
+			/>
+		</StackPanel>
+  </Grid>
+  
 </UserControl>

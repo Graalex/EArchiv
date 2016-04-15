@@ -10,7 +10,7 @@
 		VerticalAlignment="Center"
 	>
 		<ComboBox
-			ItemsSource="{Binding}"
+			ItemsSource="{Binding DocumentKinds}"
 			DisplayMemberPath="Name"
 		/>
 	</StackPanel>

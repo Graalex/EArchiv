@@ -58,16 +58,19 @@
 		-->
 
 		<!-- Правая панель -->
-    <StackPanel
+    <Border
 			Grid.Column="1"
-			Orientation="Vertical"
 		>
-			<ContentControl
-				prism:RegionManager.RegionName="{x:Static common:RegionNames.KindsListRegion}"
-			/>
-      <ContentControl
-				prism:RegionManager.RegionName="{x:Static common:RegionNames.DocumentRegion}"
-			/>
-    </StackPanel>
+			<StackPanel
+				Orientation="Vertical"
+			>
+				<ContentControl
+					prism:RegionManager.RegionName="{x:Static common:RegionNames.KindsListRegion}"
+				/>
+				<ContentControl
+					prism:RegionManager.RegionName="{x:Static common:RegionNames.DocumentRegion}"
+				/>
+			</StackPanel>
+		</Border>
   </Grid>
 </Window>
