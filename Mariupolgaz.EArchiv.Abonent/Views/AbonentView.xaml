@@ -95,6 +95,7 @@
 					<RowDefinition />
           <RowDefinition />
           <RowDefinition />
+          <RowDefinition />
         </Grid.RowDefinitions>
 
 				<Label
@@ -141,6 +142,16 @@
 					HorizontalAlignment="Stretch"
 					TextAlignment="Left"
 					Text="{Binding Address}"
+				/>
+				<Button
+					Grid.Column="0"
+					Grid.Row="3"
+					Grid.ColumnSpan="2"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Right"
+					Width="100"
+					Content="Документы"
+					Command="{Binding GetDocuments}"
 				/>
       </Grid>
 		</GroupBox>

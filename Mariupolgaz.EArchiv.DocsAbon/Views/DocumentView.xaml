@@ -20,33 +20,19 @@
 			Grid.Row="0"
 			Grid.Column="0"
 			Orientation="Horizontal"
-			HorizontalAlignment="Right"
+			HorizontalAlignment="Left"
 		>
-			<Button
+			<TextBlock
 				VerticalAlignment="Center"
-				Width="70"
-				Content="Добавить"
-				Command="{Binding}"
+				Text="Список документов"
 			/>
-      <Button
-				VerticalAlignment="Center"
-				Width="70"
-				Content="Изменить"
-				Command="{Binding}"
-			/>
-      <Button
-				VerticalAlignment="Center"
-				Width="70"
-				Content="Удалить"
-				Command="{Binding}"
-			/>
-      
-    </StackPanel>
-    <TreeView
+		</StackPanel>
+    <ListView
 			Grid.Column="0"
 			Grid.Row="1"
 			Grid.RowSpan="2"
-			ItemsSource="{Binding}"
+			ItemsSource="{Binding Documents}"
+			SelectedItem="{Binding SelectedDocument}"
 		/>
     <StackPanel
 			Grid.Row="0"
@@ -76,7 +62,7 @@
 		<Image
 			Grid.Column="1"
 			Grid.Row="1"
-			Source="{Binding}"
+			Source="{Binding SelectedDocument.Source}"
 		/>
     <StackPanel
 			Grid.Row="2"

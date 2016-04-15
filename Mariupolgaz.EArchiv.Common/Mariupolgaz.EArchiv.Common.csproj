@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\LsSelectedEvent.cs" />
     <Compile Include="Models\Abonent.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\BaseViewModel.cs" />

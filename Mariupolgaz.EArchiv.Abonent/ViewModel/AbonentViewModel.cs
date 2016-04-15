@@ -8,16 +8,23 @@ using System.Windows.Input;
 using Mariupolgaz.EArchiv.Common.Models;
 using Mariupolgaz.EArchiv.Common.Servises;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Prism.Events;
+using Mariupolgaz.EArchiv.Common.Events;
 
 namespace Mariupolgaz.EArchiv.Abonent.ViewModel
 {
 	public class AbonentViewModel: BaseViewModel
 	{
+		private readonly IEventAggregator _aggregator;
 		/// <summary>
-		/// Констаруктор
+		/// Конструктор
 		/// </summary>
-		public AbonentViewModel()
+		/// <param name="aggregator"></param>
+		public AbonentViewModel(IEventAggregator aggregator )
 		{
+			if (aggregator == null) throw new ArgumentNullException("aggregator");
+
+			_aggregator = aggregator;
 			this.Abonents = new ObservableCollection<Common.Models.Abonent>();
 		}
 
@@ -167,6 +174,26 @@ namespace Mariupolgaz.EArchiv.Abonent.ViewModel
 			} else {
 				return false;
 			}
+		}
+
+		/// <summary>
+		/// Работа с документами абонента
+		/// </summary>
+		public ICommand GetDocuments
+		{
+			get { return new DelegateCommand(onGetDocuments, canGetDocuments); }
+		}
+
+		private void onGetDocuments()
+		{
+			_aggregator
+				.GetEvent<LsSelectedEvent>()
+				.Publish(this.SelectedAbonent.LS);
+		}
+
+		private bool canGetDocuments()
+		{
+			return this.SelectedAbonent != null ? true : false;
 		}
 
 		#endregion

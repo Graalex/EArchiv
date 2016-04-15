@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 
 namespace Mariupolgaz.EArchiv.Common.Models
 {
@@ -92,5 +93,10 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			_id = id;
 			RaisePropertyChanged(() => ID);
 		}
+
+		/// <summary>
+		/// Коллекция документов, принадлежащих папке
+		/// </summary>
+		public ObservableCollection<Document> Documents { get; private set; }
 	}
 }
