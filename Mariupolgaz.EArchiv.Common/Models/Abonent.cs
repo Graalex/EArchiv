@@ -166,6 +166,15 @@ namespace Mariupolgaz.EArchiv.Common.Models
 				}
 			} 
 		}
+
+		/// <summary>
+		/// Преобразует экземпляр в строковое представление
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return this.LS.ToString() + " " + this.Family;
+		}
 	}
 		
 }

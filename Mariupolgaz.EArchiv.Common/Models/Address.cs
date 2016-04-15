@@ -1,4 +1,6 @@
-﻿namespace Mariupolgaz.EArchiv.Common.Models
+﻿using System;
+
+namespace Mariupolgaz.EArchiv.Common.Models
 {
 	/// <summary>
 	/// Представляет объект модели "Адрес" в базе NAST.
@@ -68,5 +70,23 @@
 		/// Номер квартиры
 		/// </summary>
 		public int Apartment { get; private set; }
+
+		/// <summary>
+		///  
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			string rslt = this.SettlementType + " " + this.SettlementName + ", ";
+			rslt += this.StreetType + " " + this.StreetName + ", ";
+			rslt += this.HouseNumb;
+			if(this.Litera != null && this.Litera != String.Empty) {
+				rslt += "/" + this.Litera;
+			}
+			if(this.Apartment != 0) {
+				rslt += " кв. " + this.Apartment.ToString();
+			}
+			return rslt;
+		}
 	}
 }

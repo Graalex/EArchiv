@@ -18,11 +18,9 @@
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
     <StackPanel Grid.Column="0" Orientation="Vertical">
-      
-			<ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.AbonentRegion}"/>
-      
-      
-      
+      <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.AbonentRegion}"/>
+    </StackPanel>
+    <!--
       <Border BorderBrush="Black" BorderThickness="1" Margin="10" Padding="5" CornerRadius="5">
         <StackPanel Orientation="Vertical">
           <ListBox ItemsSource="{Binding DocumentKinds}" SelectedItem="{Binding CurrentKind}" />
@@ -57,5 +55,6 @@
         </StackPanel>
       </StackPanel>
     </Border>
+		-->
   </Grid>
 </Window>

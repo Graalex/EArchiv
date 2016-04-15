@@ -18,6 +18,7 @@ namespace Mariupolgaz.EArchiv.Abonent.Views
 		/// </summary>
 		/// <param name="viewModel">Контекст данных для вида</param>
 		public AbonentView(AbonentViewModel viewModel)
+		:this()
 		{
 			DataContext = viewModel;
 		}

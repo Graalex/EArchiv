@@ -42,7 +42,7 @@
 					HorizontalContentAlignment="Right"
 					Width="60"
 					TabIndex="0"
-					Text="{Binding}"
+					Text="{Binding LS}"
 				/>
         <TextBox
 					Grid.Row="1"
@@ -51,7 +51,7 @@
 					VerticalAlignment="Center"
 					HorizontalContentAlignment="Left"
 					TabIndex="1"
-					Text="{Binding}"
+					Text="{Binding Family}"
 				/>
 				<Button
 					Grid.Row="2"
@@ -61,7 +61,7 @@
 					HorizontalAlignment="Right"
 					Width="70"
 					TabIndex="2"
-					Command="{Binding}"
+					Command="{Binding FindAbonents}"
 				/>
       </Grid>
 		</GroupBox>
@@ -70,11 +70,11 @@
 		<!-- Блок результата поиска абонетов -->
 		<GroupBox 
 			Header="Результаты поиска"
-			Visibility="{Binding}"
+			Visibility="{Binding ResultVisible}"
 		>
 			<ListView
-				ItemsSource="{Binding}"
-				SelectedItem="{Binding}"
+				ItemsSource="{Binding Abonents}"
+				SelectedItem="{Binding SelectedAbonent}"
 				SelectedIndex="0"
 			/>
 		</GroupBox>
@@ -83,7 +83,8 @@
 		<!-- Блок с информацией об абоненте -->
     <GroupBox 
 			Header="Абонент"
-			Visibility="{Binding}"
+			Visibility="{Binding AbonentVisible}"
+			DataContext="{Binding SelectedAbonent}"
 		>
       <Grid>
         <Grid.ColumnDefinitions>
@@ -123,7 +124,7 @@
 					VerticalAlignment="Center"
 					HorizontalAlignment="Stretch"
 					TextAlignment="Left"
-					Text="{Binding}"
+					Text="{Binding LS}"
 				/>
         <TextBlock
 					Grid.Row="1"
@@ -131,7 +132,7 @@
 					VerticalAlignment="Center"
 					HorizontalAlignment="Stretch"
 					TextAlignment="Left"
-					Text="{Binding}"
+					Text="{Binding Family}"
 				/>
         <TextBlock
 					Grid.Row="2"
@@ -139,7 +140,7 @@
 					VerticalAlignment="Center"
 					HorizontalAlignment="Stretch"
 					TextAlignment="Left"
-					Text="{Binding}"
+					Text="{Binding Address}"
 				/>
       </Grid>
 		</GroupBox>
