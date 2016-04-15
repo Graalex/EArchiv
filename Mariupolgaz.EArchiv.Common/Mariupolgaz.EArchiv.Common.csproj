@@ -88,6 +88,7 @@
     <Compile Include="Servises\IAbonentInfoService.cs" />
     <Compile Include="Servises\IDocumentService.cs" />
     <Compile Include="Servises\IFinderService.cs" />
+    <Compile Include="Servises\IFolderService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

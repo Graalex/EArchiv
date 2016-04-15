@@ -107,19 +107,5 @@ namespace Mariupolgaz.EArchiv.Common.Servises
 		/// <returns></returns>
 		bool MarkDeleteDocument(Document doc);
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="name"></param>
-		/// <returns></returns>
-		Folder CreateFolder(string name);
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="folder"></param>
-		/// <returns></returns>
-		void SaveFolder(Folder folder);
-	
 	}
 }

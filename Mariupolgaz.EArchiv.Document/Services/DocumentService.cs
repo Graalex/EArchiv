@@ -246,41 +246,6 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="name"></param>
-		/// <returns></returns>
-		public Folder CreateFolder(string name)
-		{
-			return new Folder(name);
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="folder"></param>
-		public void SaveFolder(Folder folder)
-		{
-			using(_con) {
-				_cmd.CommandType = CommandType.StoredProcedure;
-				_cmd.CommandText = "FolderAdd";
-				_cmd.Parameters.Clear();
-				_cmd.Parameters.AddWithValue("@Name", folder.Name);
-				_cmd.Parameters.AddWithValue("@Barcode", null);
-				_cmd.Parameters.AddWithValue("@UsrName", "EArchiv");
-				int key = -1;
-				SqlParameter param = new SqlParameter("@Key", key);
-				param.Direction = ParameterDirection.Output;
-				_cmd.Parameters.Add(param);
-
-				_con.Open();
-				_cmd.ExecuteScalar();
-
-				folder.setID(key);
-			}
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
 		/// <param name="doc"></param>
 		public void SaveDocumentAttributes(Common.Models.Document doc)
 		{
