@@ -6,23 +6,24 @@
 	public static class RegionNames
 	{
 		/// <summary>
-		/// Название региона поиска абонента
-		/// </summary>
-		public static string FinderRegion = "FinderRegion";
-
-		/// <summary>
 		/// Название региона панели информации об абоненте
 		/// </summary>
-		public static string AbonentRegion = "AbonentRegion";
+		public static string AbonentRegion = "Abonent";
 
 		/// <summary>
 		/// Название региона панели отображения документа
 		/// </summary>
-		public static string DocumentRegion = "DocumentRegion";
+		public static string DocumentRegion = "Document";
 
 		/// <summary>
 		/// Название региона списка типов документа
 		/// </summary>
-		public static string KindsListRegion = "KindsListRegion";
+		public static string KindsListRegion = "KindsList";
+
+		/// <summary>
+		/// Название региона для списка классов документа
+		/// </summary>
+		public static string ClassDocListRegion = "ClassDocList";
+
 	}
 }
