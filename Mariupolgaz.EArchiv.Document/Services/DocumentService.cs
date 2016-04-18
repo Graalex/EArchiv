@@ -18,6 +18,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 	public class DocumentService : IDocumentService
 	{
 		private string _con;
+		private IEnumerable<DocumentKind> _kinds;
 		
 		/// <summary>
 		/// 
@@ -25,6 +26,8 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		public DocumentService()
 		{
 			_con = ConfigurationManager.ConnectionStrings["Archiv"].ConnectionString;
+			//TODO: Костыль позже переделать
+			_kinds = this.GetKindsByClass(2);
 		}
 
 		/// <summary>
@@ -33,7 +36,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		/// <param name="name"></param>
 		/// <param name="kind"></param>
 		/// <returns></returns>
-		Common.Models.Document IDocumentService.CreateDocument(string name, int kind)
+		Common.Models.Document IDocumentService.CreateDocument(string name, DocumentKind kind)
 		{
 			return new Common.Models.Document(name, kind);
 		}
@@ -68,6 +71,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 				con.Open();
 				SqlDataReader reader = cmd.ExecuteReader();
 				if (reader.HasRows) {
+					
 					list = new List<Common.Models.Document>();
 					while (reader.Read()) {
 						BitmapImage thrumb = new BitmapImage();
@@ -82,7 +86,10 @@ namespace Mariupolgaz.EArchiv.Document.Services
 						src.StreamSource = stream;
 						src.EndInit();
 
-						list.Add(new Common.Models.Document(Convert.ToInt32(reader["ID"]), Convert.ToInt32(reader["Kind"]), Convert.ToString(reader["Name"]), (byte[])reader["Hash"], thrumb,
+						int id = Convert.ToInt32(reader["Kind"]);
+						var kind = _kinds.First(item => item.ID == id);
+
+						list.Add(new Common.Models.Document(Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], thrumb,
 							Convert.ToDateTime(reader["CreateAt"]), Convert.ToDateTime(reader["ModifyAt"]), Convert.ToBoolean(reader["IsMarkDelete"]), src));
 					}
 				}
@@ -126,7 +133,10 @@ namespace Mariupolgaz.EArchiv.Document.Services
 						src.StreamSource = stream;
 						src.EndInit();
 
-						list.Add(new Common.Models.Document(Convert.ToInt32(reader["ID"]), Convert.ToInt32(reader["Kind"]), Convert.ToString(reader["Name"]), (byte[])reader["Hash"], thrumb,
+						int id = Convert.ToInt32(reader["Kind"]);
+						var kind = _kinds.First(item => item.ID == id);
+
+						list.Add(new Common.Models.Document(Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], thrumb,
 							Convert.ToDateTime(reader["CreateAt"]), Convert.ToDateTime(reader["ModifyAt"]), Convert.ToBoolean(reader["IsMarkDelete"]), src));
 					}
 				}
@@ -161,7 +171,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 
 					cmd.Parameters.Clear();
 					cmd.Parameters.AddWithValue("@Name", doc.Name);
-					cmd.Parameters.AddWithValue("@Kind", doc.KindID);
+					cmd.Parameters.AddWithValue("@Kind", doc.Kind.ID);
 					cmd.Parameters.AddWithValue("@CreateAt", doc.CreateAt);
 					cmd.Parameters.AddWithValue("@ModifyAt", doc.ModifyAt);
 					cmd.Parameters.AddWithValue("@UsrName", "EArchiv");
@@ -229,7 +239,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		/// </summary>
 		/// <param name="classID"></param>
 		/// <returns></returns>
-		IList<DocumentKind> IDocumentService.GetKindsByClass(int classID)
+		public IList<DocumentKind> GetKindsByClass(int classID)
 		{
 			using (SqlConnection con = new SqlConnection(_con)) {
 				SqlCommand cmd = new SqlCommand();
@@ -294,7 +304,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 				cmd.CommandText = "DocAttrSet";
 				cmd.Parameters.Clear();
 				cmd.Parameters.AddWithValue("@Key", doc.ID);
-				cmd.Parameters.AddWithValue("@Kind", doc.KindID);
+				cmd.Parameters.AddWithValue("@Kind", doc.Kind.ID);
 				cmd.Parameters.AddWithValue("@ModifyAt", doc.ModifyAt);
 				cmd.Parameters.AddWithValue("@UsrName", "EArchiv");
 
@@ -316,7 +326,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 				cmd.CommandText = "DocSet";
 				cmd.Parameters.Clear();
 				cmd.Parameters.AddWithValue("@Key", doc.ID);
-				cmd.Parameters.AddWithValue("@Kind", doc.KindID);
+				cmd.Parameters.AddWithValue("@Kind", doc.Kind.ID);
 				cmd.Parameters.AddWithValue("@ModifyAt", doc.ModifyAt);
 				cmd.Parameters.AddWithValue("@UsrName", "EArchiv");
 				cmd.Parameters.AddWithValue("@Hash", doc.ConvertHash());

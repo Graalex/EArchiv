@@ -31,7 +31,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			_mark_del = isMarkDel;
 		}
 
-		private int _id;
+		private int _id = -1;
 		/// <summary>
 		/// ID типа
 		/// </summary>
@@ -53,7 +53,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			}
 		}
 
-		private bool _mark_del;
+		private bool _mark_del = false;
 		/// <summary>
 		/// Признак удаления
 		/// </summary>

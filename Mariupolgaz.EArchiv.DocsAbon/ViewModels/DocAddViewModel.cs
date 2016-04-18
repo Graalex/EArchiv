@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Mariupolgaz.EArchiv.Common.Events;
 using Mariupolgaz.EArchiv.Common.Models;
 using Mariupolgaz.EArchiv.Common.Servises;
+using Mariupolgaz.EArchiv.DocsAbon.Views;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
@@ -70,6 +71,8 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 
 		#endregion
 
+		public Action Close { get; set; }
+
 		#region Commands
 
 		/// <summary>
@@ -92,22 +95,7 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 		}
 
 		/// <summary>
-		/// Команда отмена
-		/// </summary>
-		public ICommand Cancel
-		{
-			get { return new DelegateCommand(onCancel); }
-		}
-
-		private void onCancel()
-		{
-			_evnAggr
-				.GetEvent<CancelEvent>()
-				.Publish(0);
-		}
-
-		/// <summary>
-		/// Команда ОК
+		/// Команда закрітия диалога
 		/// </summary>
 		public ICommand Ok
 		{
@@ -121,9 +109,16 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 				return;
 			}
 
-			_evnAggr
+			this.Close();
+
+			/*_evnAggr
 				.GetEvent<AddDocumentEvent>()
 				.Publish(new AddDocMessage(this.File, this.SelectedKind));
+				*/
+			//var dlg = ServiceLocator.Current.GetInstance<DocAddDialog>();
+			//dlg.Close();
+
+			//this.Closed?.Invoke(this, EventArgs.Empty);
 		}
 
 		private bool canOk()

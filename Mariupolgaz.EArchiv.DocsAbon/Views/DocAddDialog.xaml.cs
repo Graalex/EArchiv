@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Mariupolgaz.EArchiv.DocsAbon.ViewModels;
 
 namespace Mariupolgaz.EArchiv.DocsAbon.Views
@@ -17,6 +18,15 @@ namespace Mariupolgaz.EArchiv.DocsAbon.Views
 			:this()
 		{
 			DataContext = viewModel;
+			if(viewModel.Close == null) {
+				viewModel.Close = new Action(this._closes);
+			}
+		}
+
+		private void _closes()
+		{
+			this.DialogResult = true;
+			this.Close();
 		}
 	}
 }

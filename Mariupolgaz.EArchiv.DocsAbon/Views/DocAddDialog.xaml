@@ -8,8 +8,9 @@
 	Width="500"
 	ResizeMode="NoResize"
 	WindowStyle="SingleBorderWindow"
-	Title="Новый документ">
-	<Grid>
+	Title="Новый документ"
+>
+  <Grid>
     <Grid.ColumnDefinitions>
 			<ColumnDefinition Width="110" />
       <ColumnDefinition />
@@ -78,7 +79,7 @@
 				Content="Отмена"
 				Width="100"
 				Margin="0 0 10 0"
-				Command="{Binding Cancel}"
+				IsCancel="True"
 			/>
     </StackPanel>
   </Grid>

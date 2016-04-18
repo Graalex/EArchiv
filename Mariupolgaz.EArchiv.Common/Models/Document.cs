@@ -19,10 +19,10 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		/// </remarks>
 		/// <param name="name">Название документа</param>
 		/// <param name="kind">ID типа документа</param>
-		public Document(string name, int kind)
+		public Document(string name, DocumentKind kind)
 		{
 			this._id = -1;
-			this._kindID = kind;
+			this._kind = kind;
 			this._createat = DateTime.Now;
 			this.Name = name;
 		}
@@ -42,11 +42,11 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		/// <param name="modifyAt">Дата и время модификации</param>
 		/// <param name="isMarkDel">Пометка на удаление</param>
 		/// <param name="source">Скан копия документа</param>
-		public Document(int id, int kind, string name, byte[] hash, BitmapImage thumbnails, DateTime createAt, DateTime modifyAt,
+		public Document(int id, DocumentKind kind, string name, byte[] hash, BitmapImage thumbnails, DateTime createAt, DateTime modifyAt,
 										bool isMarkDel, BitmapImage source)
 		{
 			this._id = id;
-			this._kindID = kind;
+			this._kind = kind;
 			this._name = name;
 			this._hash = hash;
 			this._thumbnails = thumbnails;
@@ -60,7 +60,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 
 		#region Properties
 
-		private int _id;
+		private int _id = -1;
 		/// <summary>
 		/// ID документа
 		/// </summary>
@@ -68,16 +68,16 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			get { return _id; }
 		}
 
-		private int _kindID;
+		private DocumentKind _kind;
 		/// <summary>
-		/// ID типа документа
+		/// Tип документа
 		/// </summary>
-		public int KindID {
-			get { return _kindID; }
+		public DocumentKind Kind {
+			get { return _kind; }
 			set {
-				if(_kindID != value) {
-					_kindID = value;
-					RaisePropertyChanged(() => KindID);
+				if(_kind != value) {
+					_kind = value;
+					RaisePropertyChanged(() => Kind);
 				}
 			}
 		}
@@ -199,7 +199,8 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		// Создает миниатюру скана документа
 		private BitmapImage buildThumbnails()
 		{
-			throw new NotImplementedException();
+			//throw new NotImplementedException();
+			return null;
 		}
 
 		// Вычисляет хэш скана документа по алгоритму SHA-256 

@@ -98,7 +98,7 @@ namespace Mariupolgaz.EArchiv.Common.Servises
 		/// <param name="name"></param>
 		/// <param name="kind"></param>
 		/// <returns></returns>
-		Document CreateDocument(string name, int kind);
+		Document CreateDocument(string name, DocumentKind kind);
 
 		/// <summary>
 		/// 

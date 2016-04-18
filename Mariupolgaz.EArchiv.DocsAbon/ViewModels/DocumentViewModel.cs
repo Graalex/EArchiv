@@ -10,6 +10,9 @@ using Mariupolgaz.EArchiv.Common.Models;
 using Mariupolgaz.EArchiv.Common.Servises;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.ServiceLocation;
+using Mariupolgaz.EArchiv.DocsAbon.Views;
+using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 {
@@ -19,6 +22,8 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 	public class DocumentViewModel: BaseViewModel
 	{
 		private readonly IEventAggregator _aggregator;
+		private readonly IDocumentService _docsrv;
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -27,6 +32,8 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			if (aggregator == null) throw new ArgumentNullException("aggregator");
 
 			_aggregator = aggregator;
+			_docsrv = ServiceLocator.Current.GetInstance<IDocumentService>();
+
 			this.Documents = new ObservableCollection<Document>();
 			_aggregator.GetEvent<LsSelectedEvent>().Subscribe(lsSelectedEventHandler);
 		}
@@ -53,6 +60,21 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			}
 		}
 
+		private int _ls = -1;
+		/// <summary>
+		/// Лицевой счет
+		/// </summary>
+		public int LS
+		{
+			get { return _ls; }
+			set {
+				if(_ls != value) {
+					_ls = value;
+					RaisePropertyChanged(() => LS);
+				}
+			}
+		}
+
 		#endregion
 
 		#region Commands
@@ -67,6 +89,25 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 
 		private void onAddDocument()
 		{
+			//TODO: Очень не элегантно (костыль) но нет времени переделаю потом
+			// надо будет сообщения и модальные окна вывести в отдельный модуль сервис.
+
+			var dlg = ServiceLocator.Current.GetInstance<DocAddDialog>();
+			bool? rslt = dlg.ShowDialog();
+			if(rslt.GetValueOrDefault()) {
+				var data = (dlg.DataContext as DocAddViewModel);
+				Document doc = new Document(generateDocName(data.SelectedKind), data.SelectedKind);
+				BitmapImage bi = new BitmapImage();
+
+				bi.BeginInit();
+				FileStream fs = new FileStream(data.File, FileMode.Open);
+
+				bi.StreamSource = fs;
+				bi.EndInit();
+				doc.Source = bi;
+				this.Documents.Add(doc);
+				this.SelectedDocument = doc;
+      }
 			
 		}
 
@@ -76,6 +117,7 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 
 		private void lsSelectedEventHandler(int ls)
 		{
+			this.LS = ls;
 			Mouse.OverrideCursor = Cursors.Wait;
 			try {
 				var doc = ServiceLocator.Current.GetInstance<IDocumentService>();
@@ -94,6 +136,49 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			finally {
 				Mouse.OverrideCursor = null;
 			}
+		}
+
+		#endregion
+
+		#region Helpers
+
+		private string generateDocName(DocumentKind kind)
+		{
+			string rslt;
+
+			switch (kind.ID) {
+        case 1:
+					rslt = "ПП";
+					break;
+
+				case 2:
+					rslt = "ИН";
+					break;
+
+				case 3:
+					rslt = "СЗ";
+					break;
+
+				case 4:
+					rslt = "СД";
+					break;
+
+				case 5:
+					rslt = "ДГ";
+					break;
+				
+				case 6:
+					rslt = "ПД";
+					break;
+
+				default:
+					rslt = "ПР";
+					break;
+			};
+
+			rslt += ("-" + this.LS + "-" + String.Format("{0:yyyyMdHms}", DateTime.Now));
+
+			return rslt;
 		}
 
 		#endregion
