@@ -84,7 +84,6 @@
     <GroupBox 
 			Header="Абонент"
 			Visibility="{Binding AbonentVisible}"
-			DataContext="{Binding SelectedAbonent}"
 		>
       <Grid>
         <Grid.ColumnDefinitions>
@@ -125,7 +124,7 @@
 					VerticalAlignment="Center"
 					HorizontalAlignment="Stretch"
 					TextAlignment="Left"
-					Text="{Binding LS}"
+					Text="{Binding SelectedAbonent.LS}"
 				/>
         <TextBlock
 					Grid.Row="1"
@@ -133,7 +132,7 @@
 					VerticalAlignment="Center"
 					HorizontalAlignment="Stretch"
 					TextAlignment="Left"
-					Text="{Binding Family}"
+					Text="{Binding SelectedAbonent.Family}"
 				/>
         <TextBlock
 					Grid.Row="2"
@@ -141,7 +140,7 @@
 					VerticalAlignment="Center"
 					HorizontalAlignment="Stretch"
 					TextAlignment="Left"
-					Text="{Binding Address}"
+					Text="{Binding SelectedAbonent.Address}"
 				/>
 				<Button
 					Grid.Column="0"

@@ -44,7 +44,7 @@
 				VerticalAlignment="Center"
 				Width="70"
 				Content="Добавить"
-				Command="{Binding}"
+				Command="{Binding AddDocument}"
 			/>
       <Button
 				VerticalAlignment="Center"

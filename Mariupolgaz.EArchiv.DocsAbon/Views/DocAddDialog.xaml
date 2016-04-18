@@ -1,0 +1,85 @@
+﻿<Window x:Class="Mariupolgaz.EArchiv.DocsAbon.Views.DocAddDialog"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+  xmlns:local="clr-namespace:Mariupolgaz.EArchiv.DocsAbon.Views"
+  Height="180" 
+	Width="500"
+	ResizeMode="NoResize"
+	WindowStyle="SingleBorderWindow"
+	Title="Новый документ">
+	<Grid>
+    <Grid.ColumnDefinitions>
+			<ColumnDefinition Width="110" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+			<RowDefinition Height="50" />
+      <RowDefinition Height="50" />
+      <RowDefinition Height="50" />
+    </Grid.RowDefinitions>     
+		
+		<Label
+			Grid.Row="0"
+			Grid.Column="0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Center"
+			Content="Выберите файл:"
+		/>
+    <Label
+			Grid.Row="1"
+			Grid.Column="0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Center"
+			Content="Тип документа:"
+		/>
+    <StackPanel
+			Grid.Row="0"
+			Grid.Column="1"
+			Orientation="Horizontal"
+			VerticalAlignment="Center"
+		>
+			<TextBox 
+				HorizontalAlignment="Left"
+				Text="{Binding File}"
+				Width="350"
+			/>
+			<Button
+				Width="20"
+				Content="..."
+				Command="{Binding AddFile}"
+			/>
+		</StackPanel>
+		<ComboBox
+			Grid.Row="1"
+			Grid.Column="1"
+			VerticalAlignment="Center"
+			HorizontalAlignment="Left"
+			Width="350"
+			ItemsSource="{Binding Kinds}"
+			SelectedItem="{Binding SelectedKind}"
+			DisplayMemberPath="Name"
+		/>
+    <StackPanel
+			Grid.Row="2"
+			Grid.ColumnSpan="2"
+			Orientation="Horizontal"
+			VerticalAlignment="Center"
+			HorizontalAlignment="Right"
+		>
+			<Button
+				Content="ОК"
+				Width="100"
+				Margin="0 0 5 0"
+				Command="{Binding Ok}"
+			/>
+      <Button
+				Content="Отмена"
+				Width="100"
+				Margin="0 0 10 0"
+				Command="{Binding Cancel}"
+			/>
+    </StackPanel>
+  </Grid>
+</Window>

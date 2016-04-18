@@ -79,10 +79,14 @@
     <Compile Include="DocsAbonModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ClassDocViewModel.cs" />
+    <Compile Include="ViewModels\DocAddViewModel.cs" />
     <Compile Include="ViewModels\DocumentViewModel.cs" />
     <Compile Include="ViewModels\KindDocViewModel.cs" />
     <Compile Include="Views\ClassDocView.xaml.cs">
       <DependentUpon>ClassDocView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DocAddDialog.xaml.cs">
+      <DependentUpon>DocAddDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DocumentView.xaml.cs">
       <DependentUpon>DocumentView.xaml</DependentUpon>
@@ -102,6 +106,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ClassDocView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DocAddDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
