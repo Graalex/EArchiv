@@ -8,7 +8,7 @@
              d:DesignHeight="600" d:DesignWidth="800">
   <Grid>
     <Grid.ColumnDefinitions>
-			<ColumnDefinition Width="250" />
+			<ColumnDefinition Width="350" />
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
@@ -31,9 +31,25 @@
 			Grid.Column="0"
 			Grid.Row="1"
 			Grid.RowSpan="2"
+			Margin="5 0 5 15"
 			ItemsSource="{Binding Documents}"
 			SelectedItem="{Binding SelectedDocument}"
-		/>
+		>
+      <ListView.View>
+        <GridView>
+					<GridViewColumn 
+						DisplayMemberBinding="{Binding Kind.Name}"
+						Width="190"
+						Header="Тип документа"
+					/>
+          <GridViewColumn 
+						DisplayMemberBinding="{Binding Name}"
+						Width="150"
+						Header="Документ"
+					/>
+        </GridView>
+			</ListView.View>
+		</ListView>
     <StackPanel
 			Grid.Row="0"
 			Grid.Column="1"
@@ -43,18 +59,21 @@
 			<Button
 				VerticalAlignment="Center"
 				Width="70"
+				Margin="0 0 5 0"
 				Content="Добавить"
 				Command="{Binding AddDocument}"
 			/>
       <Button
 				VerticalAlignment="Center"
 				Width="70"
+				Margin="0 0 5 0"
 				Content="Заменить"
 				Command="{Binding}"
 			/>
       <Button
 				VerticalAlignment="Center"
 				Width="70"
+				Margin="0 0 5 0"
 				Content="Удалить"
 				Command="{Binding}"
 			/>
@@ -62,6 +81,11 @@
 		<Image
 			Grid.Column="1"
 			Grid.Row="1"
+			VerticalAlignment="Top"
+			HorizontalAlignment="Stretch"
+			MinHeight="200"
+			MinWidth="600"
+			Margin="5 0 5 0"
 			Source="{Binding SelectedDocument.Source}"
 		/>
     <StackPanel
@@ -69,10 +93,16 @@
 			Grid.Column="1"
 			Orientation="Horizontal"
 		>
+			<Label
+				Content="Путь для Газолины:"
+				VerticalAlignment="Center"
+				Margin="5 0 5 0"
+			/>
 			<TextBlock
 				VerticalAlignment="Center"
 				Width="400"
-				Text="{Binding}"
+				Margin="5 0 5 0"
+				Text="{Binding Url}"
 			/>
 			<Button
 				VerticalAlignment="Center"

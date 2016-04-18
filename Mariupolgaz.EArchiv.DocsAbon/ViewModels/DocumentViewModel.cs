@@ -71,6 +71,23 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 				if(_ls != value) {
 					_ls = value;
 					RaisePropertyChanged(() => LS);
+					RaisePropertyChanged(() => Url);
+				}
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public string Url
+		{
+			get
+			{
+				if (_ls != -1) {
+					return "http:////data-serv//documents//ls//" + this.LS.ToString();
+				}
+				else {
+					return null;
 				}
 			}
 		}
