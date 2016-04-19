@@ -155,7 +155,29 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 
 		private void onSaveDocuments()
 		{
+			Mouse.OverrideCursor = Cursors.Wait;
 
+			try {
+				foreach (var doc in this.Documents) {
+					if (doc.IsDirty) {
+						_docsrv.SaveDocument(doc, new Folder(this.LS.ToString()), this.LS.GetValueOrDefault());
+						doc.IsDirty = false;
+					}
+				}
+			}
+
+			catch(Exception e) {
+				MessageBox.Show(
+					"Произошла ошибка при сохранении документов!\n" + e.Message,
+					"Ошибка",
+					MessageBoxButton.OK,
+					MessageBoxImage.Error
+				);
+			}
+
+			finally {
+				Mouse.OverrideCursor = null;
+			}
 		}
 
 		private bool canSaveDocuments()
@@ -169,6 +191,22 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 
 		private void lsSelectedEventHandler(int ls)
 		{
+			// проверяем были ли какие либо изменения в списке документов
+			if(checkDirty()) {
+				if (MessageBox.Show(
+					"Один или несколько документов были вами изменены.\nСохранить результат изменений?\nПри отказе все ваши изменения будут отменены!", 
+					"Внимание", 
+					MessageBoxButton.YesNo, 
+					MessageBoxImage.Question) == MessageBoxResult.Yes) {
+					 onSaveDocuments();
+				}
+			}
+
+			// очистка предыдущего списка документов
+			this.Documents.Clear();
+			this.SelectedDocument = null;
+
+			// получение нового списка документов
 			this.LS = ls;
 			Mouse.OverrideCursor = Cursors.Wait;
 			try {
@@ -181,11 +219,12 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 					}
 				}
 				 
+				// отображение панели для работы с документами
 				this.DisplayMode = Visibility.Visible;
 			}
 
 			catch(Exception e) {
-				MessageBox.Show(e.Message, "Ошибка");
+				MessageBox.Show(e.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 
 			finally {

@@ -74,22 +74,24 @@ namespace Mariupolgaz.EArchiv.Document.Services
 					
 					list = new List<Common.Models.Document>();
 					while (reader.Read()) {
+						/*
 						BitmapImage thrumb = new BitmapImage();
 						thrumb.BeginInit();
 						MemoryStream stream = new MemoryStream((byte[])reader["Thumbnails"]);
 						thrumb.StreamSource = stream;
 						thrumb.EndInit();
+						*/
 
 						BitmapImage src = new BitmapImage();
 						src.BeginInit();
-						stream = new MemoryStream((byte[])reader["Source"]);
+						MemoryStream stream = new MemoryStream((byte[])reader["Source"]);
 						src.StreamSource = stream;
 						src.EndInit();
 
 						int id = Convert.ToInt32(reader["Kind"]);
 						var kind = _kinds.First(item => item.ID == id);
 
-						list.Add(new Common.Models.Document(Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], thrumb,
+						list.Add(new Common.Models.Document(Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], null /*thrumb*/,
 							Convert.ToDateTime(reader["CreateAt"]), Convert.ToDateTime(reader["ModifyAt"]), Convert.ToBoolean(reader["IsMarkDelete"]), src));
 					}
 				}
@@ -121,22 +123,24 @@ namespace Mariupolgaz.EArchiv.Document.Services
 				if(reader.HasRows) {
 					list = new List<Common.Models.Document>();
 					while(reader.Read()) {
+						/*
 						BitmapImage thrumb = new BitmapImage();
 						thrumb.BeginInit();
 						MemoryStream stream = new MemoryStream((byte[])reader["Thumbnails"]);
 						thrumb.StreamSource = stream;
 						thrumb.EndInit();
+						*/
 
 						BitmapImage src = new BitmapImage();
 						src.BeginInit();
-						stream = new MemoryStream((byte[])reader["Source"]);
+						MemoryStream stream = new MemoryStream((byte[])reader["Source"]);
 						src.StreamSource = stream;
 						src.EndInit();
 
 						int id = Convert.ToInt32(reader["Kind"]);
 						var kind = _kinds.First(item => item.ID == id);
 
-						list.Add(new Common.Models.Document(Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], thrumb,
+						list.Add(new Common.Models.Document(Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], null /*thrumb*/,
 							Convert.ToDateTime(reader["CreateAt"]), Convert.ToDateTime(reader["ModifyAt"]), Convert.ToBoolean(reader["IsMarkDelete"]), src));
 					}
 				}
@@ -163,7 +167,8 @@ namespace Mariupolgaz.EArchiv.Document.Services
 				cmd.CommandType = CommandType.StoredProcedure;
 
 				con.Open();
-				SqlTransaction tranc = con.BeginTransaction(IsolationLevel.RepeatableRead);
+				SqlTransaction tranc = con.BeginTransaction();
+				cmd.Transaction = tranc;
 
 				try {
 					//первая часть сохраняем сам документ
@@ -172,19 +177,28 @@ namespace Mariupolgaz.EArchiv.Document.Services
 					cmd.Parameters.Clear();
 					cmd.Parameters.AddWithValue("@Name", doc.Name);
 					cmd.Parameters.AddWithValue("@Kind", doc.Kind.ID);
-					cmd.Parameters.AddWithValue("@CreateAt", doc.CreateAt);
-					cmd.Parameters.AddWithValue("@ModifyAt", doc.ModifyAt);
 					cmd.Parameters.AddWithValue("@UsrName", "EArchiv");
 					cmd.Parameters.AddWithValue("@Hash", doc.ConvertHash());
 
-					long len = doc.Thumbnails.StreamSource.Length;
-					byte[] buf = new byte[len];
-					doc.Thumbnails.StreamSource.Read(buf, 0, (int)len);
-					cmd.Parameters.AddWithValue("@Thumbnails", buf);
+					//TODO: Костыль позже убрать
+					long len;
+					byte[] buf;
+					if (doc.Thumbnails != null) {
+						len = doc.Thumbnails.StreamSource.Length;
+						buf = new byte[len];
+						doc.Thumbnails.StreamSource.Read(buf, 0, (int)len);
+						cmd.Parameters.AddWithValue("@Thumbnails", buf);
+					} else {
+							buf = new byte[2];
+							buf[0] = 1;
+							buf[1] = 2;
+							cmd.Parameters.AddWithValue("@Thumbnails", buf);
+					}
 
 					len = doc.Source.StreamSource.Length;
 					buf = new byte[len];
-					doc.Source.StreamSource.Read(buf, 0, (int)len);
+					doc.Source.StreamSource.Position = 0;
+          doc.Source.StreamSource.Read(buf, 0, (int)len);
 					cmd.Parameters.AddWithValue("@Raw", buf);
 
 					int key = -1;
@@ -193,9 +207,11 @@ namespace Mariupolgaz.EArchiv.Document.Services
 					cmd.Parameters.Add(parametr);
 
 					cmd.ExecuteNonQuery();
-					doc.setID(key);
+					doc.setID(Convert.ToInt32(cmd.Parameters["@Key"].Value));
 
 					//вторая часть добавляем документ в папку
+					//TODO: Надо подумать как переделать
+					/*
 					cmd.CommandText = "DocFolderAdd";
 
 					cmd.Parameters.Clear();
@@ -208,6 +224,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 					cmd.Parameters.Add(parametr);
 
 					cmd.ExecuteNonQuery();
+					*/
 
 					// третья часть связываем документ с лицевым счетом
 					cmd.CommandText = "DocLsAdd";
@@ -227,8 +244,14 @@ namespace Mariupolgaz.EArchiv.Document.Services
 				}
 
 				catch(Exception e) {
-					tranc.Rollback();
-					throw new Exception(e.Message);
+					try {
+						tranc.Rollback();
+						throw new Exception(e.Message);
+					}
+
+					catch(Exception ex) {
+						throw new Exception(ex.Message);
+					}
 				}
 			}
 

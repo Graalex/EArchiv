@@ -181,7 +181,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		public bool IsDirty
 		{
 			get { return _dirty; }
-			private set {
+			set {
 				if(_dirty != value) {
 					_dirty = value;
 					RaisePropertyChanged(() => IsDirty);
@@ -219,7 +219,16 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		// Создает миниатюру скана документа
 		private BitmapImage buildThumbnails()
 		{
-			//throw new NotImplementedException();
+			/*
+			BitmapImage t = new BitmapImage();
+			t.BeginInit();
+
+			t.DecodePixelHeight = 128;
+			t.DecodePixelWidth = 128;
+			t.StreamSource = this.Source.StreamSource;
+			t.EndInit();
+			return t;
+			*/
 			return null;
 		}
 
@@ -230,6 +239,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			long len = _source.StreamSource.Length;
 			byte[] buf = new byte[len];
 
+			_source.StreamSource.Position = 0;
 			_source.StreamSource.Read(buf, 0, (int)len);
 			return sha.ComputeHash(buf);
 		}

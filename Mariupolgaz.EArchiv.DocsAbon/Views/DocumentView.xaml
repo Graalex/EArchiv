@@ -10,7 +10,7 @@
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="50" />
-      <RowDefinition Height="200" />
+      <RowDefinition Height="220" />
       <RowDefinition Height="40" />
       <RowDefinition Height="*" />
       <RowDefinition Height="100" />
@@ -43,6 +43,21 @@
 						  DisplayMemberBinding="{Binding Kind.Name}"
 						  Width="350"
 						  Header="Тип документа"
+					/>
+            <GridViewColumn 
+						  DisplayMemberBinding="{Binding CreateAt}"
+						  Width="100"
+						  Header="Время создания"
+					/>
+            <GridViewColumn 
+						  DisplayMemberBinding="{Binding ModifyAt}"
+						  Width="110"
+						  Header="Время изменения"
+					/>
+            <GridViewColumn 
+						  DisplayMemberBinding="{Binding Size}"
+						  Width="70"
+						  Header="Размер"
 					/>
           </GridView>
         </ListView.View>
@@ -90,7 +105,7 @@
       >
         <Image
           Margin="5"
-			    HorizontalAlignment="Stretch"
+			    HorizontalAlignment="Left"
           Stretch="Uniform"
 			    Source="{Binding SelectedDocument.Source}"
 		    />

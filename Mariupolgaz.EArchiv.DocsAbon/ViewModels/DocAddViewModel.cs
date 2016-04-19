@@ -118,14 +118,6 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 
 			this.Close();
 
-			/*_evnAggr
-				.GetEvent<AddDocumentEvent>()
-				.Publish(new AddDocMessage(this.File, this.SelectedKind));
-				*/
-			//var dlg = ServiceLocator.Current.GetInstance<DocAddDialog>();
-			//dlg.Close();
-
-			//this.Closed?.Invoke(this, EventArgs.Empty);
 		}
 
 		private bool canOk()
