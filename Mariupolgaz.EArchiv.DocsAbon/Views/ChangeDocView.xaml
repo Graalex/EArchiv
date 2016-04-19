@@ -1,0 +1,81 @@
+﻿<Window x:Class="Mariupolgaz.EArchiv.DocsAbon.Views.ChangeDocView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Mariupolgaz.EArchiv.DocsAbon.Views"
+						 Title="Изменить документ"
+						 Height="160"
+						 Width="380"
+						 WindowStyle="SingleBorderWindow"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="400">
+  <Grid>
+    <Grid.RowDefinitions>
+			<RowDefinition Height="40" />
+      <RowDefinition Height="40" />
+      <RowDefinition Height="40"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+			<ColumnDefinition Width="100" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+		<Label
+			VerticalAlignment="Center"
+			HorizontalAlignment="Left"
+			Content="Путь к файлу:"
+		/>
+    <Label
+			Grid.Row="1"
+			VerticalAlignment="Center"
+			HorizontalAlignment="Left"
+			Content="Тип документа:"
+		/>
+    <StackPanel
+			Grid.Column="1"
+			Orientation="Horizontal"
+			VerticalAlignment="Center"
+		>
+			<TextBox
+				Width="220"
+				Text="{Binding File}"
+			/>
+			<Button
+				Content="..."
+				Width="20"
+				Command="{Binding AddFile}"
+			/>
+		</StackPanel>
+		<ComboBox
+			Grid.Column="1"
+			Grid.Row="1"
+			VerticalAlignment="Center"
+			Margin="0 0 5 0"
+			ItemsSource="{Binding Kinds}"
+			SelectedItem="{Binding SelectedKind}"
+			DisplayMemberPath="Name"
+		/>
+    <StackPanel
+			Grid.Row="2"
+			Grid.ColumnSpan="2"
+			Orientation="Horizontal"
+			HorizontalAlignment="Right"
+		>
+			<Button
+				VerticalAlignment="Center"
+				Content="ОК"
+				Width="70"
+				Margin="0 0 5 0"
+				Command="{Binding Ok}"
+			/>
+      <Button
+				VerticalAlignment="Center"
+				Content="Отмена"
+				Width="70"
+				Margin="0 0 5 0"
+				IsCancel="True"
+			/>
+    </StackPanel>
+  </Grid>
+</Window>

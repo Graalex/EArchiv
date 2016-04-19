@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="DocsAbonModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ChangeDocViewModel.cs" />
     <Compile Include="ViewModels\ClassDocViewModel.cs" />
     <Compile Include="ViewModels\DocAddViewModel.cs" />
     <Compile Include="ViewModels\DocumentViewModel.cs" />
@@ -93,6 +94,9 @@
     </Compile>
     <Compile Include="Views\KindDocView.xaml.cs">
       <DependentUpon>KindDocView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChangeDocView.xaml.cs">
+      <DependentUpon>ChangeDocView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +122,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\KindDocView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ChangeDocView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

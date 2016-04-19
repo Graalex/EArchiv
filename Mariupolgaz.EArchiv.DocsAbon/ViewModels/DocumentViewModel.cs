@@ -160,7 +160,11 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			try {
 				foreach (var doc in this.Documents) {
 					if (doc.IsDirty) {
-						_docsrv.SaveDocument(doc, new Folder(this.LS.ToString()), this.LS.GetValueOrDefault());
+						if (doc.ID == -1) {
+							_docsrv.SaveDocument(doc, new Folder(this.LS.ToString()), this.LS.GetValueOrDefault());
+						} else {
+							_docsrv.SaveDocumentSource(doc);
+						}
 						doc.IsDirty = false;
 					}
 				}
@@ -183,6 +187,43 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 		private bool canSaveDocuments()
 		{
 			return checkDirty();
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public ICommand ChangeDocument
+		{
+			get { return new DelegateCommand(onChangeDocument, canChangeDocument); }
+		}
+
+		private void onChangeDocument()
+		{
+			var dlg = ServiceLocator.Current.GetInstance<ChangeDocView>();
+			var data = (dlg.DataContext as ChangeDocViewModel);
+			bool? rslt = dlg.ShowDialog();
+			if (rslt.GetValueOrDefault()) {
+				if (this.SelectedDocument.Kind != data.SelectedKind) {
+					this.SelectedDocument.Kind = data.SelectedKind;
+					this.SelectedDocument.Name = generateDocName(data.SelectedKind);
+				}
+				if(data.File != null && data.File != String.Empty) {
+					BitmapImage bi = new BitmapImage();
+
+					bi.BeginInit();
+					FileStream fs = new FileStream(data.File, FileMode.Open);
+
+					bi.StreamSource = fs;
+					bi.EndInit();
+
+					this.SelectedDocument.Source = bi;
+				}
+			}
+		}
+
+		private bool canChangeDocument()
+		{
+			return (this.Documents.Count > 0 && this.SelectedDocument != null) ? true : false;
 		}
 
 		#endregion

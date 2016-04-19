@@ -327,6 +327,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 				cmd.CommandText = "DocAttrSet";
 				cmd.Parameters.Clear();
 				cmd.Parameters.AddWithValue("@Key", doc.ID);
+				cmd.Parameters.AddWithValue("@Name", doc.Name);
 				cmd.Parameters.AddWithValue("@Kind", doc.Kind.ID);
 				cmd.Parameters.AddWithValue("@ModifyAt", doc.ModifyAt);
 				cmd.Parameters.AddWithValue("@UsrName", "EArchiv");
@@ -349,22 +350,32 @@ namespace Mariupolgaz.EArchiv.Document.Services
 				cmd.CommandText = "DocSet";
 				cmd.Parameters.Clear();
 				cmd.Parameters.AddWithValue("@Key", doc.ID);
+				cmd.Parameters.AddWithValue("@Name", doc.Name);
 				cmd.Parameters.AddWithValue("@Kind", doc.Kind.ID);
 				cmd.Parameters.AddWithValue("@ModifyAt", doc.ModifyAt);
 				cmd.Parameters.AddWithValue("@UsrName", "EArchiv");
 				cmd.Parameters.AddWithValue("@Hash", doc.ConvertHash());
 
+				long len;
+				byte[] buf;
+
+				/*
 				long len = doc.Thumbnails.StreamSource.Length;
 				byte[] buf = new byte[len];
 				doc.Thumbnails.StreamSource.Read(buf, 0, (int)len);
 				cmd.Parameters.AddWithValue("Thumbnails", buf);
+				*/
+				buf = new byte[2];
+				buf[0] = 1;
+				buf[1] = 2;
+				cmd.Parameters.AddWithValue("@Thumbnails", buf);
 
 				len = doc.Source.StreamSource.Length;
 				buf = new byte[len];
+				doc.Source.StreamSource.Position = 0;
 				doc.Source.StreamSource.Read(buf, 0, (int)len);
 				cmd.Parameters.AddWithValue("@Raw", buf);
-				cmd.Parameters.AddWithValue("Raw", buf);
-
+				
 				con.Open();
 				cmd.ExecuteNonQuery();
 			}
