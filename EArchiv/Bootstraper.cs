@@ -22,10 +22,10 @@ namespace Mariupolgaz.EArchiv
 		protected override void InitializeShell()
 		{
 			Application.Current.MainWindow = (Window)Shell;
-			Application.Current.MainWindow.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width / 8;
+			Application.Current.MainWindow.Left = SystemParameters.WorkArea.Left;
 			Application.Current.MainWindow.Top = SystemParameters.WorkArea.Top;
-			Application.Current.MainWindow.Width = 1200;
-			Application.Current.MainWindow.Height = 720;
+			Application.Current.MainWindow.Width = SystemParameters.WorkArea.Width;
+			Application.Current.MainWindow.Height = SystemParameters.WorkArea.Height;
 
 			//Application.Current.MainWindow.Left = 
 			Application.Current.MainWindow.Show();

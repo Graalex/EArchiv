@@ -30,6 +30,13 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			_evnAggr = eventAggr;
 			var ds = ServiceLocator.Current.GetInstance<IDocumentService>();
 			this.Kinds = new ObservableCollection<DocumentKind>(ds.GetKindsByClass(2));
+			
+			/*
+			this.Kinds = new ObservableCollection<DocumentKind>();
+			this.Kinds.Add(new DocumentKind(1, "Паспорт", false));
+			this.Kinds.Add(new DocumentKind(2, "ИНН", false));
+			this.Kinds.Add(new DocumentKind(3, "Право на земельный участок", false));
+			*/
 		}
 
 		#region Properties

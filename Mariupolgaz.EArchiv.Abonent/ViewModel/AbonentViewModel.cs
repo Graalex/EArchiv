@@ -11,6 +11,7 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Prism.Events;
 using Mariupolgaz.EArchiv.Common.Events;
 
+
 namespace Mariupolgaz.EArchiv.Abonent.ViewModel
 {
 	public class AbonentViewModel: BaseViewModel
@@ -64,7 +65,7 @@ namespace Mariupolgaz.EArchiv.Abonent.ViewModel
 			}
 		}
 
-		private Visibility _resultVisible = Visibility.Visible;
+		private Visibility _resultVisible = Visibility.Collapsed;
 		/// <summary>
 		/// Определяет видимость панели результатов поиска абонентов
 		/// </summary>
@@ -101,7 +102,7 @@ namespace Mariupolgaz.EArchiv.Abonent.ViewModel
 			}
 		}
 
-		private Visibility _abnVisible = Visibility.Visible;
+		private Visibility _abnVisible = Visibility.Collapsed;
 		/// <summary>
 		/// Определяет видимость пенели с информацией об выбранном абоненте
 		/// </summary>
@@ -134,13 +135,17 @@ namespace Mariupolgaz.EArchiv.Abonent.ViewModel
 
 			var finder = ServiceLocator.Current.GetInstance<IFinderService>();
 
+			
 			try {
+			
 				if (this.LS != null) {
 					// find for abonent
 					var rslt = finder.FindAbonent(this.LS.GetValueOrDefault(0));
 					if (rslt != null) {
 						clearCurrentAbonent();
 						this.Abonents.Add(rslt);
+						this.ResultVisible = Visibility.Visible;
+						this.AbonentVisible = Visibility.Visible;
 					} else { 
 						MessageBox.Show("Не найден абонент с таким номером лицевого счета.", "Сообщение");
 					}
@@ -152,10 +157,26 @@ namespace Mariupolgaz.EArchiv.Abonent.ViewModel
 						foreach (var item in rslts) {
 							this.Abonents.Add(item);
 						}
+						this.ResultVisible = Visibility.Visible;
+						this.AbonentVisible = Visibility.Visible;
 					} else {
 						MessageBox.Show("Не найдены абоненты с такими фамилиями.", "Сообщение");
 					}					
 				}
+			 
+				/*	
+				Common.Models.Abonent a = new Common.Models.Abonent(2, "Руссин Л.В.", new Address(1, "г.", "Мариуполь", "ул.", "Бабака", "12А", "5В", 0));
+				this.Abonents.Add(a);
+				a = new Common.Models.Abonent(5, "Руссин Л.В.", new Address(1, "г.", "Мариуполь", "ул.", "Бабака", "12А", "5В", 0));
+				this.Abonents.Add(a);
+				a = new Common.Models.Abonent(236, "Руссин Л.В.", new Address(1, "г.", "Мариуполь", "ул.", "Бабака", "12А", "5В", 0));
+				this.Abonents.Add(a);
+				a = new Common.Models.Abonent(20256, "Руссин Л.В.", new Address(1, "г.", "Мариуполь", "ул.", "Бабака", "12А", "5В", 0));
+				this.Abonents.Add(a);
+			
+				this.ResultVisible = Visibility.Visible;
+				this.AbonentVisible = Visibility.Visible;
+				*/
 			}
 
 			catch (Exception e) {

@@ -20,6 +20,7 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 		public KindDocViewModel()
 		{
 			var doc = ServiceLocator.Current.GetInstance<IDocumentService>();
+			/*
 			if(doc != null) {
 				this.DocumentKinds = new ObservableCollection<DocumentKind>(
 					doc.GetKindsByClass(_DOC_CLASS)
@@ -27,6 +28,12 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			} else {
 				this.DocumentKinds = new ObservableCollection<DocumentKind>();
 			}
+			 * */
+
+			this.DocumentKinds = new ObservableCollection<DocumentKind>();
+			this.DocumentKinds.Add(new DocumentKind(1, "Паспорт", false));
+			this.DocumentKinds.Add(new DocumentKind(2, "ИНН", false));
+			this.DocumentKinds.Add(new DocumentKind(3, "Право на земельный участок", false));
 		}
 
 		/// <summary>

@@ -5,10 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Mariupolgaz.EArchiv.Abonent.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="230">
+             d:DesignHeight="400" d:DesignWidth="380">
   <StackPanel Orientation="Vertical">
     <!-- Блок поиска абонентов -->
-		<GroupBox Header="Поиск абонентов">
+		<GroupBox 
+      Header="Поиск абонентов"
+      Margin="5 0 5 0"
+     >
       <Grid>
         <Grid.ColumnDefinitions>
 					<ColumnDefinition Width="100" />
@@ -70,19 +73,36 @@
 		<!-- Блок результата поиска абонетов -->
 		<GroupBox 
 			Header="Результаты поиска"
+      Margin="5 0 5 0"
 			Visibility="{Binding ResultVisible}"
 		>
-			<ListView
+      <ListView 
+        MaxHeight="500"
 				ItemsSource="{Binding Abonents}"
 				SelectedItem="{Binding SelectedAbonent}"
-				SelectedIndex="0"
-			/>
-		</GroupBox>
+			>
+        <ListView.View>
+          <GridView>
+            <GridViewColumn 
+              Header="Лиц. сч." 
+              Width="100"
+              DisplayMemberBinding="{Binding LS}" 
+             />
+            <GridViewColumn 
+              Header="Абонент" 
+              Width="220"
+              DisplayMemberBinding="{Binding Family}" 
+             />
+          </GridView>
+        </ListView.View>
+      </ListView>
+    </GroupBox>
 		<!-- Конец блока результатов поиска абонентов -->
 
 		<!-- Блок с информацией об абоненте -->
     <GroupBox 
 			Header="Абонент"
+      Margin="5 0 5 0"
 			Visibility="{Binding AbonentVisible}"
 		>
       <Grid>

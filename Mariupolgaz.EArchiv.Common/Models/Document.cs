@@ -25,6 +25,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			this._kind = kind;
 			this._createat = DateTime.Now;
 			this.Name = name;
+			this.IsDirty = true;
 		}
 
 		/// <summary>
@@ -54,6 +55,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			this._modifyat = modifyAt;
 			this._mark_del = isMarkDel;
 			this._source = source;
+			this.IsDirty = false;
 		}
 
 		#endregion  
@@ -77,6 +79,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			set {
 				if(_kind != value) {
 					_kind = value;
+					this.IsDirty = true;
 					RaisePropertyChanged(() => Kind);
 				}
 			}
@@ -92,6 +95,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 				if(_name != value) {
 					_name = value;
 					_modifyat = DateTime.Now;
+					this.IsDirty = true;
 					RaisePropertyChanged(() => Name);
 					RaisePropertyChanged(() => ModifyAt);
 				}
@@ -162,10 +166,26 @@ namespace Mariupolgaz.EArchiv.Common.Models
 				_modifyat = DateTime.Now;
 				_thumbnails = buildThumbnails();
 				_hash = getHash();
+				this.IsDirty = true;
 				RaisePropertyChanged(() => Source);
 				RaisePropertyChanged(() => ModifyAt);
 				RaisePropertyChanged(() => Thumbnails);
 				RaisePropertyChanged(() => Hash);
+			}
+		}
+
+		private bool _dirty;
+		/// <summary>
+		/// Признак модификации документа
+		/// </summary>
+		public bool IsDirty
+		{
+			get { return _dirty; }
+			private set {
+				if(_dirty != value) {
+					_dirty = value;
+					RaisePropertyChanged(() => IsDirty);
+				}
 			}
 		}
 

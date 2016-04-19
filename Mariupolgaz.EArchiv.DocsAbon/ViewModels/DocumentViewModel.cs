@@ -60,11 +60,11 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			}
 		}
 
-		private int _ls = -1;
+		private int? _ls;
 		/// <summary>
 		/// Лицевой счет
 		/// </summary>
-		public int LS
+		public int? LS
 		{
 			get { return _ls; }
 			set {
@@ -84,10 +84,27 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			get
 			{
 				if (_ls != -1) {
-					return "http:////data-serv//documents//ls//" + this.LS.ToString();
+					return @"http://earchiv/documents/abonent/ls/" + this.LS.ToString();
 				}
 				else {
 					return null;
+				}
+			}
+		}
+
+		private Visibility _display = Visibility.Collapsed;
+		/// <summary>
+		/// 
+		/// </summary>
+		public Visibility DisplayMode
+		{
+			get { return _display; }
+			set
+			{
+				if (_display != value)
+				{
+					_display = value;
+					RaisePropertyChanged(() => DisplayMode);
 				}
 			}
 		}
@@ -128,6 +145,24 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public ICommand SaveDocuments
+		{
+			get { return new DelegateCommand(onSaveDocuments, canSaveDocuments); }
+		}
+
+		private void onSaveDocuments()
+		{
+
+		}
+
+		private bool canSaveDocuments()
+		{
+			return checkDirty();
+		}
+
 		#endregion
 
 		#region Events
@@ -138,12 +173,15 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			Mouse.OverrideCursor = Cursors.Wait;
 			try {
 				var doc = ServiceLocator.Current.GetInstance<IDocumentService>();
+				
 				IList<Document> rslt = doc.GetDocuments(ls);
 				if (rslt != null) {
 					foreach (var item in rslt) {
 						this.Documents.Add(item);
 					}
 				}
+				 
+				this.DisplayMode = Visibility.Visible;
 			}
 
 			catch(Exception e) {
@@ -194,6 +232,16 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			};
 
 			rslt += ("-" + this.LS + "-" + String.Format("{0:yyyyMdHms}", DateTime.Now));
+
+			return rslt;
+		}
+
+		private bool checkDirty()
+		{
+			bool rslt = false;
+			if(this.Documents.Count > 0) {
+				rslt = this.Documents.Any(doc => doc.IsDirty);
+			}
 
 			return rslt;
 		}

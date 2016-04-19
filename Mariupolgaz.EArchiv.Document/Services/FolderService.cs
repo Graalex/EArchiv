@@ -16,17 +16,14 @@ namespace Mariupolgaz.EArchiv.Document.Services
 	public class FolderService : IFolderService
 	{
 
-		private SqlConnection _con;
-		private SqlCommand _cmd;
+		private string _con;
 
 		/// <summary>
 		/// 
 		/// </summary>
 		public FolderService()
 		{
-			_con = new SqlConnection(ConfigurationManager.ConnectionStrings["Archiv"].ConnectionString);
-			_cmd = new SqlCommand();
-			_cmd.Connection = _con;
+			_con = ConfigurationManager.ConnectionStrings["Archiv"].ConnectionString;
 		}
 
 		/// <summary>
@@ -76,20 +73,20 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		/// <returns></returns>
 		public bool SaveFolder(Folder folder)
 		{
-			using (_con) {
-				_cmd.CommandType = CommandType.StoredProcedure;
-				_cmd.CommandText = "FolderAdd";
-				_cmd.Parameters.Clear();
-				_cmd.Parameters.AddWithValue("@Name", folder.Name);
-				_cmd.Parameters.AddWithValue("@Barcode", null);
-				_cmd.Parameters.AddWithValue("@UsrName", "EArchiv");
+			using (SqlConnection con = new SqlConnection(_con)) {
+				SqlCommand cmd = new SqlCommand("FolderAdd", con);
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.Parameters.Clear();
+				cmd.Parameters.AddWithValue("@Name", folder.Name);
+				cmd.Parameters.AddWithValue("@Barcode", null);
+				cmd.Parameters.AddWithValue("@UsrName", "EArchiv");
 				int key = -1;
 				SqlParameter param = new SqlParameter("@Key", key);
 				param.Direction = ParameterDirection.Output;
-				_cmd.Parameters.Add(param);
+				cmd.Parameters.Add(param);
 
-				_con.Open();
-				_cmd.ExecuteScalar();
+				con.Open();
+				cmd.ExecuteScalar();
 
 				folder.setID(key);
 				return true;
