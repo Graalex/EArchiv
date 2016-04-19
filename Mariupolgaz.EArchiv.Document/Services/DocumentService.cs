@@ -156,7 +156,27 @@ namespace Mariupolgaz.EArchiv.Document.Services
 
 		public bool MarkDeleteDocument(comm.Document doc)
 		{
-			throw new NotImplementedException();
+			using (SqlConnection con = new SqlConnection(_con))
+			{
+				try {
+					bool rslt = false;
+
+					SqlCommand cmd = new SqlCommand("DocAttrMarkDel", con);
+					cmd.CommandType = CommandType.StoredProcedure;
+					cmd.Parameters.AddWithValue("@Key", doc.ID);
+
+					con.Open();
+
+					cmd.ExecuteNonQuery();
+					rslt = true;
+
+					return rslt;
+				}
+
+				catch(Exception e) {
+					throw new Exception(e.Message);
+				}
+			}
 		}
 
 		public void SaveDocument(comm.Document doc, comm.Folder folder, int ls)

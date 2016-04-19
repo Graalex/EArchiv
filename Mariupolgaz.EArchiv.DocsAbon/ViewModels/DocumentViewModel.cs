@@ -226,6 +226,34 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			return (this.Documents.Count > 0 && this.SelectedDocument != null) ? true : false;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public ICommand DeleteDocument
+		{
+			get { return new DelegateCommand(onDeleteDocument, canDeleteDocument); }
+		}
+
+		private void onDeleteDocument()
+		{
+			if(MessageBox.Show(
+				"Вы уверены, что хотите удалить документ?",
+				"Предупреждение",
+				MessageBoxButton.YesNo,
+				MessageBoxImage.Warning
+			) == MessageBoxResult.Yes) {
+				if(this.SelectedDocument.ID != -1) {
+					_docsrv.MarkDeleteDocument(this.SelectedDocument);
+				}
+				this.Documents.Remove(this.SelectedDocument);
+			}
+		}
+
+		private bool canDeleteDocument()
+		{
+			return this.SelectedDocument != null ? true : false;
+		}
+
 		#endregion
 
 		#region Events
