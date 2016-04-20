@@ -130,7 +130,7 @@
 				  VerticalAlignment="Center"
 				  Width="80"
 				  Content="Копировать"
-				  Command="{Binding}"
+				  Command="{Binding CopyUrl}"
 			  />
       </StackPanel>
   </Grid>

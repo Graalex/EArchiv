@@ -254,6 +254,21 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			return this.SelectedDocument != null ? true : false;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public ICommand CopyUrl
+		{
+			get { return new DelegateCommand(onCopyUrl); }
+		}
+
+		private void onCopyUrl()
+		{
+			Mouse.OverrideCursor = Cursors.Wait;
+			Clipboard.SetData(DataFormats.Text, (object)this.Url);
+			Mouse.OverrideCursor = null;
+    }
+
 		#endregion
 
 		#region Events
