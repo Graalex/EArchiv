@@ -25,5 +25,15 @@
 		/// </summary>
 		public static string ClassDocListRegion = "ClassDocList";
 
+		/// <summary>
+		/// Название региона для размещения UI регистрации
+		/// </summary>
+		public static string LoginRegion = "Login";
+
+		/// <summary>
+		/// Название региона для размещения UI регистрации
+		/// </summary>
+		public static string RegisterRegion = "Register";
+
 	}
 }

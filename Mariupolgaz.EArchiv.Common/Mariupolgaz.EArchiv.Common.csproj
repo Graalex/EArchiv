@@ -75,7 +75,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\IdentityMessage.cs" />
     <Compile Include="Events\LsSelectedEvent.cs" />
+    <Compile Include="Events\RegistryIdentityEvent.cs" />
     <Compile Include="Models\Abonent.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\BaseViewModel.cs" />
@@ -91,6 +93,8 @@
     <Compile Include="Servises\IDocumentService.cs" />
     <Compile Include="Servises\IFinderService.cs" />
     <Compile Include="Servises\IFolderService.cs" />
+    <Compile Include="Servises\IRegisteredService.cs" />
+    <Compile Include="Servises\ISecurityService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -13,9 +13,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mariupolgaz.EArchiv.Documen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mariupolgaz.EArchiv.Common", "Mariupolgaz.EArchiv.Common\Mariupolgaz.EArchiv.Common.csproj", "{CDA1F982-6D97-4E29-BD9B-CBD05AEBB60D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mariupolgaz.EArchiv.Authorize", "Mariupolgaz.EArchiv.Authorize\Mariupolgaz.EArchiv.Authorize.csproj", "{E34AAE10-B09D-4C93-B62C-B00305007FFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mariupolgaz.EArchiv.Security", "Mariupolgaz.EArchiv.Authorize\Mariupolgaz.EArchiv.Security.csproj", "{E34AAE10-B09D-4C93-B62C-B00305007FFF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mariupolgaz.EArchiv.DocsAbon", "Mariupolgaz.EArchiv.DocsAbon\Mariupolgaz.EArchiv.DocsAbon.csproj", "{9D4855EB-3E84-4EBD-BFAF-F6FA8D4ECE9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BA686372-B048-4B4C-870C-C6A6BA5A32E5}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
