@@ -85,7 +85,7 @@ namespace Mariupolgaz.EArchiv.Security.ViewModel
 		#endregion
 
 		#region IsActivity
-		private bool? _activity;
+		private bool? _activity = false;
 		/// <summary>
 		/// Флаг активации нового пользователя
 		/// </summary>
@@ -153,7 +153,7 @@ namespace Mariupolgaz.EArchiv.Security.ViewModel
 			Mouse.OverrideCursor = Cursors.Wait;
 			try {
 				var srv = ServiceLocator.Current.GetInstance<IRegisteredService>();
-				if (srv.RegisteredUser(this.LoginName, this.Password)) {
+				if (srv.RegisteredUser(this.LoginName, this.Password, this.IsActivity.GetValueOrDefault(false))) {
 					this._eventAggr
 						.GetEvent<RegistryIdentityEvent>()
 						.Publish(new IdentityMessage(

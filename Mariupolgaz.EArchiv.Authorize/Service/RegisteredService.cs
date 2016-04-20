@@ -23,11 +23,11 @@ namespace Mariupolgaz.EArchiv.Security.Service
 			string l = loginName.Trim();
 			if (l.Length > 25) throw new Exception("Длина имени для входа не должна быть больше 25 символов");
 			byte[] hp = (new SHA512Managed()).ComputeHash(
-				(new StreamReader(password)).BaseStream
+				Encoding.Unicode.GetBytes(password.Trim())
 			);
 
 			using(SqlConnection con = new SqlConnection(_conString)) {
-				string cmdText = "INSERT Identities (LoginName, HashPwd, IsActivity) VALUES(@Login, @Pwd, @Activity)";
+				string cmdText = "INSERT [Identities] (LoginName, HashPwd, IsActivity) VALUES(@Login, @Pwd, @Activity)";
 				SqlCommand cmd = new SqlCommand(cmdText, con);
 				cmd.Parameters.Clear();
 				cmd.Parameters.AddWithValue("@Login", l);
