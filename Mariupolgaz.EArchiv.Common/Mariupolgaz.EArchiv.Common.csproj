@@ -76,6 +76,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\IdentityMessage.cs" />
+    <Compile Include="Events\LoginEvent.cs" />
+    <Compile Include="Events\LoginMessage.cs" />
     <Compile Include="Events\LsSelectedEvent.cs" />
     <Compile Include="Events\RegistryIdentityEvent.cs" />
     <Compile Include="Models\Abonent.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Models\DocumentClass.cs" />
     <Compile Include="Models\DocumentKind.cs" />
     <Compile Include="Models\Folder.cs" />
+    <Compile Include="Models\IPasswordSupplier.cs" />
     <Compile Include="Models\NotificationObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionNames.cs" />

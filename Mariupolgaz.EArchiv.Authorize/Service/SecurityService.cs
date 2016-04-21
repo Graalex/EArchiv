@@ -37,7 +37,7 @@ namespace Mariupolgaz.EArchiv.Security.Service
 		private IIdentity getIdentity(string login, string password) 
 		{
 			using(SqlConnection con = new SqlConnection(_conString)) {
-				string cmdText = "SELECT * FROM Identities WHERE LoginName = @Login AND IsActivity = 1";
+				string cmdText = "SELECT * FROM [Identities] WHERE LoginName = @Login AND IsActivity = 1";
 				SqlCommand cmd = new SqlCommand(cmdText, con);
 				cmd.Parameters.Clear();
 				cmd.Parameters.AddWithValue("@Login", login.Trim());
@@ -50,12 +50,12 @@ namespace Mariupolgaz.EArchiv.Security.Service
 					throw new Exception("Имя пользователя или пароль не найдены!");
 				}
 
-				reader.NextResult();
+				reader.Read();
 				byte[] hp = (byte[])reader["HashPwd"];
 				SHA512Managed sha512 = new SHA512Managed();
+				byte[] b = Encoding.Unicode.GetBytes(password);
+				byte[] pwd = sha512.ComputeHash(b);
 				
-				StreamReader sr = new StreamReader(password);
-				byte[] pwd = sha512.ComputeHash(sr.BaseStream);
 				bool r = hp.SequenceEqual(pwd);
 				if(!r) {
 					con.Close();

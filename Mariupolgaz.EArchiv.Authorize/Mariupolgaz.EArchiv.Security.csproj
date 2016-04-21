@@ -82,10 +82,12 @@
     <Compile Include="SecurityModule.cs" />
     <Compile Include="Service\RegisteredService.cs" />
     <Compile Include="Service\SecurityService.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\RegisteredViewModel.cs" />
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PropertyBehavior.cs" />
     <Compile Include="Views\RegisterView.xaml.cs">
       <DependentUpon>RegisterView.xaml</DependentUpon>
     </Compile>
@@ -112,7 +114,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetPath) $(SolutionDir)EArchiv\bin\$(ConfigurationName)\</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetPath) $(SolutionDir)EArchiv\bin\$(ConfigurationName)\
+copy $(TargetPath) $(SolutionDir)AdmTools\bin\$(ConfigurationName)\</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

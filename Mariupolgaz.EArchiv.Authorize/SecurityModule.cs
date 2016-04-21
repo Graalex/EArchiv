@@ -6,6 +6,7 @@ using Mariupolgaz.EArchiv.Common.Servises;
 using Mariupolgaz.EArchiv.Security.Service;
 using Mariupolgaz.EArchiv.Common;
 using Mariupolgaz.EArchiv.Security.Views;
+using Mariupolgaz.EArchiv.Common.Models;
 
 namespace Mariupolgaz.EArchiv.Security
 {
@@ -42,6 +43,12 @@ namespace Mariupolgaz.EArchiv.Security
 			_container.RegisterType<IRegisteredService, RegisteredService>(
 				new ContainerControlledLifetimeManager()
 			);
+			/*
+			_container.RegisterInstance<IPasswordSupplier>(
+				LoginView, 
+				new ContainerControlledLifetimeManager()
+			);
+			*/
 
 			_manager.RegisterViewWithRegion(
 				RegionNames.LoginRegion,
