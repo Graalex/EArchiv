@@ -20,7 +20,11 @@
     <TextBlock
       Grid.Row="0"
       VerticalAlignment="Center"
-      Text="{Binding LS}"
+			Margin="5 0 5 0"
+			HorizontalAlignment="Center"
+			FontSize="20"
+			FontWeight="Bold"
+      Text="{Binding Path=LS, StringFormat=Лицевой счет {0}}"
      />
     <GroupBox
       Grid.Row="1"
@@ -45,17 +49,17 @@
 						  Header="Тип документа"
 					/>
             <GridViewColumn 
-						  DisplayMemberBinding="{Binding CreateAt}"
-						  Width="100"
+						  DisplayMemberBinding="{Binding CreateAt, StringFormat={}{0:dd.MM.yyyy hh:mm:ss}}"
+						  Width="140"
 						  Header="Время создания"
 					/>
             <GridViewColumn 
-						  DisplayMemberBinding="{Binding ModifyAt}"
-						  Width="110"
+						  DisplayMemberBinding="{Binding ModifyAt, StringFormat={}{0:dd.MM.yyyy hh:mm:ss}}"
+						  Width="140"
 						  Header="Время изменения"
 					/>
             <GridViewColumn 
-						  DisplayMemberBinding="{Binding Size}"
+						  DisplayMemberBinding="{Binding Size, StringFormat={}{0:# ##0}}"
 						  Width="70"
 						  Header="Размер"
 					/>

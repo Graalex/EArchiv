@@ -27,7 +27,6 @@ namespace Mariupolgaz.EArchiv
 			Application.Current.MainWindow.Width = SystemParameters.WorkArea.Width;
 			Application.Current.MainWindow.Height = SystemParameters.WorkArea.Height;
 
-			//Application.Current.MainWindow.Left = 
 			Application.Current.MainWindow.Show();
 		}
 

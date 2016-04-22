@@ -22,5 +22,11 @@ namespace Mariupolgaz.EArchiv
 		{
 			InitializeComponent();
 		}
+
+		public Shell(ShellViewModel viewModel)
+			:this()
+		{
+			DataContext = viewModel;
+		}
 	}
 }

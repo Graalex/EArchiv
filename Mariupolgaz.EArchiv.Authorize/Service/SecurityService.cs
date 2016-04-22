@@ -24,9 +24,9 @@ namespace Mariupolgaz.EArchiv.Security.Service
 		public bool Login(string loginName, string password)
 		{
 			// Получить Identity проверить
-			IIdentity idnt = getIdentity(loginName, password);
-			// Создать пользователя и определить его права
-			throw new NotImplementedException();
+			IIdentity identity = getIdentity(loginName, password);
+
+			return true;
 		}
 
 		public void Logout()
@@ -53,11 +53,9 @@ namespace Mariupolgaz.EArchiv.Security.Service
 				reader.Read();
 				byte[] hp = (byte[])reader["HashPwd"];
 				SHA512Managed sha512 = new SHA512Managed();
-				byte[] b = Encoding.Unicode.GetBytes(password);
-				byte[] pwd = sha512.ComputeHash(b);
+				byte[] pwd = sha512.ComputeHash(Encoding.Unicode.GetBytes(password));
 				
-				bool r = hp.SequenceEqual(pwd);
-				if(!r) {
+				if(!hp.SequenceEqual(pwd)) {
 					con.Close();
 					throw new Exception("Имя пользователя или пароль не найдены!");
 				}

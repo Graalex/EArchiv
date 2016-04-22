@@ -68,12 +68,20 @@ namespace Mariupolgaz.EArchiv.Security.ViewModel
 			try {
 				var srv = ServiceLocator.Current.GetInstance<ISecurityService>();
 				if (srv.Login(this.LoginName, this.Password)) {
-						
 					_eventAggr
-						.GetEvent<LoginEvent>()
-						.Publish(new LoginMessage(
+						.GetEvent<AuthenticateEvent>()
+						.Publish(new AuthenticateMessage(
 							this.LoginName,
-							DateTime.Now
+							DateTime.Now,
+							true
+					));
+				} else {
+					_eventAggr
+						.GetEvent<AuthenticateEvent>()
+						.Publish(new AuthenticateMessage(
+							this.LoginName,
+							DateTime.Now,
+							false
 					));
 				}
 			}

@@ -5,7 +5,7 @@ namespace Mariupolgaz.EArchiv.Common.Events
 	/// <summary>
 	/// Событие входа пользователя
 	/// </summary>
-	public class LoginEvent: CompositePresentationEvent<LoginMessage>
+	public class AuthenticateEvent: CompositePresentationEvent<AuthenticateMessage>
 	{
 	}
 }

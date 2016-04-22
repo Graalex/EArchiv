@@ -5,7 +5,7 @@ namespace Mariupolgaz.EArchiv.Common.Events
 	/// <summary>
 	/// Собітие регистрации нового пользователя
 	/// </summary>
-	public class RegistryIdentityEvent: CompositePresentationEvent<IdentityMessage>
+	public class RegisterIdentityEvent: CompositePresentationEvent<IdentityMessage>
 	{
 	}
 }

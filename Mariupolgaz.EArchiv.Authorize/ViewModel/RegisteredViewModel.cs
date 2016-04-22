@@ -155,7 +155,7 @@ namespace Mariupolgaz.EArchiv.Security.ViewModel
 				var srv = ServiceLocator.Current.GetInstance<IRegisteredService>();
 				if (srv.RegisteredUser(this.LoginName, this.Password, this.IsActivity.GetValueOrDefault(false))) {
 					this._eventAggr
-						.GetEvent<RegistryIdentityEvent>()
+						.GetEvent<RegisterIdentityEvent>()
 						.Publish(new IdentityMessage(
 							this.LoginName,
 							this.IsActivity.GetValueOrDefault(false),

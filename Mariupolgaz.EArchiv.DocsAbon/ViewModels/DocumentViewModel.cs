@@ -84,7 +84,7 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			get
 			{
 				if (_ls != -1) {
-					return @"http://earchiv/documents/abonent/ls/" + this.LS.ToString();
+					return @"http://earchiv/documents/ls/" + this.LS.ToString();
 				}
 				else {
 					return null;
