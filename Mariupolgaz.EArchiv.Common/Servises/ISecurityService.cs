@@ -34,6 +34,10 @@ namespace Mariupolgaz.EArchiv.Common.Servises
 		bool Deny();
 		bool Assign();
 		*/
-
+		/// <summary>
+		/// Получить список пользователей
+		/// </summary>
+		/// <returns></returns>
+		IList<string> GetIdentities();
 	}
 }

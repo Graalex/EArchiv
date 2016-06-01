@@ -34,8 +34,8 @@ namespace Mariupolgaz.EArchiv.Finder
 				SqlCommand cmd = new SqlCommand();
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Connection = con;
-				cmd.CommandText = "NASTInfoByLSNomer";
-				cmd.Parameters.AddWithValue("@LSNOMER", ls);
+				cmd.CommandText = "GZL_GetAbonentByLS";
+				cmd.Parameters.AddWithValue("@Ls", ls);
 
 				con.Open();
 				SqlDataReader reader = cmd.ExecuteReader();
@@ -44,11 +44,25 @@ namespace Mariupolgaz.EArchiv.Finder
 
 				if (reader.HasRows) {
 					reader.Read();
-					addr = new Address(0, Convert.ToString(reader["NP_TYPE"]), Convert.ToString(reader["NP_NAME"]), Convert.ToString(reader["UTYP"]),
-						Convert.ToString(reader["UNAM"]), Convert.ToString(reader["DOM"]), Convert.ToString(reader["LIT"]), Convert.ToInt32(reader["NKV"]));
-					abn = new Abonent(Convert.ToInt32(reader["NOMER"]), Convert.ToString(reader["NAME"]), addr);
-				}
+					string city = Convert.ToString(reader["CITY"]).Trim();
+					/*
+					int idx = city.LastIndexOf(' ');
+					string np = city.Substring(0, idx);
+					string npt = city.Substring(idx+1).ToLower();
+					*/
 
+					string ul = Convert.ToString(reader["UL"]).Trim();
+					/*
+					idx = ul.LastIndexOf(' ');
+					string uln = ul.Substring(0, idx);
+					string ult = ul.Substring(idx+1).ToLower();
+					*/
+
+					addr = new Address(0, null /*npt*/, city /*np*/, null /*ult*/, ul /*uln*/,	Convert.ToString(reader["NOM"]).Trim(), 
+						Convert.ToString(reader["LIT"]), Convert.ToInt32(reader["NKV"]));
+					abn = new Abonent(Convert.ToInt32(reader["NOMER"]), Convert.ToString(reader["NAME"]).Trim(), addr);
+				}
+				
 				return abn;
 			}
 		}
@@ -64,7 +78,7 @@ namespace Mariupolgaz.EArchiv.Finder
 				SqlCommand cmd = new SqlCommand();
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Connection = con;
-				cmd.CommandText = "NAST_InfoByFamily";
+				cmd.CommandText = "GZL_GetAbonentsByFamily";
 				cmd.Parameters.AddWithValue("@Family", family.Trim());
 
 				con.Open();
@@ -74,32 +88,80 @@ namespace Mariupolgaz.EArchiv.Finder
 				if (reader.HasRows) {
 					abonents = new List<Abonent>();
 					while (reader.Read()) {
-						Address addr = new Address(0, Convert.ToString(reader["NP_TYPE"]), Convert.ToString(reader["NP_NAME"]), Convert.ToString(reader["UTYP"]),
-							Convert.ToString(reader["UNAM"]), Convert.ToString(reader["DOM"]), Convert.ToString(reader["LIT"]), Convert.ToInt32(reader["NKV"]));
-						Abonent abn = new Abonent(Convert.ToInt32(reader["NOMER"]), Convert.ToString(reader["NAME"]), addr);
+						string city = Convert.ToString(reader["CITY"]).Trim();
+						/*
+						int idx = city.LastIndexOf(' ');
+						string np = city.Substring(0, idx);
+						string npt = city.Substring(idx + 1).ToLower();
+						*/
+
+						string ul = Convert.ToString(reader["UL"]).Trim();
+						/*
+						idx = ul.LastIndexOf(' ');
+						string uln = ul.Substring(0, idx);
+						string ult = ul.Substring(idx + 1).ToLower();
+						*/
+
+						Address addr = new Address(0, null /*npt*/, city /*np*/, null /*ult*/, ul /*uln*/, Convert.ToString(reader["NOM"]).Trim(),
+							Convert.ToString(reader["LIT"]), Convert.ToInt32(reader["NKV"]));
+						Abonent abn = new Abonent(Convert.ToInt32(reader["NOMER"]), Convert.ToString(reader["NAME"]).Trim(), addr);
 						abonents.Add(abn);
 					}
 				}
-
+				
 				return abonents;
 			}
 		}
 
-		/// <summary>
-		/// Ищет абонентов по адресу проживания
-		/// </summary>
-		/// <param name="settlementName">Название нас. пункта или часть названия</param>
-		/// <param name="streetName">Название улицы или часть названия</param>
-		/// <returns>Коллекция экземпляров <see cref="Abonent"/> или null</returns>
-		public IList<Abonent> FindAbonents(string settlementName, string streetName = null)
+		/// <param name="family">Часть фамилии абонента</param>
+		/// <param name="settlement">Название нас. п.</param>
+		/// <param name="street">Название улицы</param>
+		/// <param name="house">Номер дома</param>
+		/// <param name="appartment">Номер квартиры</param>
+		/// <returns>Список экземпляров Abonent</returns>
+		public IList<Abonent> FindAbonents(
+			string family, 
+			string settlement = null, 
+			string street = null, 
+			string house = null, 
+			int? appartment = null
+		)
 		{
 			using (SqlConnection con = new SqlConnection(_cons)) {
 				SqlCommand cmd = new SqlCommand();
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Connection = con;
-				cmd.CommandText = "NAST_InfoByAddress";
-				cmd.Parameters.AddWithValue("@Settlement", settlementName.Trim());
-				cmd.Parameters.AddWithValue("@Street", streetName.Trim());
+				cmd.CommandText = "GZL_GetAbonentsByAddress";
+
+				SqlParameter param = new SqlParameter();
+				param.IsNullable = true;
+				param.ParameterName = "@Family";
+				param.Value = family ?? (object)DBNull.Value;
+				cmd.Parameters.Add(param);
+
+				param = new SqlParameter();
+				param.IsNullable = true;
+				param.ParameterName = "@Settlement";
+				param.Value = settlement ?? (object)DBNull.Value;
+				cmd.Parameters.Add(param);
+
+				param = new SqlParameter();
+				param.IsNullable = true;
+				param.ParameterName = "@Street";
+				param.Value = street ?? (object)DBNull.Value;
+				cmd.Parameters.Add(param);
+
+				param = new SqlParameter();
+				param.IsNullable = true;
+				param.ParameterName = "@House";
+				param.Value = house ?? (object)DBNull.Value;
+				cmd.Parameters.Add(param);
+
+				param = new SqlParameter();
+				param.IsNullable = true;
+				param.ParameterName = "@Appartment";
+				param.Value = appartment ?? (object)DBNull.Value;
+				cmd.Parameters.Add(param);
 
 				con.Open();
 				SqlDataReader reader = cmd.ExecuteReader();
@@ -108,15 +170,88 @@ namespace Mariupolgaz.EArchiv.Finder
 				if (reader.HasRows) {
 					abonents = new List<Abonent>();
 					while (reader.Read()) {
-						Address addr = new Address(0, Convert.ToString(reader["NP_TYPE"]), Convert.ToString(reader["NP_NAME"]), Convert.ToString(reader["UTYP"]),
-							Convert.ToString(reader["UNAM"]), Convert.ToString(reader["DOM"]), Convert.ToString(reader["LIT"]), Convert.ToInt32(reader["NKV"]));
-						Abonent abn = new Abonent(Convert.ToInt32(reader["NOMER"]), Convert.ToString(reader["NAME"]), addr);
+						string city = Convert.ToString(reader["CITY"]).Trim();
+						/*
+						int idx = city.LastIndexOf(' ');
+						string np = city.Substring(0, idx);
+						string npt = city.Substring(idx + 1).ToLower();
+						*/
+
+						string ul = Convert.ToString(reader["UL"]).Trim();
+						/*
+						idx = ul.LastIndexOf(' ');
+						string uln = ul.Substring(0, idx);
+						string ult = ul.Substring(idx + 1).ToLower();
+						*/
+
+						Address addr = new Address(0, null /*npt*/, city /*np*/, null /*ult*/, ul /*uln*/, Convert.ToString(reader["NOM"]).Trim(),
+							Convert.ToString(reader["LIT"]), Convert.ToInt32(reader["NKV"]));
+						Abonent abn = new Abonent(Convert.ToInt32(reader["NOMER"]), Convert.ToString(reader["NAME"]).Trim(), addr);
 						abonents.Add(abn);
 					}
 				}
-
+				
 				return abonents;
 			}
+		}
+
+		/// <summary>
+		/// Получает список населенных пунктов
+		/// </summary>
+		/// <returns>Список населенных пунктов или null</returns>
+		public IList<Settlement> GetSettlementList()
+		{
+			IList<Settlement> rslt = null;
+
+			using(SqlConnection con = new SqlConnection(_cons)) {
+				string cmdText = "SELECT * FROM GZL_SPRNP";
+				SqlCommand cmd = new SqlCommand(cmdText, con);
+				con.Open();
+				SqlDataReader reader = cmd.ExecuteReader();
+				if(reader.HasRows) {
+					rslt = new List<Settlement>();
+					while(reader.Read()) {
+						rslt.Add(
+							new Settlement(Convert.ToInt32(reader["NOMER"]), Convert.ToString(reader["NAME"]).Trim())
+						);
+					}
+				}
+      }
+
+			return rslt;
+		}
+
+		/// <summary>
+		/// Возвращает список объектов типа <see cref="Street"/> для насаленного пункта.
+		/// </summary>
+		/// <param name="settlementID">Идентификатор нас. пункта</param>
+		/// <returns>Список объектов <see cref="Street"/> или null</returns>
+		public IList<Street> GetStreetsList(int settlementID)
+		{
+			IList<Street> rslt = null;
+
+			using(SqlConnection con = new SqlConnection(_cons)) {
+				string cmdText = "SELECT NOMER, UNAM FROM GZL_SPRUL WHERE NP = @NP";
+				SqlCommand cmd = new SqlCommand(cmdText, con);
+				cmd.Parameters.AddWithValue("@NP", settlementID);
+
+				con.Open();
+				SqlDataReader reader = cmd.ExecuteReader();
+
+				if(reader.HasRows) {
+					rslt = new List<Street>();
+					while(reader.Read()) {
+						rslt.Add(
+							new Street(
+								Convert.ToInt32(reader["NOMER"]),
+								Convert.ToString(reader["UNAM"]).Trim()
+							)
+						);
+					}
+				}
+			}
+
+			return rslt;
 		}
 	}
 }

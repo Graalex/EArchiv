@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -19,6 +20,7 @@ namespace Mariupolgaz.EArchiv.Security.ViewModel
 	public class LoginViewModel: BaseViewModel
 	{
 		private readonly IEventAggregator _eventAggr;
+		private readonly ISecurityService _security;
 
 		#region Конструктор
 		/// <summary>
@@ -30,10 +32,20 @@ namespace Mariupolgaz.EArchiv.Security.ViewModel
 			if (eventAggregator == null) throw new ArgumentNullException("eventAggregator");
 
 			_eventAggr = eventAggregator;
+			_security = ServiceLocator.Current.GetInstance<ISecurityService>();
+
+			this.Users = new ObservableCollection<string>(_security.GetIdentities());
 		}
 		#endregion
 
 		#region Свойства
+
+		#region Users
+		/// <summary>
+		/// Список пользователей для входа
+		/// </summary>
+		public ObservableCollection<string> Users { get; private set; }
+		#endregion
 
 		#region LoginName
 		/// <summary>
@@ -66,8 +78,8 @@ namespace Mariupolgaz.EArchiv.Security.ViewModel
 		{
 			Mouse.OverrideCursor = Cursors.Wait;
 			try {
-				var srv = ServiceLocator.Current.GetInstance<ISecurityService>();
-				if (srv.Login(this.LoginName, this.Password)) {
+				
+				if (_security.Login(this.LoginName, this.Password)) {
 					_eventAggr
 						.GetEvent<AuthenticateEvent>()
 						.Publish(new AuthenticateMessage(

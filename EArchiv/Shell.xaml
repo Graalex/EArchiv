@@ -26,7 +26,7 @@
 			DockPanel.Dock="Left"
 			Orientation="Vertical"
 			Margin="5"
-			Width="300"
+			Width="350"
 			Background="{x:Static SystemColors.ControlBrush}"
 		>
       <GroupBox

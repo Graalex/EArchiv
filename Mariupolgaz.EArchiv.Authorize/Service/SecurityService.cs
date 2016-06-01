@@ -67,5 +67,25 @@ namespace Mariupolgaz.EArchiv.Security.Service
 			}
 			
 		}
+
+		/// <summary>
+		/// Получить список пользователей
+		/// </summary>
+		/// <returns></returns>
+		public IList<string> GetIdentities()
+		{
+			IList<string> rslt = new List<string>();
+			using(SqlConnection con = new SqlConnection(_conString)) {
+				SqlCommand cmd = new SqlCommand("SELECT * FROM Identities", con);
+				con.Open();
+				SqlDataReader reader = cmd.ExecuteReader();
+				if(reader.HasRows) {
+					while(reader.Read()) {
+						rslt.Add(Convert.ToString(reader["LoginName"]));
+					}
+				}
+				return rslt;
+			}
+		}
 	}
 }

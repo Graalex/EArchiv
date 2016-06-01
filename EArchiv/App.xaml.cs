@@ -22,7 +22,12 @@ namespace Mariupolgaz.EArchiv
 			}
 
 			catch (Exception exp) {
-				MessageBox.Show(exp.Message, "Ошибка приложения");
+				MessageBox.Show(
+					exp.Message, 
+					"Ошибка приложения",
+					MessageBoxButton.OK,
+					MessageBoxImage.Error
+				);
 			}
 		}
 

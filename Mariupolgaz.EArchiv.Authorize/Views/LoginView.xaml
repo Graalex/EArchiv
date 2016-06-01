@@ -33,11 +33,12 @@
 			Content="Пароль:"
 		/>
 
-		<TextBox
+		<ComboBox
 			Grid.Row="0"
 			Grid.Column="1"
 			VerticalAlignment="Center"
-			Text="{Binding  LoginName}"
+			ItemsSource="{Binding Users}"
+			SelectedItem="{Binding  LoginName}"
 		/>
     <PasswordBox
 			Grid.Row="1"
