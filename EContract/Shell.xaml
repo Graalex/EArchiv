@@ -3,17 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:prism="http://www.codeplex.com/prism"
         xmlns:local="clr-namespace:EContract"
+				xmlns:common="clr-namespace:Mariupolgaz.EArchiv.Common;assembly=mariupolgaz.earchiv.common"
         mc:Ignorable="d"
         Title="ПАО Мариупольгаз. Электронный архив договоров" Height="350" Width="525">
   <DockPanel>
     <ToolBar DockPanel.Dock="Top"
 						 Height="30"
-		>
-		</ToolBar>
+		/>
     <StatusBar DockPanel.Dock="Bottom"
-							 Height="30">
-		</StatusBar>
-    <Grid></Grid>
-	</DockPanel>
+		 					 Height="30"/>
+    <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.RightRegion}" 
+										DockPanel.Dock="Right" />
+    <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.LeftRegion}"
+										DockPanel.Dock="Left" />
+    <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ContentRegion}"
+										Width="Auto" />
+  </DockPanel>
 </Window>

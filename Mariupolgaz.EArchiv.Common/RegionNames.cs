@@ -35,5 +35,20 @@
 		/// </summary>
 		public static string RegisterRegion = "Register";
 
+		/// <summary>
+		/// Регион основного контента
+		/// </summary>
+		public static string ContentRegion = "Content";
+
+		/// <summary>
+		/// Регион левой панели
+		/// </summary>
+		public static string LeftRegion = "LeftSide";
+
+		/// <summary>
+		/// Регион правой панели
+		/// </summary>
+		public static string RightRegion = "RightSide";
+
 	}
 }

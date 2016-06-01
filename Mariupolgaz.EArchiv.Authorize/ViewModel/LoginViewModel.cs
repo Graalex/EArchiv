@@ -78,8 +78,8 @@ namespace Mariupolgaz.EArchiv.Security.ViewModel
 		{
 			Mouse.OverrideCursor = Cursors.Wait;
 			try {
-				
-				if (_security.Login(this.LoginName, this.Password)) {
+				var sec = ServiceLocator.Current.GetInstance<ISecurityService>();
+				if (sec.Login(this.LoginName, this.Password)) {
 					_eventAggr
 						.GetEvent<AuthenticateEvent>()
 						.Publish(new AuthenticateMessage(
