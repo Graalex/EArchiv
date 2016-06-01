@@ -6,7 +6,14 @@
         xmlns:local="clr-namespace:EContract"
         mc:Ignorable="d"
         Title="ПАО Мариупольгаз. Электронный архив договоров" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+  <DockPanel>
+    <ToolBar DockPanel.Dock="Top"
+						 Height="30"
+		>
+		</ToolBar>
+    <StatusBar DockPanel.Dock="Bottom"
+							 Height="30">
+		</StatusBar>
+    <Grid></Grid>
+	</DockPanel>
 </Window>
