@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Windows;
+using Mariupolgaz.EArchiv.Common;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.ServiceLocation;
 
 namespace EContract
 {
@@ -19,6 +22,11 @@ namespace EContract
 			try {
 				Bootstraper bootstraper = new Bootstraper();
 				bootstraper.Run();
+
+				// устанавливаем для региона LeftSide вид формы входа в систему
+				IRegionManager manager = ServiceLocator.Current.GetInstance<IRegionManager>();
+				manager.RequestNavigate(RegionNames.LeftRegion, new Uri(ViewNames.Login, UriKind.Relative));
+				
 			}
 
 			catch (Exception exp) {

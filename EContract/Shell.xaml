@@ -13,11 +13,19 @@
 						 Height="30"
 		/>
     <StatusBar DockPanel.Dock="Bottom"
-		 					 Height="30"/>
+		 					 Height="30"
+		>
+			<TextBlock VerticalAlignment="Center"
+								 Margin="5 0 0 5"
+								 Text="{Binding User}"
+			/>
+		</StatusBar>
     <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.RightRegion}" 
 										DockPanel.Dock="Right" />
     <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.LeftRegion}"
-										DockPanel.Dock="Left" />
+										DockPanel.Dock="Left" 
+										VerticalAlignment="Top"
+		/>
     <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ContentRegion}"
 										Width="Auto" />
   </DockPanel>

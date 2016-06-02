@@ -43,13 +43,12 @@ namespace Mariupolgaz.EArchiv.Security
 			_container.RegisterType<IRegisteredService, RegisteredService>(
 				new ContainerControlledLifetimeManager()
 			);
-			/*
-			_container.RegisterInstance<IPasswordSupplier>(
-				LoginView, 
+
+			_container.RegisterType<object, LoginNView>(
+				ViewNames.Login, 
 				new ContainerControlledLifetimeManager()
 			);
-			*/
-
+			
 			_manager.RegisterViewWithRegion(
 				RegionNames.LoginRegion,
 				() => _container.Resolve<LoginView>()

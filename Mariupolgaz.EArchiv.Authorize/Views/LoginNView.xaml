@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="Mariupolgaz.EArchiv.Security.Views.LoginNView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+						 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Mariupolgaz.EArchiv.Security.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="160" d:DesignWidth="300">
+  <GroupBox Header="Вход в систему"
+						Margin="5"
+						Padding="5"
+						Width="300"
+						Height="160"
+	>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="40" />
+        <RowDefinition Height="40" />
+        <RowDefinition Height="40" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="80"/>
+        <ColumnDefinition/>
+      </Grid.ColumnDefinitions>
+      <Label
+				Grid.Row="0"
+				Grid.Column="0"
+				VerticalAlignment="Center"
+				HorizontalAlignment="Left"
+				Content="Имя входа:"
+			/>
+      <Label
+				Grid.Row="1"
+				Grid.Column="0"
+				VerticalAlignment="Center"
+				HorizontalAlignment="Left"
+				Content="Пароль:"
+			/>
+      <ComboBox
+				Grid.Row="0"
+				Grid.Column="1"
+				VerticalAlignment="Center"
+				ItemsSource="{Binding Users}"
+				SelectedItem="{Binding  LoginName}"
+			/>
+      <PasswordBox
+				Grid.Row="1"
+				Grid.Column="1"
+				VerticalAlignment="Center"
+			>
+        <i:Interaction.Behaviors>
+          <local:PropertyBehavior
+						UpdateEvent="PasswordChanged"
+						Property="Password"
+						Binding="{Binding Password}"
+				/>
+        </i:Interaction.Behaviors>
+      </PasswordBox>
+      <StackPanel
+				Grid.Row="2"
+				Grid.ColumnSpan="2"
+				Orientation="Horizontal"
+				VerticalAlignment="Center"
+				HorizontalAlignment="Right"
+			>
+        <Button
+					Width="70"
+					Margin="0 0 5 0"
+					Content="Вход"
+					Command="{Binding Login}"
+				/>
+        <Button
+					Width="70"
+					IsCancel="True"
+					Content="Отмена"
+					Command="{Binding CancelLogin}"
+				/>
+			</StackPanel>
+    </Grid>
+  </GroupBox>
+</UserControl>
