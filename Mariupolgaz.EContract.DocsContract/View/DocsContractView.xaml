@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="Mariupolgaz.EContract.DocsContract.View.DocsContractView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Mariupolgaz.EContract.DocsContract.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900">
+  <Grid>
+    <Grid.RowDefinitions>
+			<RowDefinition Height="100" />
+      <RowDefinition Height="200"/>
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid Grid.Row="0">
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+				<ColumnDefinition /> 
+				<ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <StackPanel Orientation="Horizontal"
+									Grid.Row="0"
+									Grid.ColumnSpan="2"
+			>
+				<TextBlock Text="{Binding CurrentContract.Nomer}" />
+				<TextBlock Text="{Binding CurrentContract.Name}" />
+			</StackPanel>
+			<TextBlock Grid.Row="1" Grid.Column="0"
+								 Text="Дата заключения:"
+			/>
+      <TextBlock Grid.Row="1" Grid.Column="1"
+								 Text="{Binding CurrentContract.Date}"
+			/>
+      <TextBlock Grid.Row="2" Grid.Column="0"
+								 Text="Дата окончания:"
+			/>
+      <TextBlock Grid.Row="2" Grid.Column="1"
+								 Text="{Binding CurrentContract.Expiry}"
+			/>
+    </Grid>
+    <GroupBox Header="Документы"
+							Grid.Row="1"
+							Margin="5"
+							Padding="5"
+		>
+      <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal"
+										HorizontalAlignment="Right"
+										VerticalAlignment="Center"
+				>
+					<Button Content="Добавить" 
+									Width="75"
+									Command="{Binding}"
+									Margin="5 0 0 0"
+					/>
+          <Button Content="Изменить" 
+									Width="75"
+									Command="{Binding}"
+									Margin="5 0 0 0"
+					/>
+          <Button Content="Удалить" 
+									Width="75"
+									Command="{Binding}"
+									Margin="5 0 0 0"
+					/>
+          <Button Content="Сохранить" 
+									Width="75"
+									Command="{Binding}"
+									Margin="5  0"
+					/>
+        </StackPanel>
+        <ListView>
+          <ListView.View>
+            <GridView>
+							<GridViewColumn Header="Тип"
+															Width="200"
+															DisplayMemberBinding="{Binding}"
+							/>
+              <GridViewColumn Header="Название"
+															Width="300"
+															DisplayMemberBinding="{Binding}"
+							/>
+              <GridViewColumn Header="Создан"
+															Width="100"
+															DisplayMemberBinding="{Binding}"
+							/>
+              <GridViewColumn Header="Размер"
+															Width="100"
+															DisplayMemberBinding="{Binding}"
+							/>
+            </GridView>
+					</ListView.View>
+				</ListView>
+      </StackPanel>
+      
+		</GroupBox>
+	</Grid>
+</UserControl>

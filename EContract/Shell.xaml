@@ -7,7 +7,8 @@
         xmlns:local="clr-namespace:EContract"
 				xmlns:common="clr-namespace:Mariupolgaz.EArchiv.Common;assembly=mariupolgaz.earchiv.common"
         mc:Ignorable="d"
-        Title="ПАО Мариупольгаз. Электронный архив договоров" Height="350" Width="525">
+        Title="ПАО Мариупольгаз. Электронный архив договоров" Height="350" Width="525"
+				FontSize="15">
   <DockPanel>
     <ToolBar DockPanel.Dock="Top"
 						 Height="30"

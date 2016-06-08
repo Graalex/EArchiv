@@ -10,28 +10,27 @@
     <GroupBox Header="Контрагенты"
 							Margin="5"
 							Padding="5"
-							Width="400"
+							Width="450"
 		>
       <Grid>
         <Grid.ColumnDefinitions>
-					<ColumnDefinition Width="70" />
+          <ColumnDefinition Width="80" />
           <ColumnDefinition />
           <ColumnDefinition Width="75" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-					<RowDefinition />
+          <RowDefinition />
           <RowDefinition />
         </Grid.RowDefinitions>
-
-				<Label Content="Контрагент" 
+        <Label Content="Контрагент" 
 							 Grid.Row="0"
 							 Grid.Column="0"
 				/>
-				<TextBox Text="{Binding ContragentName}"
+        <TextBox Text="{Binding ContragentName}"
 								 Grid.Row="0"
 								 Grid.Column="1"
 				/>
-				<Button Content="Найти"
+        <Button Content="Найти"
 								Grid.Column="2"
 								Grid.Row="0"
 								Width="70"
@@ -43,10 +42,11 @@
 									Margin="0 10 0 0"
 									ItemsSource="{Binding Contragents}"
 									SelectedItem="{Binding CurrentContragent}"
+									Visibility="{Binding ContragentVisibility}"
 				>
           <ListView.View>
             <GridView>
-							<GridViewColumn Header="Код"
+              <GridViewColumn Header="Код"
 															Width="50"
 															DisplayMemberBinding="{Binding Code}"
 							 />
@@ -55,49 +55,54 @@
 															DisplayMemberBinding="{Binding Name}"
 							 />
             </GridView>
-					</ListView.View>
-				</ListView>
-			</Grid>
-		</GroupBox>
+          </ListView.View>
+        </ListView>
+      </Grid>
+    </GroupBox>
     <GroupBox Header="Договора"
 							Margin="5"
 							Padding="5"
-							Width="400"
+							Width="450"
+							Visibility="{Binding ContractVisibility}"
 		>
       <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="25*"/>
+          <ColumnDefinition Width="101*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-					<RowDefinition />
+          <RowDefinition />
           <RowDefinition />
         </Grid.RowDefinitions>
         <ListView MaxHeight="200"
 									ItemsSource="{Binding CurrentContragent.Contracts}"
-									SelectedItem="{Binding CurrentContract}"
+									SelectedItem="{Binding CurrentContract}" Grid.ColumnSpan="2"
 				>
           <ListView.View>
             <GridView>
-							<GridViewColumn Header="Код"
+              <GridViewColumn Header="Код"
 															Width="50"
 															DisplayMemberBinding="{Binding Code}"
 							 />
               <GridViewColumn Header="Номер"
 															Width="50"
-															DisplayMemberBinding="{Binding Number}"
+															DisplayMemberBinding="{Binding Nomer}"
 							 />
               <GridViewColumn Header="Наименование"
 															Width="270"
 															DisplayMemberBinding="{Binding Name}"
-							 />	
+							 />
             </GridView>
-					</ListView.View>
-				</ListView>
+          </ListView.View>
+        </ListView>
         <Button Content="Вперед"
 							  Grid.Row="1"
 								Width="70"
 								HorizontalAlignment="Right"
 								Margin="0 10 0 0"
-								Command="{Binding GetDocuments}"
+								Command="{Binding GetDocuments}" Grid.Column="1"
 				 />
       </Grid>
-		</GroupBox>
+    </GroupBox>
   </StackPanel>
 </UserControl>

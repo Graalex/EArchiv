@@ -1,5 +1,7 @@
 ﻿using System;
 using Mariupolgaz.EArchiv.Common;
+using Mariupolgaz.EArchiv.Common.Servises;
+using Mariupolgaz.EContract.Finder.Services;
 using Mariupolgaz.EContract.Finder.Views;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
@@ -31,6 +33,10 @@ namespace Mariupolgaz.EContract.Finder
 		{
 			_container.RegisterType<object, ContractFinderView>(
 				ViewNames.ContractFinder,
+				new ContainerControlledLifetimeManager()
+			);
+
+			_container.RegisterType<IContractFinderService, ContractFinderService>(
 				new ContainerControlledLifetimeManager()
 			);
 		}
