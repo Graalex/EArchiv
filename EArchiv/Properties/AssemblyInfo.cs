@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("EArchiv")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("E-Archiv")]
+[assembly: AssemblyDescription("Электронный Архив")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("ПАО Мариупольгаз")]
 [assembly: AssemblyProduct("EArchiv")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Григорчук Александр ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
