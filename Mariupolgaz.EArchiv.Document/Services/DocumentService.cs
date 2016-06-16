@@ -9,6 +9,7 @@ using comm = Mariupolgaz.EArchiv.Common.Models;
 using Mariupolgaz.EArchiv.Common.Servises;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Windows.Media;
 
 namespace Mariupolgaz.EArchiv.Document.Services
 {
@@ -87,7 +88,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 						MemoryStream stream = new MemoryStream((byte[])reader["Source"]);
 						src.StreamSource = stream;
 						src.EndInit();
-
+						
 						int id = Convert.ToInt32(reader["Kind"]);
 						var kind = _kinds.First(item => item.ID == id);
 
@@ -161,7 +162,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 				try {
 					bool rslt = false;
 
-					SqlCommand cmd = new SqlCommand("DocAttrMarkDel", con);
+					SqlCommand cmd = new SqlCommand("DocDelMark", con);
 					cmd.CommandType = CommandType.StoredProcedure;
 					cmd.Parameters.AddWithValue("@Key", doc.ID);
 
@@ -215,10 +216,12 @@ namespace Mariupolgaz.EArchiv.Document.Services
 							cmd.Parameters.AddWithValue("@Thumbnails", buf);
 					}
 
-					len = doc.Source.StreamSource.Length;
+					FileStream s = new FileStream((doc.Source.StreamSource as FileStream).Name, FileMode.Open);
+					
+					len = s.Length;
 					buf = new byte[len];
-					doc.Source.StreamSource.Position = 0;
-          doc.Source.StreamSource.Read(buf, 0, (int)len);
+					s.Position = 0;
+          s.Read(buf, 0, (int)len);
 					cmd.Parameters.AddWithValue("@Raw", buf);
 
 					int key = -1;
@@ -390,10 +393,11 @@ namespace Mariupolgaz.EArchiv.Document.Services
 				buf[1] = 2;
 				cmd.Parameters.AddWithValue("@Thumbnails", buf);
 
-				len = doc.Source.StreamSource.Length;
+				FileStream s = new FileStream((doc.Source.StreamSource as FileStream).Name, FileMode.Open);
+				len = s.Length;
 				buf = new byte[len];
-				doc.Source.StreamSource.Position = 0;
-				doc.Source.StreamSource.Read(buf, 0, (int)len);
+				s.Position = 0;
+				s.Read(buf, 0, (int)len);
 				cmd.Parameters.AddWithValue("@Raw", buf);
 				
 				con.Open();
