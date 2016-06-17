@@ -13,8 +13,6 @@
       <RowDefinition Height="180" />
       <RowDefinition Height="40" />
       <RowDefinition Height="*" />
-      <RowDefinition Height="40" />
-      <RowDefinition Height="40" />
     </Grid.RowDefinitions>
     
     <TextBlock
@@ -109,34 +107,16 @@
 				Padding="5"
 				BorderBrush="Black"
       >
-      <Image
+      <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Image
 					Margin="5"
           Stretch="Uniform"
+					Width="{Binding ImageWidth}"
 					Source="{Binding SelectedDocument.Source}"
-			/>
-    </Border>
+				/>
+      </ScrollViewer>
       
-      <StackPanel
-			  Grid.Row="5"
-			  Orientation="Horizontal"
-		  >
-        <Label
-			  	Content="Путь для Газолины:"
-				  VerticalAlignment="Center"
-				  Margin="5 0 5 0"
-			  />
-        <TextBlock
-				  VerticalAlignment="Center"
-				  Width="400"
-				  Margin="5 0 5 0"
-				  Text="{Binding Url}"
-			  />
-        <Button
-				  VerticalAlignment="Center"
-				  Width="80"
-				  Content="Копировать"
-				  Command="{Binding CopyUrl}"
-			  />
-      </StackPanel>
+    </Border>
+
   </Grid>
 </UserControl>
