@@ -22,6 +22,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\mariupolgaz.econtract.finder.XML</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -75,6 +77,18 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="VanessaSharp.Data, Version=0.3.1.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\VanessaSharp.0.3.1\lib\VanessaSharp.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VanessaSharp.Data.Linq, Version=0.3.1.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\VanessaSharp.0.3.1\lib\VanessaSharp.Data.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VanessaSharp.Proxy.Common, Version=0.3.1.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\VanessaSharp.0.3.1\lib\VanessaSharp.Proxy.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>

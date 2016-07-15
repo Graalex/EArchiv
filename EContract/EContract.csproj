@@ -15,7 +15,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -27,7 +27,7 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -78,6 +78,18 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="VanessaSharp.Data, Version=0.3.1.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\VanessaSharp.0.3.1\lib\VanessaSharp.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VanessaSharp.Data.Linq, Version=0.3.1.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\VanessaSharp.0.3.1\lib\VanessaSharp.Data.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VanessaSharp.Proxy.Common, Version=0.3.1.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\VanessaSharp.0.3.1\lib\VanessaSharp.Proxy.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
