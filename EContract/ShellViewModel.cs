@@ -71,7 +71,8 @@ namespace EContract
 		{
 			if(msg.IsAuthenticate) {
 				this.User = msg.LoginName;
-				_manager.RequestNavigate(RegionNames.LeftRegion, new Uri(ViewNames.ContractFinder, UriKind.Relative));
+				_manager.RequestNavigate(RegionNames.ContentRegion, new Uri(ViewNames.ContractFinder, UriKind.Relative));
+				_manager.RequestNavigate(RegionNames.LeftRegion, new Uri(ViewNames.ModernFinder, UriKind.Relative));
 			}
 
 		}

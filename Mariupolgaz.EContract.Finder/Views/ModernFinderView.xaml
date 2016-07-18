@@ -6,77 +6,81 @@
              xmlns:local="clr-namespace:Mariupolgaz.EContract.Finder.Views"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="1000">
-  <Grid>
-    <Grid.RowDefinitions>
-			<RowDefinition Height="50" />
-      <RowDefinition />
-    </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*" MinWidth="400" />
-      <ColumnDefinition Width="3*" />
-    </Grid.ColumnDefinitions>
-    <StackPanel Grid.ColumnSpan="2" 
+  
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="50" />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" MinWidth="400" />
+        <ColumnDefinition Width="3*" />
+      </Grid.ColumnDefinitions>
+      <StackPanel Grid.ColumnSpan="2" 
 								Grid.Row="0"
 								Orientation="Horizontal"
 								VerticalAlignment="Center"
 								HorizontalAlignment="Right">
-			<Label Content="Название контрагента" />
-			<TextBox Width="600" 
+        <Label Content="Название контрагента" />
+        <TextBox Width="600" 
 							 Text="{Binding ContragentName}"
 							 Margin="10 0" />
-			<Button Content="Поиск"
+        <Button Content="Поиск"
 							Command="{Binding FindContragents}"
 							Width="80"
 							Margin="10 0 5 0" />
-		</StackPanel>
-    <GroupBox Grid.Row="1"
+      </StackPanel>
+      <GroupBox Grid.Row="1"
 							Grid.Column="0"
 							Header="Контрагенты"
 							Margin="5"
 							Padding="5">
-      <ListView ItemsSource="{Binding Contragents}"
+        <ListView ItemsSource="{Binding Contragents}"
 								SelectedItem="{Binding CurrentContragent}"
 								SelectedIndex="0">
-        <ListView.View>
-          <GridView>
-						<GridViewColumn Header="Код"
+          <ListView.View>
+            <GridView>
+              <GridViewColumn Header="Код"
 														Width="100"
 														DisplayMemberBinding="{Binding Code}" />
-						<GridViewColumn Header="ЕДРПОУ"
+              <GridViewColumn Header="ЕДРПОУ"
 														Width="100"
 														DisplayMemberBinding="{Binding EDRPOU}"/>
-						<GridViewColumn Header="Наименование"
+              <GridViewColumn Header="Наименование"
 														Width="500"
 														DisplayMemberBinding="{Binding FullName}"/>
-					</GridView>
-				</ListView.View>
-			</ListView>
-		</GroupBox>
-    <GroupBox Grid.Column="1"
+            </GridView>
+          </ListView.View>
+        </ListView>
+      </GroupBox>
+      <GroupBox Grid.Column="1"
 							Grid.Row="1"
 							Header="Договора"
 							Margin="5"
 							Padding="5">
-      <ListView SelectedItem="{Binding CurrentContract}"
+        <ListView SelectedItem="{Binding CurrentContract}"
 								ItemsSource="{Binding CurrentContragent.Contracts}"
 								SelectedIndex="0">
-        <ListView.View>
-          <GridView>
-						<GridViewColumn Header="Номер"
+          <ListView.View>
+            <GridView>
+              <GridViewColumn Header="Номер"
 														Width="120"
 														DisplayMemberBinding="{Binding Nomer}"/>
-            <GridViewColumn Header="Наименование"
+              <GridViewColumn Header="Наименование"
 														Width="300"
 														DisplayMemberBinding="{Binding Name}"/>
-            <GridViewColumn Header="Дата заключения"
+              <GridViewColumn Header="Дата заключения"
 														Width="150"
 														DisplayMemberBinding="{Binding Date}"/>
-            <GridViewColumn Header="Срок действия"
+              <!--
+						<GridViewColumn Header="Срок действия"
 														Width="150"
 														DisplayMemberBinding="{Binding ClosedDate}"/>
-          </GridView>
-				</ListView.View>
-			</ListView>
-		</GroupBox>
-  </Grid>
+														-->
+            </GridView>
+          </ListView.View>
+        </ListView>
+      </GroupBox>
+    </Grid>
+  
 </UserControl>

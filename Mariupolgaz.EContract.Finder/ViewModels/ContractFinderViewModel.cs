@@ -19,12 +19,14 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 	{
 		private string _org;
 
-
+		/// <summary>
+		/// 
+		/// </summary>
 		public ContractFinderViewModel()
 		{
 			// первоначальная иницилизация
-			this.ContractVisibility = Visibility.Collapsed;
-			this.ContragentVisibility = Visibility.Collapsed;
+			this.ContractVisibility = Visibility.Visible;
+			this.ContragentVisibility = Visibility.Visible;
 			this.Contragents = new ObservableCollection<Contragent>();
 			_org = ConfigurationManager.AppSettings["org"];
     }

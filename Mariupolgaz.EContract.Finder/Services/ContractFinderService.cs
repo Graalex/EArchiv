@@ -112,7 +112,7 @@ namespace Mariupolgaz.EContract.Finder.Services
 							}
 						}
 
-						reader.Close();
+						
 					}
 				}
 			}

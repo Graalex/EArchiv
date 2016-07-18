@@ -41,6 +41,11 @@
 		public static string ContentRegion = "Content";
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public static string ContentTopRegion = "ContentTop";
+
+		/// <summary>
 		/// Регион левой панели
 		/// </summary>
 		public static string LeftRegion = "LeftSide";
