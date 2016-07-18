@@ -84,7 +84,7 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			get
 			{
 				if (_ls != -1) {
-					return @"http://earchiv/documents/ls/" + this.LS.ToString();
+					return @"http://192.168.0.199/documents/ls/" + this.LS.ToString();
 				}
 				else {
 					return null;
@@ -109,6 +109,21 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 			}
 		}
 
+		private double _img_width = Double.NaN;
+		/// <summary>
+		/// Ширина изображения
+		/// </summary>
+		public double ImageWidth
+		{
+			get { return _img_width; }
+			set {
+				if(_img_width != value) {
+					_img_width = value;
+					RaisePropertyChanged(() => ImageWidth);
+				}
+			}
+		}
+
 		#endregion
 
 		#region Commands
@@ -123,25 +138,48 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 
 		private void onAddDocument()
 		{
-			//TODO: Очень не элегантно (костыль) но нет времени переделаю потом
-			// надо будет сообщения и модальные окна вывести в отдельный модуль сервис.
+			FileStream fs = null;
 
-			var dlg = ServiceLocator.Current.GetInstance<DocAddDialog>();
-			bool? rslt = dlg.ShowDialog();
-			if(rslt.GetValueOrDefault()) {
-				var data = (dlg.DataContext as DocAddViewModel);
-				Document doc = new Document(generateDocName(data.SelectedKind), data.SelectedKind);
-				BitmapImage bi = new BitmapImage();
+			try {
+				//TODO: Очень не элегантно (костыль) но нет времени переделаю потом
+				// надо будет сообщения и модальные окна вывести в отдельный модуль сервис. 
+				var dlg = ServiceLocator.Current.GetInstance<DocAddDialog>();
+				bool? rslt = dlg.ShowDialog();
+				if (rslt.GetValueOrDefault()) {
+					Mouse.OverrideCursor = Cursors.Wait;
 
-				bi.BeginInit();
-				FileStream fs = new FileStream(data.File, FileMode.Open);
+					var data = (dlg.DataContext as DocAddViewModel);
+					Document doc = new Document(generateDocName(data.SelectedKind), data.SelectedKind);
 
-				bi.StreamSource = fs;
-				bi.EndInit();
-				doc.Source = bi;
-				this.Documents.Add(doc);
-				this.SelectedDocument = doc;
-      }
+					BitmapImage bi = new BitmapImage();
+					fs = new FileStream(data.File, FileMode.Open);
+
+					bi.BeginInit();
+					bi.CacheOption = BitmapCacheOption.OnLoad;
+					bi.StreamSource = fs;
+					bi.EndInit();
+
+					doc.Source = bi;
+					this.Documents.Add(doc);
+					this.SelectedDocument = doc;
+				}
+			}
+
+			catch(Exception e) {
+				MessageBox.Show(
+					"Произошла ошибка при добавлении документа.\n" + e.Message,
+					"Ошибка",
+					MessageBoxButton.OK,
+					MessageBoxImage.Error
+				);
+			}
+
+			finally {
+				if(fs != null) {
+					fs.Close();
+				}
+				Mouse.OverrideCursor = null;
+			}
 			
 		}
 
@@ -199,26 +237,51 @@ namespace Mariupolgaz.EArchiv.DocsAbon.ViewModels
 
 		private void onChangeDocument()
 		{
-			var dlg = ServiceLocator.Current.GetInstance<ChangeDocView>();
-			var data = (dlg.DataContext as ChangeDocViewModel);
-			bool? rslt = dlg.ShowDialog();
-			if (rslt.GetValueOrDefault()) {
-				if (this.SelectedDocument.Kind != data.SelectedKind) {
-					this.SelectedDocument.Kind = data.SelectedKind;
-					this.SelectedDocument.Name = generateDocName(data.SelectedKind);
-				}
-				if(data.File != null && data.File != String.Empty) {
-					BitmapImage bi = new BitmapImage();
+			FileStream fs = null;
 
-					bi.BeginInit();
-					FileStream fs = new FileStream(data.File, FileMode.Open);
+			try {
+				var dlg = ServiceLocator.Current.GetInstance<ChangeDocView>();
+				var data = (dlg.DataContext as ChangeDocViewModel);
+				bool? rslt = dlg.ShowDialog();
+				if (rslt.GetValueOrDefault()) {
+					Mouse.OverrideCursor = Cursors.Wait;
 
-					bi.StreamSource = fs;
-					bi.EndInit();
+					if (this.SelectedDocument.Kind != data.SelectedKind) {
+						this.SelectedDocument.Kind = data.SelectedKind;
+						this.SelectedDocument.Name = generateDocName(data.SelectedKind);
+					}
 
-					this.SelectedDocument.Source = bi;
+					if (data.File != null && data.File != String.Empty) {
+						BitmapImage bi = new BitmapImage();
+
+						bi.BeginInit();
+						bi.CacheOption = BitmapCacheOption.OnLoad;
+						fs = new FileStream(data.File, FileMode.Open);
+						bi.StreamSource = fs;
+						bi.EndInit();
+
+						this.SelectedDocument.Source = bi;
+					}
 				}
 			}
+
+			catch(Exception e) {
+				MessageBox.Show(
+					"Произошла ошибка при изменении документа.\n" + e.Message,
+					"Ошибка",
+					MessageBoxButton.OK,
+					MessageBoxImage.Error
+				);
+			}
+
+			finally {
+				if(fs != null) {
+					fs.Close();
+				}
+
+				Mouse.OverrideCursor = null;
+			}
+
 		}
 
 		private bool canChangeDocument()
