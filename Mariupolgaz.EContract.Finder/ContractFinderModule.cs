@@ -35,6 +35,10 @@ namespace Mariupolgaz.EContract.Finder
 				ViewNames.ContractFinder,
 				new ContainerControlledLifetimeManager()
 			);
+			_container.RegisterType<object, ModernFinderView>(
+				ViewNames.ModernFinder,
+				new ContainerControlledLifetimeManager()
+			);
 
 			_container.RegisterType<IContractFinderService, ContractFinderService>(
 				new ContainerControlledLifetimeManager()

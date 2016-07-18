@@ -99,6 +99,9 @@
     <Compile Include="Views\ContractFinderView.xaml.cs">
       <DependentUpon>ContractFinderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ModernFinderView.xaml.cs">
+      <DependentUpon>ModernFinderView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mariupolgaz.EArchiv.Common\Mariupolgaz.EArchiv.Common.csproj">
@@ -111,6 +114,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ContractFinderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ModernFinderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

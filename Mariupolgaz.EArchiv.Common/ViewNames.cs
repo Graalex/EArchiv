@@ -19,5 +19,10 @@
 		/// Название вида для отображения электронных копий договоров
 		/// </summary>
 		public static string DocsContract = "DocsContactView";
-	}
+
+		/// <summary>
+		/// Название вида для поиска договоров (модернизированный)
+		/// </summary>
+		public static string ModernFinder = "ModernFinderView";
+  }
 }
