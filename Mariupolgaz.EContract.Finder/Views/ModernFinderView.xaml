@@ -9,7 +9,7 @@
   
     <Grid>
       <Grid.RowDefinitions>
-        <RowDefinition Height="50" />
+        <RowDefinition Height="40" />
         <RowDefinition />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
@@ -20,7 +20,7 @@
 								Grid.Row="0"
 								Orientation="Horizontal"
 								VerticalAlignment="Center"
-								HorizontalAlignment="Right">
+								HorizontalAlignment="Left">
         <Label Content="Название контрагента" />
         <TextBox Width="600" 
 							 Text="{Binding ContragentName}"
@@ -40,15 +40,14 @@
 								SelectedIndex="0">
           <ListView.View>
             <GridView>
-              <GridViewColumn Header="Код"
-														Width="100"
-														DisplayMemberBinding="{Binding Code}" />
               <GridViewColumn Header="ЕДРПОУ"
 														Width="100"
 														DisplayMemberBinding="{Binding EDRPOU}"/>
-              <GridViewColumn Header="Наименование"
+              
+							<GridViewColumn Header="Наименование"
 														Width="500"
-														DisplayMemberBinding="{Binding FullName}"/>
+														DisplayMemberBinding="{Binding Name}"/>
+														
             </GridView>
           </ListView.View>
         </ListView>
@@ -64,19 +63,19 @@
           <ListView.View>
             <GridView>
               <GridViewColumn Header="Номер"
-														Width="120"
+														Width="130"
 														DisplayMemberBinding="{Binding Nomer}"/>
               <GridViewColumn Header="Наименование"
-														Width="300"
+														Width="400"
 														DisplayMemberBinding="{Binding Name}"/>
               <GridViewColumn Header="Дата заключения"
 														Width="150"
-														DisplayMemberBinding="{Binding Date}"/>
-              <!--
+														DisplayMemberBinding="{Binding Date, StringFormat={}{0:dd.MM.yyyy}}"/>
+             
 						<GridViewColumn Header="Срок действия"
 														Width="150"
-														DisplayMemberBinding="{Binding ClosedDate}"/>
-														-->
+														DisplayMemberBinding="{Binding ClosedDate, StringFormat={}{0:dd.MM.yyyy}}"/>
+														
             </GridView>
           </ListView.View>
         </ListView>

@@ -20,7 +20,7 @@ namespace Mariupolgaz.EContract.Finder.Views
 		/// Конструктор
 		/// </summary>
 		/// <param name="dataContext">Контекст данных</param>
-		public ContractFinderView(ContractFinderViewModel dataContext) :this()
+		public ContractFinderView(ContractFinderViewModel dataContext) : this()
 		{
 			this.DataContext = dataContext;
 		}

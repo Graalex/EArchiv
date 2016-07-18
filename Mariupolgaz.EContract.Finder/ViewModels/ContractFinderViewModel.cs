@@ -124,7 +124,7 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 		/// </summary>
 		public ICommand FindContragents
 		{
-			get { return new DelegateCommand(onFindContragents); }
+			get { return new DelegateCommand(onFindContragents, canFindContragents); }
 		}
 
 		private void onFindContragents()
@@ -172,6 +172,11 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 				Mouse.OverrideCursor = null;
 			}
 
+		}
+
+		private bool canFindContragents()
+		{
+			return this.ContragentName != null && this.ContragentName.Trim() != "";
 		}
 
 		#endregion

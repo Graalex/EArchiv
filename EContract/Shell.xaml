@@ -27,17 +27,15 @@
 										DockPanel.Dock="Left" 
 										VerticalAlignment="Top"
 		/>
-    <!--
-		<Grid>
+    <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="400" />
         <RowDefinition />
       </Grid.RowDefinitions>
-			-->
-      <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ContentRegion}"
+			<ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ContentTopRegion}"
 										Width="Auto" />
-			<!--
+			
     </Grid>
-		-->
+	
   </DockPanel>
 </Window>

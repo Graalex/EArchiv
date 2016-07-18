@@ -20,8 +20,7 @@ namespace Mariupolgaz.EContract.Finder.Views
 		/// Создает экземпляр <see cref="ModernFinderView"/>, с передаваемым контекстом данных
 		/// </summary>
 		/// <param name="viewModel">Экземпляр <see cref="ContractFinderViewModel"/> для контекста данных элемента управления.</param>
-		public ModernFinderView(ContractFinderViewModel viewModel)
-		:base()
+		public ModernFinderView(ContractFinderViewModel viewModel) : this()
 		{
 			this.DataContext = viewModel;
 		}

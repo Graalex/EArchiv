@@ -31,14 +31,14 @@ namespace Mariupolgaz.EContract.Finder
 		/// </summary>
 		public void Initialize()
 		{
-			
-			_container.RegisterType<object, ContractFinderView>(
-				ViewNames.ContractFinder,
-				new ContainerControlledLifetimeManager()
-			);
-			
+
 			_container.RegisterType<object, ModernFinderView>(
 				ViewNames.ModernFinder,
+				new ContainerControlledLifetimeManager()
+			);
+
+			_container.RegisterType<object, ContractFinderView>(
+				ViewNames.ContractFinder,
 				new ContainerControlledLifetimeManager()
 			);
 
