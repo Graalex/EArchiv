@@ -6,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using Mariupolgaz.EArchiv.Common.Events;
 using Mariupolgaz.EArchiv.Common.Models;
 using Mariupolgaz.EArchiv.Common.Servises;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.ServiceLocation;
 
 namespace Mariupolgaz.EContract.Finder.ViewModels
@@ -18,15 +20,16 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 	public class ContractFinderViewModel: BaseViewModel
 	{
 		private string _org;
+		private readonly IEventAggregator _aggr;
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public ContractFinderViewModel()
+		public ContractFinderViewModel(IEventAggregator aggregator)
 		{
-			// первоначальная иницилизация
-			this.ContractVisibility = Visibility.Visible;
-			this.ContragentVisibility = Visibility.Visible;
+			if (aggregator == null) throw new ArgumentNullException("aggregator");
+
+			_aggr = aggregator;
 			this.Contragents = new ObservableCollection<Contragent>();
 			_org = ConfigurationManager.AppSettings["org"];
     }
@@ -68,22 +71,6 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 			}
 		}
 
-		private Visibility _contragentVisibility;
-		/// <summary>
-		/// Определяет видимость элемента управления со списком контрагентов
-		/// </summary>
-		public Visibility ContragentVisibility
-		{
-			get { return _contragentVisibility; }
-			set
-			{
-				if (_contragentVisibility != value) {
-					_contragentVisibility = value;
-					RaisePropertyChanged(() => ContragentVisibility);
-				}
-			}
-		}
-
 		private Contract _curContract;
 		/// <summary>
 		/// Выбранный договор контрагента
@@ -95,20 +82,6 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 				if(_curContract != value) {
 					_curContract = value;
 					RaisePropertyChanged(() => CurrentContract);
-				}
-			}
-		}
-
-		private Visibility _contractVisibility;
-		/// <summary>
-		/// Определяет видимость элемента управления со списком договоров контрагента
-		/// </summary>
-		public Visibility ContractVisibility
-		{ 
-			get { return _contractVisibility; }
-			set {
-				if(_contractVisibility != value) {
-					RaisePropertyChanged(() => ContractVisibility);
 				}
 			}
 		}
@@ -143,13 +116,8 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 						this.Contragents.Add(item);
 					}
 
-					// отображаем элементы управления
-					this.ContragentVisibility = Visibility.Visible;
-					this.ContractVisibility = Visibility.Visible;
 				}
 				else {
-					this.ContragentVisibility = Visibility.Collapsed;
-					this.ContractVisibility = Visibility.Collapsed;
 					MessageBox.Show(
 						"Контрагенты не найдены.",
 						"Сообщение",
@@ -193,7 +161,7 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 
 		private void onGetDocuments()
 		{
-
+			_aggr.GetEvent<ContractSelectedEvent>().Publish(new ContractMessage(this.CurrentContract.Code, _org));
 		}
 
 		private bool canGetDocuments()

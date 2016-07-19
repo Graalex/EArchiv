@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+						 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+						 xmlns:prism="clr-namespace:Microsoft.Practices.Prism.Interactivity;assembly=Microsoft.Practices.Prism.Interactivity"
              xmlns:local="clr-namespace:Mariupolgaz.EContract.Finder.Views"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="1000">
@@ -78,6 +80,11 @@
 														
             </GridView>
           </ListView.View>
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="MouseDoubleClick">
+							<prism:InvokeCommandAction Command="{Binding GetDocuments}" />
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
         </ListView>
       </GroupBox>
     </Grid>

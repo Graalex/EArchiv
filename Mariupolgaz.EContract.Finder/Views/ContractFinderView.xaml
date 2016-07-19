@@ -42,7 +42,6 @@
 									Margin="0 10 0 0"
 									ItemsSource="{Binding Contragents}"
 									SelectedItem="{Binding CurrentContragent}"
-									Visibility="{Binding ContragentVisibility}"
 				>
           <ListView.View>
             <GridView>
@@ -63,7 +62,6 @@
 							Margin="5"
 							Padding="5"
 							Width="450"
-							Visibility="{Binding ContractVisibility}"
 		>
       <Grid>
         <Grid.ColumnDefinitions>
