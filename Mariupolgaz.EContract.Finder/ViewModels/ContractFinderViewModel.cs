@@ -67,6 +67,7 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 				if(_curContragent != value) {
 					_curContragent = value;
 					RaisePropertyChanged(() => CurrentContragent);
+					this.ContractIndex = 0;
 				}
 			}
 		}
@@ -82,6 +83,39 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 				if(_curContract != value) {
 					_curContract = value;
 					RaisePropertyChanged(() => CurrentContract);
+				}
+			}
+		}
+
+		private int _contrIdx = 0;
+		/// <summary>
+		/// 
+		/// </summary>
+		public int ContragentIndex
+		{ 
+			get { return _contrIdx; }
+			set {
+				if(_contrIdx != value) {
+					_contrIdx = value;
+					//_conIdx = 0;
+					RaisePropertyChanged(() => ContragentIndex);
+					//RaisePropertyChanged(() => ContractIndex);
+				}
+			}
+		}
+
+		private int _conIdx = 0;
+		/// <summary>
+		/// 
+		/// </summary>
+		public int ContractIndex
+		{
+			get { return _conIdx; }
+			set
+			{
+				if (_conIdx != value) {
+					_conIdx = value;
+					RaisePropertyChanged(() => ContractIndex);
 				}
 			}
 		}
@@ -115,7 +149,8 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 					foreach (var item in contr) {
 						this.Contragents.Add(item);
 					}
-
+					this.ContragentIndex = 0;
+					this.ContractIndex = 0;
 				}
 				else {
 					MessageBox.Show(
@@ -161,7 +196,8 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 
 		private void onGetDocuments()
 		{
-			_aggr.GetEvent<ContractSelectedEvent>().Publish(new ContractMessage(this.CurrentContract.Code, _org));
+			_aggr.GetEvent<ContractSelectedEvent>().Publish(this.CurrentContract);
+
 		}
 
 		private bool canGetDocuments()

@@ -55,5 +55,10 @@
 		/// </summary>
 		public static string RightRegion = "RightSide";
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public static string ContentDocRegion = "ContentDocument";
+
 	}
 }

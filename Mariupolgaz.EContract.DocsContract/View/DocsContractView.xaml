@@ -8,99 +8,78 @@
              d:DesignHeight="600" d:DesignWidth="900">
   <Grid>
     <Grid.RowDefinitions>
-			<RowDefinition Height="100" />
-      <RowDefinition Height="200"/>
-      <RowDefinition />
+			<RowDefinition Height="50" />
+      <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
-    <Grid Grid.Row="0">
-      <Grid.RowDefinitions>
-        <RowDefinition />
-        <RowDefinition />
-        <RowDefinition />
-      </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
-				<ColumnDefinition /> 
-				<ColumnDefinition />
-      </Grid.ColumnDefinitions>
-      <StackPanel Orientation="Horizontal"
+    <Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" MinWidth="400" />
+      <ColumnDefinition Width="3*"/>
+    </Grid.ColumnDefinitions>
+    <StackPanel Orientation="Horizontal"
 									Grid.Row="0"
 									Grid.ColumnSpan="2"
-			>
-				<TextBlock Text="{Binding CurrentContract.Nomer}" />
-				<TextBlock Text="{Binding CurrentContract.Name}" />
-			</StackPanel>
-			<TextBlock Grid.Row="1" Grid.Column="0"
-								 Text="Дата заключения:"
-			/>
-      <TextBlock Grid.Row="1" Grid.Column="1"
-								 Text="{Binding CurrentContract.Date}"
-			/>
-      <TextBlock Grid.Row="2" Grid.Column="0"
-								 Text="Дата окончания:"
-			/>
-      <TextBlock Grid.Row="2" Grid.Column="1"
-								 Text="{Binding CurrentContract.Expiry}"
-			/>
-    </Grid>
+									VerticalAlignment="Center"
+									HorizontalAlignment="Center">
+      <TextBlock Text="{Binding CurrentContract.Nomer}" />
+      <TextBlock Text="{Binding CurrentContract.Name}" />
+    </StackPanel>
     <GroupBox Header="Документы"
 							Grid.Row="1"
 							Margin="5"
-							Padding="5"
-		>
-      <StackPanel Orientation="Vertical">
+							Padding="5">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="40"/>
+          <RowDefinition />
+        </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal"
 										HorizontalAlignment="Right"
 										VerticalAlignment="Center"
 				>
-					<Button Content="Добавить" 
+          <Button Content="Добавить" 
 									Width="75"
 									Command="{Binding AddDocument}"
-									Margin="5 0 0 0"
+									Margin="5"
 					/>
           <Button Content="Изменить" 
 									Width="75"
 									Command="{Binding EditDocument}"
-									Margin="5 0 0 0"
+									Margin="5"
 					/>
           <Button Content="Удалить" 
 									Width="75"
 									Command="{Binding DeleteDocument}"
-									Margin="5 0 0 0"
+									Margin="5"
 					/>
           <Button Content="Сохранить" 
 									Width="75"
 									Command="{Binding SaveChange}"
-									Margin="5  0"
+									Margin="5"
 					/>
         </StackPanel>
-        <ListView ItemsSource="{Binding Documents}"
-					SelectedItem="SelectedDocument">
+        <ListView Grid.Row="1"
+									ItemsSource="{Binding Documents}"
+									SelectedItem="{Binding SelectedDocument}">
           <ListView.View>
             <GridView>
-							<GridViewColumn Header="Тип"
+              <GridViewColumn Header="Тип"
 															Width="200"
 															DisplayMemberBinding="{Binding Kind.Name}"
 							/>
               <GridViewColumn Header="Название"
-															Width="300"
+															Width="220"
 															DisplayMemberBinding="{Binding Name}"
 							/>
-              <GridViewColumn Header="Создан"
-															Width="100"
-															DisplayMemberBinding="{Binding  CreateAt, StringFormat={}{0:dd.MM.yyyy hh:mm:ss}}"
-							/>
-              <GridViewColumn Header="Размер"
-															Width="100"
-															DisplayMemberBinding="{Binding Size, StringFormat={}{0:# ##0}}"
-							/>
             </GridView>
-					</ListView.View>
-				</ListView>
-      </StackPanel>
-      
-		</GroupBox>
-		<Image Grid.Row="2"
-			Margin="5"
-			Source="{Binding SelectedDocument.Source}" />
+          </ListView.View>
+        </ListView>
+      </Grid>
+    </GroupBox>
+		<Image Grid.Column="1"
+					 Grid.Row="1"
+					 Stretch="Uniform"
+					 Width="{Binding ImageWidth}"
+			     Margin="5"
+			     Source="{Binding SelectedDocument.Source}" />
 	</Grid>
 </UserControl>

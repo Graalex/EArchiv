@@ -1,10 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
-using System.Text;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using Mariupolgaz.EArchiv.Common.Events;
 using Mariupolgaz.EArchiv.Common.Models;
+using Mariupolgaz.EArchiv.Common.Servises;
+using Mariupolgaz.EContract.DocsContract.View;
+using Mariupolgaz.EContract.DocsContract.Views;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Mariupolgaz.EContract.DocsContract.ViewModel
 {
@@ -13,6 +20,24 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 	/// </summary>
 	public class DocsContarctViewModel : BaseViewModel
 	{
+		private readonly IEventAggregator _aggr;
+		private readonly IDocumentService _docsrv;
+
+		/// <summary>
+		/// <see cref="DocsContarctViewModel"/>
+		/// </summary>
+		/// <param name="aggregator"></param>
+		public DocsContarctViewModel(IEventAggregator aggregator)
+		{
+			if (aggregator == null) throw new ArgumentNullException("aggregator");
+
+			_aggr = aggregator;
+			_docsrv = ServiceLocator.Current.GetInstance<IDocumentService>();
+
+			_aggr.GetEvent<ContractSelectedEvent>().Subscribe(updateContract);
+			this.Documents = new ObservableCollection<Document>();
+		}
+
 		#region Properties
 
 		/// <summary>
@@ -50,21 +75,6 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 			}
 		}
 
-		private bool _isDirty;
-		/// <summary>
-		/// Признак вносились ли изменения в коллекцию документов
-		/// </summary>
-		public bool IsDirty
-		{
-			get { return _isDirty; } 
-			set {
-				if(_isDirty != value) {
-					_isDirty = value;
-					RaisePropertyChanged(() => IsDirty);
-				}
-			}
-		}
-
 		#endregion
 
 		#region Commands
@@ -79,7 +89,48 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 
 		private void onAddDocument()
 		{
+			FileStream fs = null;
 
+			try {
+				//TODO: Очень не элегантно (костыль) но нет времени переделаю потом
+				// надо будет сообщения и модальные окна вывести в отдельный модуль сервис. 
+				var dlg = ServiceLocator.Current.GetInstance<ContractDocAddDialog>();
+				bool? rslt = dlg.ShowDialog();
+				if (rslt.GetValueOrDefault()) {
+					Mouse.OverrideCursor = Cursors.Wait;
+
+					var data = (dlg.DataContext as ContractDocAddViewModel);
+					Document doc = new Document(generateDocName(data.SelectedKind), data.SelectedKind);
+
+					BitmapImage bi = new BitmapImage();
+					fs = new FileStream(data.File, FileMode.Open);
+
+					bi.BeginInit();
+					bi.CacheOption = BitmapCacheOption.OnLoad;
+					bi.StreamSource = fs;
+					bi.EndInit();
+
+					doc.Source = bi;
+					this.Documents.Add(doc);
+					this.SelectedDocument = doc;
+				}
+			}
+
+			catch (Exception e) {
+				MessageBox.Show(
+					"Произошла ошибка при добавлении документа.\n" + e.Message,
+					"Ошибка",
+					MessageBoxButton.OK,
+					MessageBoxImage.Error
+				);
+			}
+
+			finally {
+				if (fs != null) {
+					fs.Close();
+				}
+				Mouse.OverrideCursor = null;
+			}
 		}
 
 		/// <summary>
@@ -92,12 +143,55 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 
 		private void onEditDocument()
 		{
+			FileStream fs = null;
 
+			try {
+				var dlg = ServiceLocator.Current.GetInstance<ContractDocEditDialog>();
+				var data = (dlg.DataContext as ContractDocEditViewModel);
+				bool? rslt = dlg.ShowDialog();
+				if (rslt.GetValueOrDefault()) {
+					Mouse.OverrideCursor = Cursors.Wait;
+
+					if (this.SelectedDocument.Kind != data.SelectedKind) {
+						this.SelectedDocument.Kind = data.SelectedKind;
+						this.SelectedDocument.Name = generateDocName(data.SelectedKind);
+					}
+
+					if (data.File != null && data.File != String.Empty) {
+						BitmapImage bi = new BitmapImage();
+
+						bi.BeginInit();
+						bi.CacheOption = BitmapCacheOption.OnLoad;
+						fs = new FileStream(data.File, FileMode.Open);
+						bi.StreamSource = fs;
+						bi.EndInit();
+
+						this.SelectedDocument.Source = bi;
+					}
+				}
+			}
+
+			catch (Exception e) {
+				MessageBox.Show(
+					"Произошла ошибка при изменении документа.\n" + e.Message,
+					"Ошибка",
+					MessageBoxButton.OK,
+					MessageBoxImage.Error
+				);
+			}
+
+			finally {
+				if (fs != null) {
+					fs.Close();
+				}
+
+				Mouse.OverrideCursor = null;
+			}
 		}
 
 		private bool canEditDocument()
 		{
-			return this.SelectedDocument != null;
+			return this.SelectedDocument != null ? true : false; 
 		}
 
 		/// <summary>
@@ -110,12 +204,22 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 
 		private void onDeleteDocument()
 		{
-
+			if (MessageBox.Show(
+				"Вы уверены, что хотите удалить документ?",
+				"Предупреждение",
+				MessageBoxButton.YesNo,
+				MessageBoxImage.Warning
+			) == MessageBoxResult.Yes) {
+				if (this.SelectedDocument.ID != -1) {
+					_docsrv.MarkDeleteDocument(this.SelectedDocument);
+				}
+				this.Documents.Remove(this.SelectedDocument);
+			}
 		}
 
 		private bool canDeleteDocument()
 		{
-			return this.SelectedDocument != null;
+			return this.SelectedDocument != null ? true : false;
 		}
 
 		/// <summary>
@@ -128,14 +232,92 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 
 		private void onSaveChange()
 		{
+			Mouse.OverrideCursor = Cursors.Wait;
 
+			try {
+				foreach (var doc in this.Documents) {
+					if (doc.IsDirty) {
+						if (doc.ID == -1) {
+							_docsrv.SaveDocument(doc, "03361135", this.CurrentContract.Code);
+						}
+						else {
+							_docsrv.SaveDocumentSource(doc);
+						}
+						doc.IsDirty = false;
+					}
+				}
+			}
+
+			catch (Exception e) {
+				MessageBox.Show(
+					"Произошла ошибка при сохранении документов!\n" + e.Message,
+					"Ошибка",
+					MessageBoxButton.OK,
+					MessageBoxImage.Error
+				);
+			}
+
+			finally {
+				Mouse.OverrideCursor = null;
+			}
 		}
 
 		private bool canSaveChange()
 		{
-			return this.IsDirty;
+			return checkDirty();
 		}
 
 		#endregion
+
+		private void updateContract(Contract contract)
+		{
+			this.CurrentContract = contract;
+			this.Documents.Clear();
+			var docs = _docsrv.GetDocuments("03361135", contract.Code);
+			foreach(var item in docs) {
+				this.Documents.Add(item);
+			}
+		}
+
+		private string generateDocName(DocumentKind kind)
+		{
+			string rslt;
+
+			switch (kind.ID) {
+				case 1012:
+					rslt = "ДГ";
+					break;
+
+				case 1013:
+					rslt = "ДС";
+					break;
+
+				case 1014:
+					rslt = "ТС";
+					break;
+
+				case 1015:
+					rslt = "ЗП";
+					break;
+
+				default:
+					rslt = "ПР";
+					break;
+			};
+
+			rslt += ("-" + Convert.ToInt32(this.CurrentContract.Code) + "-" + String.Format("{0:yyyyMdHms}", DateTime.Now));
+
+			return rslt;
+		}
+
+		private bool checkDirty()
+		{
+			bool rslt = false;
+			if (this.Documents.Count > 0) {
+				rslt = this.Documents.Any(doc => doc.IsDirty);
+			}
+
+			return rslt;
+		}
 	}
 }

@@ -28,7 +28,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		{
 			_con = ConfigurationManager.ConnectionStrings["Archiv"].ConnectionString;
 			//TODO: Костыль позже переделать
-			_kinds = this.GetKindsByClass(2);
+			_kinds = this.GetKinds();
 		}
 
 		/// <summary>
@@ -104,6 +104,46 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="orgCode"></param>
+		/// <param name="contractCode"></param>
+		/// <returns></returns>
+		public IList<comm.Document> GetDocuments(string orgCode, string contractCode)
+		{
+			IList<comm.Document> rslt = new List<comm.Document>();
+
+			using(SqlConnection con = new SqlConnection(_con)) {
+				using(SqlCommand cmd = new SqlCommand("GetDocByContract", con)) {
+					cmd.CommandType = CommandType.StoredProcedure;
+					cmd.Parameters.AddWithValue("@OrgCode", orgCode.Trim());
+					cmd.Parameters.AddWithValue("@ContractCode", contractCode.Trim());
+					con.Open();
+
+					using(SqlDataReader reader = cmd.ExecuteReader()) {
+						if(reader.HasRows) {
+							while(reader.Read()) {
+								BitmapImage src = new BitmapImage();
+								src.BeginInit();
+								MemoryStream stream = new MemoryStream((byte[])reader["Source"]);
+								src.StreamSource = stream;
+								src.EndInit();
+
+								int id = Convert.ToInt32(reader["Kind"]);
+								var kind = _kinds.First(item => item.ID == id);
+
+								rslt.Add(new Common.Models.Document(Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], null /*thrumb*/,
+									Convert.ToDateTime(reader["CreateAt"]), Convert.ToDateTime(reader["ModifyAt"]), Convert.ToBoolean(reader["IsMarkDelete"]), src));
+							}
+						}
+					}
+				}
+			}
+
+			return rslt;
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="ls"></param>
 		/// <param name="kindID"></param>
 		/// <returns></returns>
@@ -155,6 +195,11 @@ namespace Mariupolgaz.EArchiv.Document.Services
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="doc"></param>
+		/// <returns></returns>
 		public bool MarkDeleteDocument(comm.Document doc)
 		{
 			using (SqlConnection con = new SqlConnection(_con))
@@ -283,6 +328,91 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="doc"></param>
+		/// <param name="orgCode"></param>
+		/// <param name="contractCode"></param>
+		public void SaveDocument(comm.Document doc, string orgCode, string contractCode)
+		{
+			using(SqlConnection con = new SqlConnection(_con)) {
+				using(SqlCommand cmd = new SqlCommand()) {
+					cmd.Connection = con;
+					cmd.CommandType = CommandType.StoredProcedure;
+
+					con.Open();
+					SqlTransaction tranc = con.BeginTransaction();
+					cmd.Transaction = tranc;
+
+					try {
+						//первая часть сохраняем сам документ
+						cmd.CommandText = "DocAdd";
+
+						cmd.Parameters.Clear();
+						cmd.Parameters.AddWithValue("@Name", doc.Name);
+						cmd.Parameters.AddWithValue("@Kind", doc.Kind.ID);
+						cmd.Parameters.AddWithValue("@UsrName", "EArchiv");
+						cmd.Parameters.AddWithValue("@Hash", doc.ConvertHash());
+
+						//TODO: Костыль позже убрать
+						long len;
+						byte[] buf;
+						if (doc.Thumbnails != null) {
+							len = doc.Thumbnails.StreamSource.Length;
+							buf = new byte[len];
+							doc.Thumbnails.StreamSource.Read(buf, 0, (int)len);
+							cmd.Parameters.AddWithValue("@Thumbnails", buf);
+						}
+						else {
+							buf = new byte[2];
+							buf[0] = 1;
+							buf[1] = 2;
+							cmd.Parameters.AddWithValue("@Thumbnails", buf);
+						}
+
+						FileStream s = new FileStream((doc.Source.StreamSource as FileStream).Name, FileMode.Open);
+
+						len = s.Length;
+						buf = new byte[len];
+						s.Position = 0;
+						s.Read(buf, 0, (int)len);
+						cmd.Parameters.AddWithValue("@Raw", buf);
+
+						int key = -1;
+						SqlParameter parametr = new SqlParameter("@Key", key);
+						parametr.Direction = ParameterDirection.Output;
+						cmd.Parameters.Add(parametr);
+
+						cmd.ExecuteNonQuery();
+						doc.setID(Convert.ToInt32(cmd.Parameters["@Key"].Value));
+
+						// вторая часть связываем документ с договором
+						cmd.CommandText = "DocContractAdd";
+
+						cmd.Parameters.Clear();
+						cmd.Parameters.AddWithValue("@Doc", doc.ID);
+						cmd.Parameters.AddWithValue("@OrgCode", orgCode);
+						cmd.Parameters.AddWithValue("@ContractCode", contractCode);
+						cmd.Parameters.AddWithValue("UsrName", "EContract");
+
+						parametr = new SqlParameter("@Key", key);
+						parametr.Direction = ParameterDirection.Output;
+						cmd.Parameters.Add(parametr);
+
+						cmd.ExecuteNonQuery();
+
+						tranc.Commit();
+					}
+
+					catch(Exception e) {
+						tranc.Rollback();
+						throw new Exception(e.Message);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <param name="classID"></param>
 		/// <returns></returns>
 		public IList<comm.DocumentKind> GetKindsByClass(int classID)
@@ -308,6 +438,34 @@ namespace Mariupolgaz.EArchiv.Document.Services
 
 				return list;
 			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public IList<comm.DocumentKind> GetKinds()
+		{
+			IList<comm.DocumentKind> rslt = new List<comm.DocumentKind>();
+
+			using(SqlConnection con = new SqlConnection(_con)) {
+				using(SqlCommand cmd = new SqlCommand("DocKindsgetAll", con)) {
+					cmd.CommandType = CommandType.StoredProcedure;
+					con.Open();
+
+					using(SqlDataReader reader = cmd.ExecuteReader()) {
+						if (reader.HasRows) {
+							while(reader.Read()) {
+								rslt.Add(
+									new Common.Models.DocumentKind(Convert.ToInt32(reader["KEY"]), Convert.ToString(reader["KIND_NAME"]), false)
+								);
+							}
+						}
+					}
+				}
+			}
+
+			return rslt;
 		}
 
 		/// <summary>

@@ -37,10 +37,10 @@
 							Header="Контрагенты"
 							Margin="5"
 							Padding="5">
-        <ListView ItemsSource="{Binding Contragents}"
+      <ListView ItemsSource="{Binding Contragents}"
 								SelectedItem="{Binding CurrentContragent}"
-								SelectedIndex="0">
-          <ListView.View>
+								SelectedIndex="{Binding ContragentIndex}">
+        <ListView.View>
             <GridView>
               <GridViewColumn Header="ЕДРПОУ"
 														Width="100"
@@ -59,10 +59,10 @@
 							Header="Договора"
 							Margin="5"
 							Padding="5">
-        <ListView SelectedItem="{Binding CurrentContract}"
+      <ListView SelectedItem="{Binding CurrentContract}"
 								ItemsSource="{Binding CurrentContragent.Contracts}"
-								SelectedIndex="0">
-          <ListView.View>
+								SelectedIndex="{Binding ContractIndex}" >
+        <ListView.View>
             <GridView>
               <GridViewColumn Header="Номер"
 														Width="130"
@@ -80,11 +80,13 @@
 														
             </GridView>
           </ListView.View>
+					
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="MouseDoubleClick">
 							<prism:InvokeCommandAction Command="{Binding GetDocuments}" />
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
+					
         </ListView>
       </GroupBox>
     </Grid>

@@ -34,7 +34,9 @@
       </Grid.RowDefinitions>
 			<ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ContentTopRegion}"
 										Width="Auto" />
-			
+			<ContentControl Grid.Row="1" 
+											prism:RegionManager.RegionName="{x:Static common:RegionNames.ContentDocRegion}"
+											Width="Auto" />
     </Grid>
 	
   </DockPanel>

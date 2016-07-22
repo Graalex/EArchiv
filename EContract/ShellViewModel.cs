@@ -39,6 +39,9 @@ namespace EContract
 			_container = container;
 
 			_aggregator.GetEvent<AuthenticateEvent>().Subscribe(authenticated);
+			_aggregator.GetEvent<ContractSelectedEvent>()
+				.Subscribe(contract => 
+					_manager.RequestNavigate(RegionNames.ContentDocRegion, new Uri(ViewNames.DocsContract, UriKind.Relative)));
 		}
 
 		#region Properties

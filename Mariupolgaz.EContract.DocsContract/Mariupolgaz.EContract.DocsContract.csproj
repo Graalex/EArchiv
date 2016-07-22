@@ -81,7 +81,15 @@
   <ItemGroup>
     <Compile Include="DocsContractModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\ContractDocAddViewModel.cs" />
+    <Compile Include="ViewModel\ContractDocEditViewModel.cs" />
     <Compile Include="ViewModel\DocsContarctViewModel.cs" />
+    <Compile Include="View\ContractDocAddDialog.xaml.cs">
+      <DependentUpon>ContractDocAddDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ContractDocEditDialog.xaml.cs">
+      <DependentUpon>ContractDocEditDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DocsContractView.xaml.cs">
       <DependentUpon>DocsContractView.xaml</DependentUpon>
     </Compile>
@@ -96,6 +104,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\ContractDocAddDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ContractDocEditDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DocsContractView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

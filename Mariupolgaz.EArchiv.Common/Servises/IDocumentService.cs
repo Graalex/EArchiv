@@ -19,6 +19,12 @@ namespace Mariupolgaz.EArchiv.Common.Servises
 		/// 
 		/// </summary>
 		/// <returns></returns>
+		IList<DocumentKind> GetKinds();
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		IList<DocumentClass> GetClasses();
 		
 		/// <summary>
@@ -27,6 +33,14 @@ namespace Mariupolgaz.EArchiv.Common.Servises
 		/// <param name="ls"></param>
 		/// <returns></returns>
 		IList<Document> GetDocuments(int ls);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="orgCode"></param>
+		/// <param name="contractCode"></param>
+		/// <returns></returns>
+		IList<Document> GetDocuments(string orgCode, string contractCode);
 
 		/// <summary>
 		/// 
@@ -65,6 +79,14 @@ namespace Mariupolgaz.EArchiv.Common.Servises
 		/// <param name="ls"></param>
 		/// <returns></returns>
 		void SaveDocument(Document doc, Folder folder, int ls);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="doc"></param>
+		/// <param name="orgCode"></param>
+		/// <param name="contractCode"></param>
+		void SaveDocument(Document doc, string orgCode, string contractCode);
 
 		/// <summary>
 		/// 
