@@ -85,6 +85,22 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 			get { return "Договор № " + _curcontro.Nomer + " " + _curcontro.Name; }	
 		}
 
+		private double _img_width = Double.NaN;
+		/// <summary>
+		/// Ширина изображения
+		/// </summary>
+		public double ImageWidth
+		{
+			get { return _img_width; }
+			set
+			{
+				if (_img_width != value) {
+					_img_width = value;
+					RaisePropertyChanged(() => ImageWidth);
+				}
+			}
+		}
+
 		#endregion
 
 		#region Commands
