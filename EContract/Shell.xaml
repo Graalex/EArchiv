@@ -8,7 +8,8 @@
 				xmlns:common="clr-namespace:Mariupolgaz.EArchiv.Common;assembly=mariupolgaz.earchiv.common"
         mc:Ignorable="d"
         Title="ПАО Мариупольгаз. Электронный архив договоров" Height="350" Width="525"
-				FontSize="15">
+				FontSize="14"
+				>
   <DockPanel>
     <ToolBar DockPanel.Dock="Top"
 						 Height="30"
@@ -22,14 +23,14 @@
 			/>
 		</StatusBar>
     <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.RightRegion}" 
-										DockPanel.Dock="Right" />
+										DockPanel.Dock="Right"  Margin="5"/>
     <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.LeftRegion}"
 										DockPanel.Dock="Left" 
 										VerticalAlignment="Top"
 		/>
     <Grid>
       <Grid.RowDefinitions>
-        <RowDefinition Height="400" />
+        <RowDefinition Height="300" />
         <RowDefinition />
       </Grid.RowDefinitions>
 			<ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.ContentTopRegion}"

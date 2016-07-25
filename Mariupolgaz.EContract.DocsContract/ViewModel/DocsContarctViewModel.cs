@@ -60,6 +60,7 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 			}
 		}
 
+
 		private Contract _curcontro;
 		/// <summary>
 		/// Текущий договор
@@ -71,8 +72,17 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 				if(_curcontro != value) {
 					_curcontro = value;
 					RaisePropertyChanged(() => CurrentContract);
+					RaisePropertyChanged(() => ContractText);
 				}
 			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public string ContractText
+		{
+			get { return "Договор № " + _curcontro.Nomer + " " + _curcontro.Name; }	
 		}
 
 		#endregion

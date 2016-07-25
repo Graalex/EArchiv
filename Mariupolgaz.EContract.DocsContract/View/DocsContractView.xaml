@@ -20,8 +20,8 @@
 									Grid.ColumnSpan="2"
 									VerticalAlignment="Center"
 									HorizontalAlignment="Center">
-      <TextBlock Text="{Binding CurrentContract.Nomer}" />
-      <TextBlock Text="{Binding CurrentContract.Name}" />
+      <TextBlock Text="{Binding ContractText}" FontWeight="Bold" />
+      
     </StackPanel>
     <GroupBox Header="Документы"
 							Grid.Row="1"

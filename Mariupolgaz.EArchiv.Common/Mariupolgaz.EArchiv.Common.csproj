@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="Events\ContractSelectedEvent.cs" />
     <Compile Include="Events\ContractMessage.cs" />
+    <Compile Include="Events\ContractSelectEvent.cs" />
     <Compile Include="Events\IdentityMessage.cs" />
     <Compile Include="Events\AuthenticateEvent.cs" />
     <Compile Include="Events\AuthenticateMessage.cs" />

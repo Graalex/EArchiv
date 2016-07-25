@@ -196,6 +196,7 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 
 		private void onGetDocuments()
 		{
+			_aggr.GetEvent<ContractSelectEvent>().Publish(true);
 			_aggr.GetEvent<ContractSelectedEvent>().Publish(this.CurrentContract);
 
 		}
