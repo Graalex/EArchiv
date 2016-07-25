@@ -28,6 +28,7 @@
     <ProductName>E-Archiv</ProductName>
     <PublisherName>ПАО Мариупольгаз</PublisherName>
     <SuiteName>EArchiv</SuiteName>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
@@ -35,7 +36,7 @@
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <BootstrapperComponentsLocation>Absolute</BootstrapperComponentsLocation>
-    <BootstrapperComponentsUrl>\\gx\all\EARCHIV\vendor</BootstrapperComponentsUrl>
+    <BootstrapperComponentsUrl>\\192.168.0.9\all\EARCHIV\vendor</BootstrapperComponentsUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>

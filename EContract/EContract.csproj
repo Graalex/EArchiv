@@ -13,6 +13,29 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>\\192.168.0.9\all\ECONTRACT\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ProductName>E-Contract</ProductName>
+    <PublisherName>ПАО Мариупольгаз</PublisherName>
+    <SuiteName>EContract</SuiteName>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BootstrapperComponentsLocation>Absolute</BootstrapperComponentsLocation>
+    <BootstrapperComponentsUrl>\\192.168.0.9\all\ECONTRACT\vendor</BootstrapperComponentsUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -37,6 +60,18 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>EContract.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>FFC981BABEBF92E2BF4066E1A299E8C2EFCE9431</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>EContract_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -137,6 +172,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="EContract_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -145,13 +181,36 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Mariupolgaz.EArchiv.Authorize\Mariupolgaz.EArchiv.Security.csproj">
+      <Project>{e34aae10-b09d-4c93-b62c-b00305007fff}</Project>
+      <Name>Mariupolgaz.EArchiv.Security</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mariupolgaz.EArchiv.Common\Mariupolgaz.EArchiv.Common.csproj">
       <Project>{cda1f982-6d97-4e29-bd9b-cbd05aebb60d}</Project>
       <Name>Mariupolgaz.EArchiv.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mariupolgaz.EArchiv.Document\Mariupolgaz.EArchiv.Document.csproj">
+      <Project>{eefb5bf6-8ccd-4ae9-a3aa-9a5ccca73c86}</Project>
+      <Name>Mariupolgaz.EArchiv.Document</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mariupolgaz.EContract.DocsContract\Mariupolgaz.EContract.DocsContract.csproj">
+      <Project>{4822ce0c-eb6b-41c0-bb2a-43d3b1da5fa7}</Project>
+      <Name>Mariupolgaz.EContract.DocsContract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mariupolgaz.EContract.Finder\Mariupolgaz.EContract.Finder.csproj">
+      <Project>{585b86dd-a84a-4eee-8660-1cebdbe109b2}</Project>
+      <Name>Mariupolgaz.EContract.Finder</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="EContract.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
