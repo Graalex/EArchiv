@@ -39,8 +39,9 @@ namespace EContract
 			_container = container;
 
 			_aggregator.GetEvent<AuthenticateEvent>().Subscribe(authenticated);
-			_aggregator.GetEvent<ContractSelectEvent>()
-				.Subscribe(documented);
+			_aggregator.GetEvent<ContractSelectEvent>().Subscribe(documented);
+			_aggregator.GetEvent<ServerConectEvent>().Subscribe(msg => this.Info = "Соединяемся с сервером 1С " + msg);
+			_aggregator.GetEvent<ServerConectedEvent>().Subscribe(connected);
 		}
 
 		#region Properties
@@ -65,6 +66,21 @@ namespace EContract
 			}
 		}
 
+		private string _info;
+		/// <summary>
+		/// 
+		/// </summary>
+		public string Info
+		{
+			get { return _info; }
+			set {
+				if(_info != value) {
+					_info = value;
+					RaisePropertyChanged(() => Info);
+				}
+			}
+		}
+
 		#endregion
 
 		#region Helpers
@@ -85,6 +101,12 @@ namespace EContract
 			if(flag)
 				_manager.RequestNavigate(RegionNames.ContentDocRegion, new Uri(ViewNames.DocsContract, UriKind.Relative));
     }
+
+		private void connected(bool flag)
+		{
+			if (flag) this.Info = "Подключены успешно!";
+			else this.Info = "";
+		}
 
 		#endregion
 	}

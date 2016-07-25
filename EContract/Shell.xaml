@@ -17,11 +17,14 @@
     <StatusBar DockPanel.Dock="Bottom"
 		 					 Height="30"
 		>
-			<TextBlock VerticalAlignment="Center"
-								 Margin="5 0 0 5"
-								 Text="{Binding User}"
-			/>
-		</StatusBar>
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+				<TextBlock VerticalAlignment="Center"
+									 Margin="5 0 0 5"
+									 Text="{Binding User}"
+				/>
+				<TextBlock Margin="5 0 0 5" Text="{Binding Info}"/>
+      </StackPanel>
+    </StatusBar>
     <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.RightRegion}" 
 										DockPanel.Dock="Right"  Margin="5"/>
     <ContentControl prism:RegionManager.RegionName="{x:Static common:RegionNames.LeftRegion}"

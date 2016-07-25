@@ -21,6 +21,7 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 	{
 		private string _org;
 		private readonly IEventAggregator _aggr;
+		private IContractFinderService _serv;
 
 		/// <summary>
 		/// 
@@ -32,6 +33,7 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 			_aggr = aggregator;
 			this.Contragents = new ObservableCollection<Contragent>();
 			_org = ConfigurationManager.AppSettings["org"];
+			_serv = ServiceLocator.Current.GetInstance<IContractFinderService>();
     }
 		
 		#region Properties
@@ -141,7 +143,7 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 			try {
 				this.Contragents.Clear();
 				// ищем сервис поиска договоров в 1С и получаеи список контрагентов
-				var contr = (ServiceLocator.Current.GetInstance<IContractFinderService>()).FindContragents(_org, this.ContragentName);
+				var contr = _serv.FindContragents(_org, this.ContragentName);
 				this.ContragentName = null;
 
 				if (contr != null) {
