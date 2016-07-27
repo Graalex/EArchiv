@@ -40,7 +40,9 @@ namespace EContract
 
 			_aggregator.GetEvent<AuthenticateEvent>().Subscribe(authenticated);
 			_aggregator.GetEvent<ContractSelectEvent>().Subscribe(documented);
-			_aggregator.GetEvent<ServerConectEvent>().Subscribe(msg => this.Info = "Соединяемся с сервером 1С " + msg);
+			_aggregator.GetEvent<ServerConectEvent>().Subscribe(
+				msg => this.Info = "Соединяемся с сервером 1С " + msg
+			);
 			_aggregator.GetEvent<ServerConectedEvent>().Subscribe(connected);
 		}
 
