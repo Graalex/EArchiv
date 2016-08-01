@@ -57,6 +57,11 @@ namespace Mariupolgaz.EArchiv.Document.Services
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="ls"></param>
+		/// <returns></returns>
 		public IList<comm.Document> GetDocuments(int ls)
 		{
 			using (SqlConnection con = new SqlConnection(_con)) {
@@ -107,9 +112,9 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		/// <param name="orgCode"></param>
 		/// <param name="contractCode"></param>
 		/// <returns></returns>
-		public IList<comm.Document> GetDocuments(string orgCode, string contractCode)
+		public IList<comm.ContractDocument> GetDocuments(string orgCode, string contractCode)
 		{
-			IList<comm.Document> rslt = new List<comm.Document>();
+			IList<comm.ContractDocument> rslt = new List<comm.ContractDocument>();
 
 			using(SqlConnection con = new SqlConnection(_con)) {
 				using(SqlCommand cmd = new SqlCommand("GetDocByContract", con)) {
@@ -130,8 +135,12 @@ namespace Mariupolgaz.EArchiv.Document.Services
 								int id = Convert.ToInt32(reader["Kind"]);
 								var kind = _kinds.First(item => item.ID == id);
 
-								rslt.Add(new Common.Models.Document(Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], null /*thrumb*/,
-									Convert.ToDateTime(reader["CreateAt"]), Convert.ToDateTime(reader["ModifyAt"]), Convert.ToBoolean(reader["IsMarkDelete"]), src));
+								rslt.Add(
+									new Common.Models.ContractDocument(
+										Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], null /*thrumb*/,
+										Convert.ToDateTime(reader["CreateAt"]), Convert.ToDateTime(reader["ModifyAt"]), Convert.ToBoolean(reader["IsMarkDelete"]), 
+										src, Convert.ToDateTime(reader["DocumentDate"]), Convert.ToString(reader["DocumentNomer"])
+								));
 							}
 						}
 					}
@@ -190,6 +199,11 @@ namespace Mariupolgaz.EArchiv.Document.Services
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="docID"></param>
+		/// <returns></returns>
 		public comm.Document LoadDocument(int docID)
 		{
 			throw new NotImplementedException();
@@ -225,6 +239,12 @@ namespace Mariupolgaz.EArchiv.Document.Services
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="doc"></param>
+		/// <param name="folder"></param>
+		/// <param name="ls"></param>
 		public void SaveDocument(comm.Document doc, comm.Folder folder, int ls)
 		{
 			using(SqlConnection con = new SqlConnection(_con)) {
@@ -331,7 +351,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		/// <param name="doc"></param>
 		/// <param name="orgCode"></param>
 		/// <param name="contractCode"></param>
-		public void SaveDocument(comm.Document doc, string orgCode, string contractCode)
+		public void SaveDocument(comm.ContractDocument doc, string orgCode, string contractCode)
 		{
 			using(SqlConnection con = new SqlConnection(_con)) {
 				using(SqlCommand cmd = new SqlCommand()) {
@@ -391,6 +411,8 @@ namespace Mariupolgaz.EArchiv.Document.Services
 						cmd.Parameters.AddWithValue("@Doc", doc.ID);
 						cmd.Parameters.AddWithValue("@OrgCode", orgCode);
 						cmd.Parameters.AddWithValue("@ContractCode", contractCode);
+						cmd.Parameters.AddWithValue("@ContractDate", doc.DocumentDate);
+						cmd.Parameters.AddWithValue("@ContractNomer", doc.DocumentNumber);
 						cmd.Parameters.AddWithValue("UsrName", "EContract");
 
 						parametr = new SqlParameter("@Key", key);

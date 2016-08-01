@@ -65,6 +65,37 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 		/// </summary>
 		public Action Close { get; set; }
 
+		private DateTime _docDate;
+		/// <summary>
+		/// 
+		/// </summary>
+		public DateTime DocumentDate
+		{
+			get { return _docDate; }
+			set {
+				if(_docDate != value) {
+					_docDate = value;
+					RaisePropertyChanged(() => DocumentDate);
+				}
+			}
+		}
+
+		private string _docNumb;
+		/// <summary>
+		/// 
+		/// </summary>
+		public string DocumentNumber
+		{
+			get { return _docNumb; }
+			set
+			{
+				if (_docNumb != value) {
+					_docNumb = value;
+					RaisePropertyChanged(() => DocumentNumber);
+				}
+			}
+		}
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -96,6 +127,9 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 			get { return new DelegateCommand(onAddFile); }
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public int DocumentService { get; private set; }
 
 		private void onAddFile()

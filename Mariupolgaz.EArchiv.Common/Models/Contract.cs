@@ -37,6 +37,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			this.Name = name;
 			this.Nomer = nomer;
 			this.Date = date;
+			this.Expiry = expiry;
 			this.IsSigned = isSigned;
 			this.IsEarly = isEarly;
 			this.IsAsseccion = isAsseccion;

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Linq;
 using System.Windows.Input;
 using Mariupolgaz.EArchiv.Common.Models;
 using Mariupolgaz.EArchiv.Common.Servises;
@@ -28,26 +30,32 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 			_evnAggr = eventAggr;
 			var ds = ServiceLocator.Current.GetInstance<IDocumentService>();
 			this.Kinds = new ObservableCollection<DocumentKind>(ds.GetKindsByClass(6));
-		}
+			this.Files = new List<string>();
+      this.DocumentDate = DateTime.Today;
+    }
 
 		#region Properties
 
-		private string _file;
 		/// <summary>
-		/// Полный путь к файлу с изображением
+		/// Список полных путей выбранных файлов изображений
 		/// </summary>
-		public string File
+		public IList<string> Files { get; private set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public string Paths
 		{
-			get { return _file; }
-			set
-			{
-				if (_file != value) {
-					_file = value;
-					RaisePropertyChanged(() => File);
+			get {
+				string rslt = "";
+				foreach(string item in this.Files) {
+					rslt += item + ";";
 				}
+
+				return rslt;
 			}
 		}
-
+				
 		private DocumentKind _kind;
 		/// <summary>
 		/// Выбранный тип документа
@@ -64,6 +72,36 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 			}
 		}
 
+		private DateTime _docDate;
+		/// <summary>
+		/// Дата документа
+		/// </summary>
+		public DateTime DocumentDate
+		{
+			get { return _docDate; }
+			set {
+				if(_docDate != value) {
+					_docDate = value;
+					RaisePropertyChanged(() => DocumentDate);
+				}
+			}
+		}
+
+		private string _docNumb;
+		/// <summary>
+		/// Номер документа
+		/// </summary>
+		public string DocumentNumber
+		{
+			get { return _docNumb; }
+			set {
+				if(_docNumb != value) {
+					_docNumb = value;
+					RaisePropertyChanged(() => DocumentNumber);
+				}
+			}
+		}
+
 		/// <summary>
 		/// Список типов документов
 		/// </summary>
@@ -71,6 +109,9 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 
 		#endregion
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public Action Close { get; set; }
 
 		#region Commands
@@ -86,11 +127,12 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 		private void onAddFile()
 		{
 			OpenFileDialog dlg = new OpenFileDialog();
-			dlg.Multiselect = false;
+			dlg.Multiselect = true;
 			dlg.Filter = "Изображения (jpeg)|*.jpg;(tiff)|*.tif;(bmp)|*.bmp";
 			bool? rslt = dlg.ShowDialog();
 			if (rslt.GetValueOrDefault()) {
-				this.File = dlg.FileName;
+				this.Files = dlg.FileNames;
+				RaisePropertyChanged(() => Paths);
 			}
 		}
 
@@ -104,18 +146,13 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 
 		private void onOk()
 		{
-			if (!System.IO.File.Exists(this.File)) {
-				MessageBox.Show("Файл не существует!", "Сообщение");
-				return;
-			}
-
 			this.Close();
 
 		}
 
 		private bool canOk()
 		{
-			return (this.File != String.Empty && this.SelectedKind != null);
+			return (this.Files.Count > 0  && this.SelectedKind != null);
 		}
 
 		#endregion

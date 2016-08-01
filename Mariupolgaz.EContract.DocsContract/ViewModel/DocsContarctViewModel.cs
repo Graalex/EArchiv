@@ -35,7 +35,8 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 			_docsrv = ServiceLocator.Current.GetInstance<IDocumentService>();
 
 			_aggr.GetEvent<ContractSelectedEvent>().Subscribe(updateContract);
-			this.Documents = new ObservableCollection<Document>();
+			this.Documents = new ObservableCollection<ContractDocument>();
+			
 		}
 
 		#region Properties
@@ -43,13 +44,13 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 		/// <summary>
 		/// Список отсканированных документов для договора
 		/// </summary>
-		public ObservableCollection<Document> Documents { get; private set; }
+		public ObservableCollection<ContractDocument> Documents { get; private set; }
 
-		private Document _seldoc;
+		private ContractDocument _seldoc;
 		/// <summary>
 		/// Текущий документа
 		/// </summary>
-		public Document SelectedDocument 
+		public ContractDocument SelectedDocument 
 		{ 
 			get { return _seldoc; }
 			set {
@@ -126,25 +127,31 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 					Mouse.OverrideCursor = Cursors.Wait;
 
 					var data = (dlg.DataContext as ContractDocAddViewModel);
-					Document doc = new Document(generateDocName(data.SelectedKind), data.SelectedKind);
+					foreach(string file in data.Files) {
+						ContractDocument doc = new ContractDocument(generateDocName(data.SelectedKind), data.SelectedKind, data.DocumentDate, data.DocumentNumber);
+						
+						BitmapImage bi = new BitmapImage();
+						fs = new FileStream(file, FileMode.Open);
 
-					BitmapImage bi = new BitmapImage();
-					fs = new FileStream(data.File, FileMode.Open);
+						bi.BeginInit();
+						bi.CacheOption = BitmapCacheOption.OnLoad;
+						bi.StreamSource = fs;
+						bi.EndInit();
 
-					bi.BeginInit();
-					bi.CacheOption = BitmapCacheOption.OnLoad;
-					bi.StreamSource = fs;
-					bi.EndInit();
+						doc.Source = bi;
+						this.Documents.Add(doc);
+						fs.Close();
+					}
+					
 
-					doc.Source = bi;
-					this.Documents.Add(doc);
-					this.SelectedDocument = doc;
+					
+					this.SelectedDocument = this.Documents.Last();
 				}
 			}
 
 			catch (Exception e) {
 				MessageBox.Show(
-					"Произошла ошибка при добавлении документа.\n" + e.Message,
+					"Произошла ошибка при добавлении документов.\n" + e.Message,
 					"Ошибка",
 					MessageBoxButton.OK,
 					MessageBoxImage.Error
@@ -174,6 +181,10 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 			try {
 				var dlg = ServiceLocator.Current.GetInstance<ContractDocEditDialog>();
 				var data = (dlg.DataContext as ContractDocEditViewModel);
+				data.SelectedKind = this.SelectedDocument.Kind;
+				data.DocumentDate = this.SelectedDocument.DocumentDate;
+				data.DocumentNumber = this.SelectedDocument.DocumentNumber;
+
 				bool? rslt = dlg.ShowDialog();
 				if (rslt.GetValueOrDefault()) {
 					Mouse.OverrideCursor = Cursors.Wait;
