@@ -90,6 +90,8 @@ namespace EContract
 		private void authenticated(AuthenticateMessage msg)
 		{
 			if(msg.IsAuthenticate) {
+				//TODO: Запустить сессию
+
 				this.User = msg.LoginName;
 				_manager.RequestNavigate(RegionNames.ContentTopRegion, new Uri(ViewNames.ModernFinder, UriKind.Relative));
 				var reg = _manager.Regions[RegionNames.LeftRegion];

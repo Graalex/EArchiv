@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Security.Cryptography;
 using System.Windows.Media.Imaging;
 
@@ -7,7 +8,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 	/// <summary>
 	/// Представляет электронный документ
 	/// </summary>
-	public class Document: NotificationObject
+	public class Document : NotificationObject
 	{
 		#region Constructors
 
@@ -44,7 +45,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		/// <param name="isMarkDel">Пометка на удаление</param>
 		/// <param name="source">Скан копия документа</param>
 		public Document(int id, DocumentKind kind, string name, byte[] hash, BitmapImage thumbnails, DateTime createAt, DateTime modifyAt,
-										bool isMarkDel, BitmapImage source)
+										bool isMarkDel, BitmapImage source, string usrAdd = null)
 		{
 			this._id = id;
 			this._kind = kind;
@@ -56,9 +57,11 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			this._mark_del = isMarkDel;
 			this._source = source;
 			this.IsDirty = false;
+			this.UserAdd = usrAdd;
+			this.UsersModifity = new ObservableCollection<UserMod>();
 		}
 
-		#endregion  
+		#endregion
 
 		#region Properties
 
@@ -77,7 +80,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		public DocumentKind Kind {
 			get { return _kind; }
 			set {
-				if(_kind != value) {
+				if (_kind != value) {
 					_kind = value;
 					this.IsDirty = true;
 					RaisePropertyChanged(() => Kind);
@@ -92,7 +95,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		public string Name {
 			get { return _name; }
 			set {
-				if(_name != value) {
+				if (_name != value) {
 					_name = value;
 					_modifyat = DateTime.Now;
 					this.IsDirty = true;
@@ -109,7 +112,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		public string Hash {
 			get {
 				string rslt = String.Empty;
-        for (int i=0; i<_hash.Length; i++) {
+				for (int i = 0; i < _hash.Length; i++) {
 					rslt += String.Format("0:X2", _hash[i]);
 				}
 				return rslt;
@@ -182,12 +185,31 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		{
 			get { return _dirty; }
 			set {
-				if(_dirty != value) {
+				if (_dirty != value) {
 					_dirty = value;
 					RaisePropertyChanged(() => IsDirty);
 				}
 			}
 		}
+
+		private string _usrAdd;
+		/// <summary>
+		/// Имя пользователя добавившего документ
+		/// </summary>
+		public string UserAdd {
+			get { return _usrAdd; }
+			set {
+				if (_usrAdd != value) {
+					_usrAdd = value;
+					RaisePropertyChanged(() => UserAdd);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Список пользователей изменивший документ
+		/// </summary>
+		public ObservableCollection<UserMod> UsersModifity { get; private set; }
 
 		// TODO: Надо будет добавить создание штрих кода документа (причем разных).
 

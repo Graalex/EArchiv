@@ -40,9 +40,9 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		public ContractDocument(
 			int id, DocumentKind kind, string name, byte[] hash,
 			BitmapImage thumbnails, DateTime createAt, DateTime modifyAt,
-			bool isMarkDel, BitmapImage source,
+			bool isMarkDel, BitmapImage source, string usrAdd,
 			DateTime docDate, string docNumb
-		) : base(id, kind, name, hash, thumbnails, createAt, modifyAt, isMarkDel, source)
+		) : base(id, kind, name, hash, thumbnails, createAt, modifyAt, isMarkDel, source, usrAdd)
 		{
 			this.DocumentDate = docDate;
 			this.DocumentNumber = docNumb;

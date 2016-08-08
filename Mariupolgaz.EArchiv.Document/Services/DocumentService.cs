@@ -58,7 +58,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		}
 
 		/// <summary>
-		/// 
+		/// Возвращает список документов по лицевому счету
 		/// </summary>
 		/// <param name="ls"></param>
 		/// <returns></returns>
@@ -107,7 +107,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		}
 
 		/// <summary>
-		/// 
+		/// Возвращает список документов по ЕДРПОУ предприятия и коду договора в базе 1С
 		/// </summary>
 		/// <param name="orgCode"></param>
 		/// <param name="contractCode"></param>
@@ -138,13 +138,37 @@ namespace Mariupolgaz.EArchiv.Document.Services
 								rslt.Add(
 									new Common.Models.ContractDocument(
 										Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], null /*thrumb*/,
-										Convert.ToDateTime(reader["CreateAt"]), Convert.ToDateTime(reader["ModifyAt"]), Convert.ToBoolean(reader["IsMarkDelete"]), 
-										src, Convert.ToDateTime(reader["DocumentDate"]), Convert.ToString(reader["DocumentNomer"])
+										Convert.ToDateTime(reader["CreateAt"]), Convert.ToDateTime(reader["ModifyAt"]), Convert.ToBoolean(reader["IsMarkDelete"]),
+										src, Convert.ToString(reader["AddUser"]),
+										Convert.ToDateTime(reader["DocumentDate"]), Convert.ToString(reader["DocumentNomer"])
 								));
 							}
 						}
 					}
-				}
+
+					cmd.CommandText = "GetUsrWorks";
+					cmd.Parameters.Clear();
+					cmd.Parameters.AddWithValue("@TableName", "DocAttr");
+					cmd.Parameters.AddWithValue("@Operation", "UPD");
+					cmd.Parameters.AddWithValue("@RecID", 0);
+
+					foreach (var item in rslt) {
+						cmd.Parameters["@RecID"].Value = item.ID;
+
+						using (SqlDataReader r = cmd.ExecuteReader()) {
+							if (r.HasRows) {
+								while (r.Read()) {
+									item.UsersModifity.Add(
+										new comm.UserMod(
+											Convert.ToString(r["UsrName"]),
+											Convert.ToDateTime(r["EventTime"])
+										)
+									);
+								}
+							}
+						}
+					}
+        }
 			}
 
 			return rslt;
