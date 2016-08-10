@@ -86,7 +86,8 @@ namespace Mariupolgaz.EArchiv.Common.Servises
 		/// <param name="doc"></param>
 		/// <param name="orgCode"></param>
 		/// <param name="contractCode"></param>
-		void SaveDocument(ContractDocument doc, string orgCode, string contractCode);
+		/// <param name="user"></param>
+		void SaveDocument(ContractDocument doc, string orgCode, string contractCode, string user);
 
 		/// <summary>
 		/// 
@@ -99,6 +100,13 @@ namespace Mariupolgaz.EArchiv.Common.Servises
 		/// </summary>
 		/// <param name="doc"></param>
 		void SaveDocumentSource(Document doc);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="doc"></param>
+		/// <param name="user"></param>
+		void SaveDocumentSource(ContractDocument doc, string user);
 
 		/// <summary>
 		/// 

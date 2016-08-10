@@ -201,6 +201,10 @@
       <Project>{585b86dd-a84a-4eee-8660-1cebdbe109b2}</Project>
       <Name>Mariupolgaz.EContract.Finder</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mariupolgaz.EContract.Worker\Mariupolgaz.EContract.Worker.csproj">
+      <Project>{9db8eca8-8d8d-4c40-b397-f0b2ae767e96}</Project>
+      <Name>Mariupolgaz.EContract.Worker</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="EContract.ico" />

@@ -6,6 +6,7 @@ using System.Windows;
 using Mariupolgaz.EArchiv.Common;
 using Mariupolgaz.EArchiv.Common.Events;
 using Mariupolgaz.EArchiv.Common.Models;
+using Mariupolgaz.EArchiv.Common.Servises;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
@@ -91,6 +92,8 @@ namespace EContract
 		{
 			if(msg.IsAuthenticate) {
 				//TODO: Запустить сессию
+				var worker = ServiceLocator.Current.GetInstance<IWorkerService>();
+				worker.RegisterIdentity(new WorkerIdentity(msg.LoginName));
 
 				this.User = msg.LoginName;
 				_manager.RequestNavigate(RegionNames.ContentTopRegion, new Uri(ViewNames.ModernFinder, UriKind.Relative));

@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mariupolgaz.EContract.Finde
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mariupolgaz.EContract.DocsContract", "Mariupolgaz.EContract.DocsContract\Mariupolgaz.EContract.DocsContract.csproj", "{4822CE0C-EB6B-41C0-BB2A-43D3B1DA5FA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mariupolgaz.EContract.Worker", "Mariupolgaz.EContract.Worker\Mariupolgaz.EContract.Worker.csproj", "{9DB8ECA8-8D8D-4C40-B397-F0B2AE767E96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{4822CE0C-EB6B-41C0-BB2A-43D3B1DA5FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4822CE0C-EB6B-41C0-BB2A-43D3B1DA5FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4822CE0C-EB6B-41C0-BB2A-43D3B1DA5FA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DB8ECA8-8D8D-4C40-B397-F0B2AE767E96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DB8ECA8-8D8D-4C40-B397-F0B2AE767E96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DB8ECA8-8D8D-4C40-B397-F0B2AE767E96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DB8ECA8-8D8D-4C40-B397-F0B2AE767E96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

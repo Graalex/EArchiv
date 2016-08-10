@@ -375,7 +375,8 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		/// <param name="doc"></param>
 		/// <param name="orgCode"></param>
 		/// <param name="contractCode"></param>
-		public void SaveDocument(comm.ContractDocument doc, string orgCode, string contractCode)
+		/// <param name="user"></param>
+		public void SaveDocument(comm.ContractDocument doc, string orgCode, string contractCode, string user)
 		{
 			using(SqlConnection con = new SqlConnection(_con)) {
 				using(SqlCommand cmd = new SqlCommand()) {
@@ -393,7 +394,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 						cmd.Parameters.Clear();
 						cmd.Parameters.AddWithValue("@Name", doc.Name);
 						cmd.Parameters.AddWithValue("@Kind", doc.Kind.ID);
-						cmd.Parameters.AddWithValue("@UsrName", "EArchiv");
+						cmd.Parameters.AddWithValue("@UsrName", user.Trim());
 						cmd.Parameters.AddWithValue("@Hash", doc.ConvertHash());
 
 						//TODO: Костыль позже убрать
@@ -437,7 +438,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 						cmd.Parameters.AddWithValue("@ContractCode", contractCode);
 						cmd.Parameters.AddWithValue("@ContractDate", doc.DocumentDate);
 						cmd.Parameters.AddWithValue("@ContractNomer", doc.DocumentNumber);
-						cmd.Parameters.AddWithValue("UsrName", "EContract");
+						cmd.Parameters.AddWithValue("UsrName", user.Trim());
 
 						parametr = new SqlParameter("@Key", key);
 						parametr.Direction = ParameterDirection.Output;
@@ -604,6 +605,52 @@ namespace Mariupolgaz.EArchiv.Document.Services
 				s.Read(buf, 0, (int)len);
 				cmd.Parameters.AddWithValue("@Raw", buf);
 				
+				con.Open();
+				cmd.ExecuteNonQuery();
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="doc"></param>
+		/// <param name="user"></param>
+		public void SaveDocumentSource(comm.ContractDocument doc, string user)
+		{
+			using (SqlConnection con = new SqlConnection(_con)) {
+				SqlCommand cmd = new SqlCommand();
+				cmd.Connection = con;
+				cmd.CommandType = CommandType.StoredProcedure;
+				cmd.CommandText = "DocSet";
+				cmd.Parameters.Clear();
+				cmd.Parameters.AddWithValue("@Key", doc.ID);
+				cmd.Parameters.AddWithValue("@Name", doc.Name);
+				cmd.Parameters.AddWithValue("@Kind", doc.Kind.ID);
+				cmd.Parameters.AddWithValue("@ModifyAt", doc.ModifyAt);
+				cmd.Parameters.AddWithValue("@UsrName", user.Trim());
+				cmd.Parameters.AddWithValue("@Hash", doc.ConvertHash());
+
+				long len;
+				byte[] buf;
+
+				/*
+				long len = doc.Thumbnails.StreamSource.Length;
+				byte[] buf = new byte[len];
+				doc.Thumbnails.StreamSource.Read(buf, 0, (int)len);
+				cmd.Parameters.AddWithValue("Thumbnails", buf);
+				*/
+				buf = new byte[2];
+				buf[0] = 1;
+				buf[1] = 2;
+				cmd.Parameters.AddWithValue("@Thumbnails", buf);
+
+				FileStream s = new FileStream((doc.Source.StreamSource as FileStream).Name, FileMode.Open);
+				len = s.Length;
+				buf = new byte[len];
+				s.Position = 0;
+				s.Read(buf, 0, (int)len);
+				cmd.Parameters.AddWithValue("@Raw", buf);
+
 				con.Open();
 				cmd.ExecuteNonQuery();
 			}

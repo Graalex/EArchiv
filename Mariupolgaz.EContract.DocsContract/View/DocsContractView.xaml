@@ -85,11 +85,61 @@
         </ListView>
       </Grid>
     </GroupBox>
-		<Image Grid.Column="1"
-					 Grid.Row="1"
-					 Stretch="Uniform"
-					 Width="{Binding ImageWidth}"
-			     Margin="5"
-			     Source="{Binding SelectedDocument.Source}" />
-	</Grid>
+    <Grid Grid.Column="1"
+					Grid.Row="1">
+      <Grid.ColumnDefinitions>
+				<ColumnDefinition />
+        <ColumnDefinition Width="180" />
+      </Grid.ColumnDefinitions>
+      <GroupBox Margin="5"
+								Padding="5"
+								Header="Скан документа">
+				<Image Stretch="Uniform"
+							 Width="{Binding ImageWidth}"
+							 Margin="5"
+							 Source="{Binding SelectedDocument.Source}" />
+      </GroupBox>
+      <GroupBox Grid.Column="1"
+							  Padding="5"
+								Margin="5"
+								Header="Исполнители">
+        <Grid>
+          <Grid.RowDefinitions>
+						<RowDefinition Height="70"/>
+            <RowDefinition />
+          </Grid.RowDefinitions>
+          
+          <StackPanel Orientation="Vertical">
+            <TextBlock FontWeight="Bold"
+											 Text="Добавил:" 
+											 VerticalAlignment="Top"
+										   HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding SelectedDocument.UserAdd}" />
+            <TextBlock Text="{Binding SelectedDocument.CreateAt, StringFormat={}{0:dd.MM.yyyy HH:mm:ss}}" />
+          </StackPanel>
+          <StackPanel Grid.Row="1" Orientation="Vertical">
+						<TextBlock Text="Изменили:" 
+											 FontWeight="Bold"
+											 HorizontalAlignment="Center"
+											 VerticalAlignment="Top"/>
+            <ItemsControl VerticalAlignment="Top"
+													ItemsSource="{Binding SelectedDocument.UsersModifity}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Grid>
+                    <Grid.RowDefinitions>
+                      <RowDefinition />
+                      <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Name}" />
+                    <TextBlock Grid.Row="1" Text="{Binding ModifityAt, StringFormat={}{0:dd.MM.yyyy  HH:mm:ss}}"/>
+                  </Grid>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </Grid>
+			</GroupBox>
+    </Grid>
+  </Grid>
 </UserControl>

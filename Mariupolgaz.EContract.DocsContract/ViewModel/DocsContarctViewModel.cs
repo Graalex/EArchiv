@@ -35,6 +35,7 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 			_docsrv = ServiceLocator.Current.GetInstance<IDocumentService>();
 
 			_aggr.GetEvent<ContractSelectedEvent>().Subscribe(updateContract);
+			this.WorkUser = ServiceLocator.Current.GetInstance<IWorkerService>().GetCurrentIdentity().LoginName;
 			this.Documents = new ObservableCollection<ContractDocument>();
 			
 		}
@@ -98,6 +99,21 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 				if (_img_width != value) {
 					_img_width = value;
 					RaisePropertyChanged(() => ImageWidth);
+				}
+			}
+		}
+
+		private string _usr;
+		/// <summary>
+		/// Имя зарегистрированного пользователя
+		/// </summary>
+		public string WorkUser
+		{
+			get { return _usr; }
+			set {
+				if(_usr != value) {
+					_usr = value;
+					RaisePropertyChanged(() => WorkUser);
 				}
 			}
 		}
@@ -275,10 +291,10 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 				foreach (var doc in this.Documents) {
 					if (doc.IsDirty) {
 						if (doc.ID == -1) {
-							_docsrv.SaveDocument(doc, "03361135", this.CurrentContract.Code);
+							_docsrv.SaveDocument(doc, "03361135", this.CurrentContract.Code, this.WorkUser);
 						}
 						else {
-							_docsrv.SaveDocumentSource(doc);
+							_docsrv.SaveDocumentSource(doc, this.WorkUser);
 						}
 						doc.IsDirty = false;
 					}
@@ -356,5 +372,6 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 
 			return rslt;
 		}
+
 	}
 }

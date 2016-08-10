@@ -26,17 +26,20 @@
         <Label Content="Название контрагента" />
         <TextBox Width="600" 
 							 Text="{Binding ContragentName}"
-							 Margin="10 0" />
+							 Margin="10 0"
+							 TabIndex="0" />
         <Button Content="Поиск"
 							Command="{Binding FindContragents}"
 							Width="80"
-							Margin="10 0 5 0" />
+							Margin="10 0 5 0"
+							TabIndex="1" />
       </StackPanel>
       <GroupBox Grid.Row="1"
 							Grid.Column="0"
 							Header="Контрагенты"
 							Margin="5"
-							Padding="5">
+							Padding="5"
+							TabIndex="2">
       <ListView ItemsSource="{Binding Contragents}"
 								SelectedItem="{Binding CurrentContragent}"
 								SelectedIndex="{Binding ContragentIndex}">
