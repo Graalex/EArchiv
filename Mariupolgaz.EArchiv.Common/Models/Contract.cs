@@ -13,6 +13,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		/// <param name="code">Код в 1С</param>
 		/// <param name="name">Наименование</param>
 		/// <param name="nomer">Номер договора</param>
+		/// <param name="parent">Название головного договора</param>
 		/// <param name="date">Дата заключения</param>
 		/// <param name="expiry">Дата окончания</param>
 		/// <param name="isSigned">Подписан</param>
@@ -24,6 +25,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			string code,
 			string name,
 			string nomer,
+			string parent,
 			DateTime? date = null,
 			DateTime? expiry = null,
 			bool? isSigned = null,
@@ -37,6 +39,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			this.Name = name;
 			this.Nomer = nomer;
 			this.Date = date;
+			this.Parent = parent;
 			this.Expiry = expiry;
 			this.IsSigned = isSigned;
 			this.IsEarly = isEarly;
@@ -94,5 +97,10 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		/// Дата заявления о присоединении
 		/// </summary>
 		public DateTime? AsseccionDate { get; private set; }
-}
+
+		/// <summary>
+		/// Головной договор
+		/// </summary>
+		public string Parent { get; private set; }
+	}
 }

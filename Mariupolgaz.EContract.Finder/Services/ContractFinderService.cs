@@ -53,12 +53,13 @@ namespace Mariupolgaz.EContract.Finder.Services
 													"Контрагенты.КодПоЕДРПОУ," +
 													"Контрагенты.НомерСвидетельства " +
 											  "ИЗ Справочник.Контрагенты КАК Контрагенты " +
-											  "ГДЕ Контрагенты.Наименование ПОДОБНО &Наименование " +
+											  "ГДЕ Контрагенты.Наименование ПОДОБНО &Наименование И Контрагенты.ЭтоГруппа = ЛОЖЬ " +
 											  "УПОРЯДОЧИТЬ ПО Код";
 			string qrConcract = "ВЫБРАТЬ " +
 														"ДоговорыКонтрагентов.Код," +
 														"ДоговорыКонтрагентов.Наименование," +
 														"ДоговорыКонтрагентов.Номер," +
+														"ДоговорыКонтрагентов.Родитель.Наименование КАК Родитель, " +
 														"ДоговорыКонтрагентов.Дата КАК Дата," +
 														"ДоговорыКонтрагентов.СрокДействия," +
 														"ДоговорыКонтрагентов.Подписан," +
@@ -67,7 +68,7 @@ namespace Mariupolgaz.EContract.Finder.Services
 														"ДоговорыКонтрагентов.ДатаЗаявленияПрисоединения," +
 														"ДоговорыКонтрагентов.ДатаЗакрытДосрочно " +
 													"ИЗ Справочник.ДоговорыКонтрагентов КАК ДоговорыКонтрагентов " +
-													"ГДЕ ДоговорыКонтрагентов.Владелец.Код = &Код " +
+													"ГДЕ ДоговорыКонтрагентов.Владелец.Код = &Код И ДоговорыКонтрагентов.ЭтоГруппа = ЛОЖЬ " +
 													"УПОРЯДОЧИТЬ ПО Дата УБЫВ";
 
 			using (var cmd = new OneSCommand(_con)) {
@@ -100,13 +101,14 @@ namespace Mariupolgaz.EContract.Finder.Services
 										readerContracts.GetString(0),
 										readerContracts.GetString(1),
 										readerContracts.GetString(2),
-										readerContracts.GetDateTime(3),
+										readerContracts.GetString(3),
 										readerContracts.GetDateTime(4),
-										readerContracts.GetBoolean(5),
+										readerContracts.GetDateTime(5),
 										readerContracts.GetBoolean(6),
 										readerContracts.GetBoolean(7),
-										readerContracts.GetDateTime(8),
-										readerContracts.GetDateTime(9)
+										readerContracts.GetBoolean(8),
+										readerContracts.GetDateTime(9),
+										readerContracts.GetDateTime(10)
 									));
 								}
 							}
@@ -152,12 +154,13 @@ namespace Mariupolgaz.EContract.Finder.Services
 													"Контрагенты.КодПоЕДРПОУ," +
 													"Контрагенты.НомерСвидетельства " +
 												"ИЗ Справочник.Контрагенты КАК Контрагенты " +
-												"ГДЕ Контрагенты.КодПоЕДРПОУ = &ЕДРПОУ " +
+												"ГДЕ Контрагенты.КодПоЕДРПОУ = &ЕДРПОУ И Контрагенты.ЭтоГруппа = ЛОЖЬ " +
 												"УПОРЯДОЧИТЬ ПО Код";
 			string qrConcract = "ВЫБРАТЬ " +
 														"ДоговорыКонтрагентов.Код," +
 														"ДоговорыКонтрагентов.Наименование," +
 														"ДоговорыКонтрагентов.Номер," +
+														"ДоговорыКонтрагентов.Родитель.Наименование КАК Родитель, " +
 														"ДоговорыКонтрагентов.Дата КАК Дата," +
 														"ДоговорыКонтрагентов.СрокДействия," +
 														"ДоговорыКонтрагентов.Подписан," +
@@ -166,7 +169,7 @@ namespace Mariupolgaz.EContract.Finder.Services
 														"ДоговорыКонтрагентов.ДатаЗаявленияПрисоединения," +
 														"ДоговорыКонтрагентов.ДатаЗакрытДосрочно " +
 													"ИЗ Справочник.ДоговорыКонтрагентов КАК ДоговорыКонтрагентов " +
-													"ГДЕ ДоговорыКонтрагентов.Владелец.Код = &Код " +
+													"ГДЕ ДоговорыКонтрагентов.Владелец.Код = &Код И ДоговорыКонтрагентов.ЭтоГруппа = ЛОЖЬ " +
 													"УПОРЯДОЧИТЬ ПО Дата УБЫВ";
 
 			using (var cmd = new OneSCommand(_con)) {
@@ -195,13 +198,14 @@ namespace Mariupolgaz.EContract.Finder.Services
 										readerContracts.GetString(0),
 										readerContracts.GetString(1),
 										readerContracts.GetString(2),
-										readerContracts.GetDateTime(3),
+										readerContracts.GetString(3),
 										readerContracts.GetDateTime(4),
-										readerContracts.GetBoolean(5),
+										readerContracts.GetDateTime(5),
 										readerContracts.GetBoolean(6),
 										readerContracts.GetBoolean(7),
-										readerContracts.GetDateTime(8),
-										readerContracts.GetDateTime(9)
+										readerContracts.GetBoolean(8),
+										readerContracts.GetDateTime(9),
+										readerContracts.GetDateTime(10)
 									));
 								}
 							}
