@@ -53,6 +53,21 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 			}
 		}
 
+		private string _ccode;
+		/// <summary>
+		/// ЕДРПОУ код контрагента
+		/// </summary>
+		public string ContragentCode
+		{
+			get { return _ccode; }
+			set {
+				if(_ccode != value) {
+					_ccode = value;
+					RaisePropertyChanged(() => ContragentCode);
+				}
+			}
+		}
+
 		/// <summary>
 		/// Список найденных котрагентов
 		/// </summary>
@@ -142,29 +157,49 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 
 			try {
 				this.Contragents.Clear();
-				// ищем сервис поиска договоров в 1С и получаеи список контрагентов
-				var contr = _serv.FindContragents(_org, this.ContragentName);
-				this.ContragentName = null;
 
-				if (contr != null) {
-					// контрагенты найдены, заполняем список
-					foreach (var item in contr) {
-						this.Contragents.Add(item);
+				// ищем сервис поиска договоров в 1С и получаеи список контрагентов
+				if (this.ContragentCode != null && this.ContragentCode != "") {
+					var contrs = _serv.FindContragentsCode(_org, this.ContragentCode);
+
+					if (contrs != null) {
+						foreach (var item in contrs) {
+							this.Contragents.Add(item);
+						}
 					}
-					this.ContragentIndex = 0;
-					this.ContractIndex = 0;
+					else {
+						MessageBox.Show(
+							"Контрагент не найден.",
+							"Сообщение",
+							MessageBoxButton.OK,
+							MessageBoxImage.Information
+						);
+					}
 				}
-				else {
-					MessageBox.Show(
-						"Контрагенты не найдены.",
-						"Сообщение",
-						MessageBoxButton.OK,
-						MessageBoxImage.Information
-					);
+
+				else if (this.ContragentName != null && this.ContragentName != "") {
+					var contrs = _serv.FindContragents(_org, this.ContragentName);
+
+					if (contrs != null) {
+						// контрагенты найдены, заполняем список
+						foreach (var item in contrs) {
+							this.Contragents.Add(item);
+						}
+						this.ContragentIndex = 0;
+						this.ContractIndex = 0;
+					}
+					else {
+						MessageBox.Show(
+							"Контрагенты не найдены.",
+							"Сообщение",
+							MessageBoxButton.OK,
+							MessageBoxImage.Information
+						);
+					}
 				}
 			}
 
-			catch(Exception e) {
+			catch (Exception e) {
 				MessageBox.Show(
 					e.Message,
 					"Ошибка",
@@ -174,6 +209,8 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 			}
 
 			finally {
+				this.ContragentName = null;
+				this.ContragentCode = null;
 				Mouse.OverrideCursor = null;
 			}
 
@@ -181,7 +218,8 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 
 		private bool canFindContragents()
 		{
-			return this.ContragentName != null && this.ContragentName.Trim() != "";
+			return (this.ContragentName != null && this.ContragentName.Trim() != "") ||
+							(this.ContragentCode != null && this.ContragentCode.Trim() != "");
 		}
 
 		#endregion

@@ -16,5 +16,13 @@ namespace Mariupolgaz.EArchiv.Common.Servises
 		/// <returns></returns>
 		IList<Contragent> FindContragents(string orgKey, string contragentName);
 
+		/// <summary>
+		/// Получить список контрагентов по коду ЕДРПОУ
+		/// </summary>
+		/// <param name="orgKey">Ключ к параметрам подключения информационной базы 1С</param>
+		/// <param name="contragentCode">ЕДРПОУ контрагента</param>
+		/// <returns></returns>
+		IList<Contragent> FindContragentsCode(string orgKey, string contragentCode);
+
 	}
 }

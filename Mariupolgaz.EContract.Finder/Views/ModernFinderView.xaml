@@ -24,15 +24,20 @@
 								VerticalAlignment="Center"
 								HorizontalAlignment="Left">
         <Label Content="Название контрагента" />
-        <TextBox Width="600" 
+        <TextBox Width="400" 
 							 Text="{Binding ContragentName}"
 							 Margin="10 0"
 							 TabIndex="0" />
+				<Label Content="ЕДРПОУ"/>
+				<TextBox Width="200"
+								 Margin="10 0"
+								 TabIndex="1"
+								 Text="{Binding ContragentCode}"/>
         <Button Content="Поиск"
 							Command="{Binding FindContragents}"
 							Width="80"
 							Margin="10 0 5 0"
-							TabIndex="1" />
+							TabIndex="2" />
       </StackPanel>
       <GroupBox Grid.Row="1"
 							Grid.Column="0"
