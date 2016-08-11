@@ -21,6 +21,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		/// <param name="isAsseccion">Заявление о присоединении</param>
 		/// <param name="closedDate">Дата закрытия</param>
 		/// <param name="asseccionDate">Дата заявления о присоединении</param>
+		/// <param name="serviceObject">Наименование объекта обслуживания</param>
 		public Contract(
 			string code,
 			string name,
@@ -32,7 +33,8 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			bool isEarly = false,
 			bool isAsseccion = false,
 			DateTime? closedDate = null,
-			DateTime? asseccionDate = null
+			DateTime? asseccionDate = null,
+			string serviceObject = null
 		)
 		{
 			this.Code = code;
@@ -46,6 +48,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			this.IsAsseccion = isAsseccion;
 			this.ClosedDate = closedDate;
 			this.AsseccionDate = asseccionDate;
+			this.ServiceObject = serviceObject;
 		}
 
 		/// <summary>
@@ -102,5 +105,10 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		/// Головной договор
 		/// </summary>
 		public string Parent { get; private set; }
+
+		/// <summary>
+		/// Объект обслуживания
+		/// </summary>
+		public string ServiceObject { get; private set; }
 	}
 }

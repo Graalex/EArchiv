@@ -55,7 +55,7 @@
 														DisplayMemberBinding="{Binding EDRPOU}"/>
               
 							<GridViewColumn Header="Наименование"
-														Width="500"
+														Width="550"
 														DisplayMemberBinding="{Binding Name}"/>
 														
             </GridView>
@@ -76,9 +76,15 @@
 														Width="130"
 														DisplayMemberBinding="{Binding Nomer}"/>
               <GridViewColumn Header="Наименование"
-														Width="400"
+														Width="450"
 														DisplayMemberBinding="{Binding Name}"/>
-              <GridViewColumn Header="Дата заключения"
+            <GridViewColumn Header="Группа"
+														Width="150"
+														DisplayMemberBinding="{Binding Parent}"/>
+            <GridViewColumn Header="Объект обслуживания"
+														Width="250"
+														DisplayMemberBinding="{Binding ServiceObject}"/>
+            <GridViewColumn Header="Дата заключения"
 														Width="150"
 														DisplayMemberBinding="{Binding Date, StringFormat={}{0:dd.MM.yyyy}}"/>
              

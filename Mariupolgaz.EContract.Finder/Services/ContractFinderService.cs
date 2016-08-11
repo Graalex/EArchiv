@@ -66,7 +66,8 @@ namespace Mariupolgaz.EContract.Finder.Services
 														"ДоговорыКонтрагентов.ЗакрытДосрочно," +
 														"ДоговорыКонтрагентов.ЗаявлениеПрисоединения," +
 														"ДоговорыКонтрагентов.ДатаЗаявленияПрисоединения," +
-														"ДоговорыКонтрагентов.ДатаЗакрытДосрочно " +
+														"ДоговорыКонтрагентов.ДатаЗакрытДосрочно, " +
+														"ДоговорыКонтрагентов.Объект.Наименование КАК Объект " +
 													"ИЗ Справочник.ДоговорыКонтрагентов КАК ДоговорыКонтрагентов " +
 													"ГДЕ ДоговорыКонтрагентов.Владелец.Код = &Код И ДоговорыКонтрагентов.ЭтоГруппа = ЛОЖЬ " +
 													"УПОРЯДОЧИТЬ ПО Дата УБЫВ";
@@ -108,7 +109,8 @@ namespace Mariupolgaz.EContract.Finder.Services
 										readerContracts.GetBoolean(7),
 										readerContracts.GetBoolean(8),
 										readerContracts.GetDateTime(9),
-										readerContracts.GetDateTime(10)
+										readerContracts.GetDateTime(10),
+										readerContracts.GetString(11)
 									));
 								}
 							}
@@ -167,7 +169,8 @@ namespace Mariupolgaz.EContract.Finder.Services
 														"ДоговорыКонтрагентов.ЗакрытДосрочно," +
 														"ДоговорыКонтрагентов.ЗаявлениеПрисоединения," +
 														"ДоговорыКонтрагентов.ДатаЗаявленияПрисоединения," +
-														"ДоговорыКонтрагентов.ДатаЗакрытДосрочно " +
+														"ДоговорыКонтрагентов.ДатаЗакрытДосрочно, " +
+														"ДоговорыКонтрагентов.Объект.Наименование КАК Объект " +
 													"ИЗ Справочник.ДоговорыКонтрагентов КАК ДоговорыКонтрагентов " +
 													"ГДЕ ДоговорыКонтрагентов.Владелец.Код = &Код И ДоговорыКонтрагентов.ЭтоГруппа = ЛОЖЬ " +
 													"УПОРЯДОЧИТЬ ПО Дата УБЫВ";
@@ -205,7 +208,8 @@ namespace Mariupolgaz.EContract.Finder.Services
 										readerContracts.GetBoolean(7),
 										readerContracts.GetBoolean(8),
 										readerContracts.GetDateTime(9),
-										readerContracts.GetDateTime(10)
+										readerContracts.GetDateTime(10),
+										readerContracts.GetString(11)
 									));
 								}
 							}

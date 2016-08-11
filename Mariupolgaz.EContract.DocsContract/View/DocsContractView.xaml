@@ -67,11 +67,11 @@
 															DisplayMemberBinding="{Binding DocumentNumber}"
 							/>
               <GridViewColumn Header="Дата документа"
-														Width="105"
+														Width="110"
 														DisplayMemberBinding="{Binding DocumentDate, StringFormat={}{0:dd.MM.yyyy}}"
 							/>
               <GridViewColumn Header="Тип"
-															Width="150"
+															Width="190"
 															DisplayMemberBinding="{Binding Kind.Name}"
 							/>
               <!--
