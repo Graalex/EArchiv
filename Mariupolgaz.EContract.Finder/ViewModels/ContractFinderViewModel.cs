@@ -271,8 +271,8 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 		{
 			if (_curContragent != null) {
 				_contracts = CollectionViewSource.GetDefaultView(this.CurrentContragent.Contracts);
-				_contracts.GroupDescriptions.Clear();
-				_contracts.GroupDescriptions.Add(new PropertyGroupDescription("Parent"));
+				//_contracts.GroupDescriptions.Clear();
+				//_contracts.GroupDescriptions.Add(new PropertyGroupDescription("Parent"));
 				// TODO: Настроить сортировку, группировку и фильтрацию
 
 			}

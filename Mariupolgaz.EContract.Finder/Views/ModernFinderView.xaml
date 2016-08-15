@@ -81,7 +81,9 @@
 								AutoGenerateColumns="False"
 								GridLinesVisibility="None">
         <DataGrid.Columns>
+					
           <DataGridTextColumn Header="Группа" Width="150" Binding="{Binding Parent}"/>
+					
           <DataGridTextColumn Header="Номер" Width="130" Binding="{Binding Nomer}"/>
           <DataGridTextColumn Header="Наименование" Width="450" Binding="{Binding Name}"/>
           <DataGridTextColumn Header="Объект обслуживания" Width="250" Binding="{Binding ServiceObject}"/>
@@ -90,6 +92,22 @@
           <DataGridTextColumn Header="Срок действия" Width="150" CanUserSort="False"
 															Binding="{Binding Expiry, StringFormat={}{0:dd.MM.yyyy}}"/>
         </DataGrid.Columns>
+        <!--
+				<DataGrid.GroupStyle>
+          <GroupStyle>
+            <GroupStyle.HeaderTemplate>
+              <DataTemplate>
+								<TextBlock Text="{Binding Parent}"/>
+							</DataTemplate>
+						</GroupStyle.HeaderTemplate>
+					</GroupStyle>
+				</DataGrid.GroupStyle>
+				-->
+        <i:Interaction.Triggers>
+          <i:EventTrigger EventName="MouseDoubleClick">
+            <prism:InvokeCommandAction Command="{Binding GetDocuments}" />
+          </i:EventTrigger>
+        </i:Interaction.Triggers>
       </DataGrid>
     </GroupBox>
     </Grid>
