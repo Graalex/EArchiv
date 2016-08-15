@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using Mariupolgaz.EArchiv.Common.Events;
 using Mariupolgaz.EArchiv.Common.Models;
@@ -30,13 +32,25 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 		{
 			if (aggregator == null) throw new ArgumentNullException("aggregator");
 
-			_aggr = aggregator;
+			_aggr = aggregator;	
 			this.Contragents = new ObservableCollection<Contragent>();
 			_org = ConfigurationManager.AppSettings["org"];
 			_serv = ServiceLocator.Current.GetInstance<IContractFinderService>();
-    }
-		
+		}
+
 		#region Properties
+
+		private ICollectionView _contracts;
+		/// <summary>
+		/// Договора выбранного контрагента
+		/// </summary>
+		public ICollectionView Contracts
+		{
+			get {
+				_initializeContracts();
+				return _contracts;
+			}
+		}
 
 		private string _cname;
 		/// <summary>
@@ -84,6 +98,7 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 				if(_curContragent != value) {
 					_curContragent = value;
 					RaisePropertyChanged(() => CurrentContragent);
+					RaisePropertyChanged(() => Contracts);
 					this.ContractIndex = 0;
 				}
 			}
@@ -247,6 +262,21 @@ namespace Mariupolgaz.EContract.Finder.ViewModels
 		}
 
 		#endregion
+
+		#endregion
+
+		#region Helper Methods
+
+		private void _initializeContracts()
+		{
+			if (_curContragent != null) {
+				_contracts = CollectionViewSource.GetDefaultView(this.CurrentContragent.Contracts);
+				_contracts.GroupDescriptions.Clear();
+				_contracts.GroupDescriptions.Add(new PropertyGroupDescription("Parent"));
+				// TODO: Настроить сортировку, группировку и фильтрацию
+
+			}
+		}
 
 		#endregion
 	}

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Mariupolgaz.EArchiv.Common.Models
 {
@@ -30,7 +29,7 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		{
 			this.Code = code;
 			this.Name = name;
-			this.Contracts = new ReadOnlyObservableCollection<Contract>(new ObservableCollection<Contract>(contracts));
+			this.Contracts = new List<Contract>(contracts);
 			this.FullName = fullName;
 			this.EDRPOU = edrpou;
 			this.INN = inn;
@@ -50,8 +49,8 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		/// <summary>
 		/// Договора
 		/// </summary>
-		public ReadOnlyObservableCollection<Contract> Contracts { get; private set; }
-
+		public IList<Contract> Contracts { get; private set; }
+		
 		/// <summary>
 		/// Наименование полное
 		/// </summary>
