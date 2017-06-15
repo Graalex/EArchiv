@@ -39,5 +39,12 @@ namespace Mariupolgaz.EArchiv.Common.Servises
 		/// </summary>
 		/// <returns></returns>
 		IList<string> GetIdentities();
+
+		/// <summary>
+		/// Получить список пользователей, имеющих право работать с приложением.
+		/// </summary>
+		/// <param name="appName">Имя приложения</param>
+		/// <returns></returns>
+		IList<string> GetIdentities(string appName);
 	}
 }

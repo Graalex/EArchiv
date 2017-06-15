@@ -87,5 +87,26 @@ namespace Mariupolgaz.EArchiv.Security.Service
 				return rslt;
 			}
 		}
+
+		/// <summary>
+		/// Получить список пользователей, имеющих право работать с приложением.
+		/// </summary>
+		/// <param name="appName">Имя приложения</param>
+		/// <returns></returns>
+		public IList<string> GetIdentities(string appName)
+		{
+			IList<string> rslt = new List<string>();
+			using (SqlConnection con = new SqlConnection(_conString)) {
+				SqlCommand cmd = new SqlCommand("SELECT * FROM Identities", con);
+				con.Open();
+				SqlDataReader reader = cmd.ExecuteReader();
+				if (reader.HasRows) {
+					while (reader.Read()) {
+						rslt.Add(Convert.ToString(reader["LoginName"]));
+					}
+				}
+				return rslt;
+			}
+		}
 	}
 }
