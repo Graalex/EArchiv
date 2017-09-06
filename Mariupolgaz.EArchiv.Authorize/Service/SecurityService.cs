@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Principal;
@@ -21,6 +20,12 @@ namespace Mariupolgaz.EArchiv.Security.Service
 			.ConnectionStrings["Security"]
 			.ConnectionString;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="loginName"></param>
+		/// <param name="password"></param>
+		/// <returns></returns>
 		public bool Login(string loginName, string password)
 		{
 			// Получить Identity проверить
@@ -29,6 +34,9 @@ namespace Mariupolgaz.EArchiv.Security.Service
 			return true;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void Logout()
 		{
 			throw new NotImplementedException();

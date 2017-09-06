@@ -23,9 +23,7 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 		/// <param name="eventAggr">Агрегатор событий</param>
 		public ContractDocAddViewModel(IEventAggregator eventAggr)
 		{
-			if (eventAggr == null) throw new ArgumentNullException("evenAggr");
-
-			_evnAggr = eventAggr;
+			_evnAggr = eventAggr ?? throw new ArgumentNullException("evenAggr");
 			var ds = ServiceLocator.Current.GetInstance<IDocumentService>();
 			this.Kinds = new ObservableCollection<DocumentKind>(ds.GetKindsByClass(6));
 		}
@@ -71,6 +69,9 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 
 		#endregion
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public Action Close { get; set; }
 
 		#region Commands

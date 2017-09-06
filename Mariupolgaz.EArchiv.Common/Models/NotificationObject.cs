@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Mariupolgaz.EArchiv.Common.Models
 {
@@ -24,6 +21,11 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		/// </summary>
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="action"></param>
 		protected void RaisePropertyChanged<T>(Expression<Func<T>> action)
 		{
 			var propertyName = GetPropertyName(action);

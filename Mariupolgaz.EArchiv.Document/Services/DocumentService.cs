@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using comm = Mariupolgaz.EArchiv.Common.Models;
-using Mariupolgaz.EArchiv.Common.Servises;
-using System.Windows.Media.Imaging;
+using System.Data.SqlClient;
 using System.IO;
-using System.Windows.Media;
+using System.Linq;
+using System.Windows.Media.Imaging;
+using Mariupolgaz.EArchiv.Common.Servises;
+using comm = Mariupolgaz.EArchiv.Common.Models;
 
 namespace Mariupolgaz.EArchiv.Document.Services
 {
@@ -39,28 +37,48 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		/// <returns></returns>
 		public comm.Document CreateDocument(string name, comm.DocumentKind kind)
 		{
-			return new Common.Models.Document(name, kind);
+			return new comm.Document(name, kind);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="docID"></param>
+		/// <returns></returns>
 		public comm.DocumentClass GetDocumentClass(int docID)
 		{
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="docID"></param>
+		/// <returns></returns>
 		public comm.DocumentKind GetDocumentKind(int docID)
 		{
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="docID"></param>
+		/// <returns></returns>
 		public int GetDocumentLS(int docID)
 		{
 			throw new NotImplementedException();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="ls"></param>
+		/// <returns></returns>
 		public IList<comm.Document> GetDocuments(int ls)
 		{
 			using (SqlConnection con = new SqlConnection(_con)) {
-				IList<Common.Models.Document> list = null;
+				IList<comm.Document> list = null;
 				SqlCommand cmd = new SqlCommand();
 				cmd.Connection = con;
 				cmd.CommandType = CommandType.StoredProcedure;
@@ -73,7 +91,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 				SqlDataReader reader = cmd.ExecuteReader();
 				if (reader.HasRows) {
 					
-					list = new List<Common.Models.Document>();
+					list = new List<comm.Document>();
 					while (reader.Read()) {
 						/*
 						BitmapImage thrumb = new BitmapImage();
@@ -92,7 +110,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 						int id = Convert.ToInt32(reader["Kind"]);
 						var kind = _kinds.First(item => item.ID == id);
 
-						list.Add(new Common.Models.Document(Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], null /*thrumb*/,
+						list.Add(new comm.Document(Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], null /*thrumb*/,
 							Convert.ToDateTime(reader["CreateAt"]), Convert.ToDateTime(reader["ModifyAt"]), Convert.ToBoolean(reader["IsMarkDelete"]), src));
 					}
 				}
@@ -130,7 +148,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 								int id = Convert.ToInt32(reader["Kind"]);
 								var kind = _kinds.First(item => item.ID == id);
 
-								rslt.Add(new Common.Models.Document(Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], null /*thrumb*/,
+								rslt.Add(new comm.Document(Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], null /*thrumb*/,
 									Convert.ToDateTime(reader["CreateAt"]), Convert.ToDateTime(reader["ModifyAt"]), Convert.ToBoolean(reader["IsMarkDelete"]), src));
 							}
 						}
@@ -150,7 +168,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 		public IList<comm.Document> GetDocuments(int ls, int kindID)
 		{
 			using(SqlConnection con = new SqlConnection(_con)) {
-				IList<Common.Models.Document> list = null;
+				IList<comm.Document> list = null;
 				SqlCommand cmd = new SqlCommand();
 				cmd.Connection = con;
 				cmd.CommandType = CommandType.StoredProcedure;
@@ -162,7 +180,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 				con.Open();
 				SqlDataReader reader = cmd.ExecuteReader();
 				if(reader.HasRows) {
-					list = new List<Common.Models.Document>();
+					list = new List<comm.Document>();
 					while(reader.Read()) {
 						/*
 						BitmapImage thrumb = new BitmapImage();
@@ -181,7 +199,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 						int id = Convert.ToInt32(reader["Kind"]);
 						var kind = _kinds.First(item => item.ID == id);
 
-						list.Add(new Common.Models.Document(Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], null /*thrumb*/,
+						list.Add(new comm.Document(Convert.ToInt32(reader["ID"]), kind, Convert.ToString(reader["Name"]), (byte[])reader["Hash"], null /*thrumb*/,
 							Convert.ToDateTime(reader["CreateAt"]), Convert.ToDateTime(reader["ModifyAt"]), Convert.ToBoolean(reader["IsMarkDelete"]), src));
 					}
 				}
@@ -190,6 +208,11 @@ namespace Mariupolgaz.EArchiv.Document.Services
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="docID"></param>
+		/// <returns></returns>
 		public comm.Document LoadDocument(int docID)
 		{
 			throw new NotImplementedException();
@@ -225,6 +248,12 @@ namespace Mariupolgaz.EArchiv.Document.Services
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="doc"></param>
+		/// <param name="folder"></param>
+		/// <param name="ls"></param>
 		public void SaveDocument(comm.Document doc, comm.Folder folder, int ls)
 		{
 			using(SqlConnection con = new SqlConnection(_con)) {
@@ -457,7 +486,7 @@ namespace Mariupolgaz.EArchiv.Document.Services
 						if (reader.HasRows) {
 							while(reader.Read()) {
 								rslt.Add(
-									new Common.Models.DocumentKind(Convert.ToInt32(reader["KEY"]), Convert.ToString(reader["KIND_NAME"]), false)
+									new comm.DocumentKind(Convert.ToInt32(reader["KEY"]), Convert.ToString(reader["KIND_NAME"]), false)
 								);
 							}
 						}

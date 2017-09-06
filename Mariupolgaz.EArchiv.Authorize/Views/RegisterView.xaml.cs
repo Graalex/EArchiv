@@ -8,6 +8,9 @@ namespace Mariupolgaz.EArchiv.Security.Views
 	/// </summary>
 	public partial class RegisterView : UserControl
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public RegisterView()
 		{
 			InitializeComponent();

@@ -8,6 +8,9 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace AdmTools
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class Bootstraper : UnityBootstrapper
 	{
 		/// <summary>

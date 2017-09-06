@@ -5,6 +5,9 @@ using Microsoft.Practices.Prism.Modularity;
 
 namespace Mariupolgaz.EArchiv
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class Bootstraper: UnityBootstrapper
 	{
 		/// <summary>

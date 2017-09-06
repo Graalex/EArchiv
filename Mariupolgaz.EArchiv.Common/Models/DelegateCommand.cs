@@ -27,10 +27,8 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		/// <param name="canExecute">Делегат проверяющий возможность исполнения команды</param>
 		public DelegateCommand(Action command, Func<bool> canExecute = null)
 		{
-			if (command == null)
-				throw new ArgumentNullException();
 			_canExecute = canExecute;
-			_command = command;
+			_command = command ?? throw new ArgumentNullException();
 		}
 
 		/// <summary>

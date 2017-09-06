@@ -1,24 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using System.Windows;
 using System.Windows.Interactivity;
 
 namespace Mariupolgaz.EArchiv.Security.Views
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class PropertyBehavior : Behavior<DependencyObject>
 	{
 		private PropertyInfo _propertyInfo;
 		private EventInfo _eventInfo;
 		private Delegate _handler;
-		
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public string Property { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public string UpdateEvent { get; set; }
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public static readonly DependencyProperty BindingProperty =
 			DependencyProperty.RegisterAttached(
 				"Binding",
@@ -26,12 +37,19 @@ namespace Mariupolgaz.EArchiv.Security.Views
         typeof(PropertyBehavior),
 				new FrameworkPropertyMetadata { BindsTwoWayByDefault = true }
 			);
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public object Binding
 		{
 			get { return GetValue(BindingProperty); }
 			set { SetValue(BindingProperty, value); }
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		protected override void OnAttached()
 		{
 			Type elementType = AssociatedObject.GetType();
@@ -74,6 +92,9 @@ namespace Mariupolgaz.EArchiv.Security.Views
 			_eventInfo.AddEventHandler(AssociatedObject, _handler);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		protected override void OnDetaching()
 		{
 			if (_eventInfo == null) return;
@@ -82,6 +103,10 @@ namespace Mariupolgaz.EArchiv.Security.Views
 			_eventInfo.RemoveEventHandler(AssociatedObject, _handler);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
 		{
 			if (e.Property.Name != "Binding") return;

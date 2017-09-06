@@ -96,6 +96,9 @@ namespace Mariupolgaz.EContract.DocsContract.ViewModel
 			get { return new DelegateCommand(onAddFile); }
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public int DocumentService { get; private set; }
 
 		private void onAddFile()

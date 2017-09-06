@@ -1,13 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Mariupolgaz.EArchiv.Common.Servises
+﻿namespace Mariupolgaz.EArchiv.Common.Servises
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public interface IRegisteredService
 	{
-		//bool CreateUser()
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="loginName"></param>
+		/// <param name="password"></param>
+		/// <param name="isActivity"></param>
+		/// <returns></returns>
 		bool RegisteredUser(string loginName, string password, bool isActivity = false);
 	}
 }

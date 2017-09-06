@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using Mariupolgaz.EArchiv.Common.Events;
 using Mariupolgaz.EArchiv.Common.Models;
 using Mariupolgaz.EArchiv.Common.Servises;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Prism.Events;
-using Mariupolgaz.EArchiv.Common.Events;
+using Microsoft.Practices.ServiceLocation;
 
 
 namespace Mariupolgaz.EArchiv.Abonent.ViewModel
@@ -25,19 +24,11 @@ namespace Mariupolgaz.EArchiv.Abonent.ViewModel
 		/// <param name="aggregator"></param>
 		public AbonentViewModel(IEventAggregator aggregator )
 		{
-			if (aggregator == null) throw new ArgumentNullException("aggregator");
-
-			_aggregator = aggregator;
+			_aggregator = aggregator ?? throw new ArgumentNullException("aggregator");
 			_finder = ServiceLocator.Current.GetInstance<IFinderService>();
 
 			this.Abonents = new ObservableCollection<Common.Models.Abonent>();
 			this.Settlements = new ObservableCollection<Settlement>(_finder.GetSettlementList());
-			
-			/*
-			if(this.Settlements.Count > 0) {
-				this.CurrentSettlement = this.Settlements.First(item => item.ID == 100);
-			}
-			*/
 		}
 
 		#endregion
@@ -236,14 +227,14 @@ namespace Mariupolgaz.EArchiv.Abonent.ViewModel
 		{
 			Mouse.OverrideCursor = Cursors.Wait;
 
-			var finder = ServiceLocator.Current.GetInstance<IFinderService>();
+			//var finder = ServiceLocator.Current.GetInstance<IFinderService>();
 
 			
 			try {
 
 				if (this.LS != null) {
 					// find for abonent
-					var rslt = finder.FindAbonent(this.LS.GetValueOrDefault(0));
+					var rslt = _finder.FindAbonent(this.LS.GetValueOrDefault(0));
 					if (rslt != null) {
 						clearCurrentAbonent();
 						this.Abonents.Add(rslt);
@@ -260,7 +251,7 @@ namespace Mariupolgaz.EArchiv.Abonent.ViewModel
 					}
 				}
 				else if (this.Family != null && this.Family != "") {
-					var rslts = finder.FindAbonents(this.Family);
+					var rslts = _finder.FindAbonents(this.Family);
 					if (rslts != null) {
 						clearCurrentAbonent();
 						foreach (var item in rslts) {
@@ -286,8 +277,12 @@ namespace Mariupolgaz.EArchiv.Abonent.ViewModel
 					this.CurrentStreet != ""
 				) {
 					string settl = null;
-					if (this.CurrentSettlement != null) settl = this.CurrentSettlement.Name;
-					var rslt = finder.FindAbonents(
+					if (this.CurrentSettlement != null)
+					{
+						settl = this.CurrentSettlement.Name;
+					}
+
+					var rslt = _finder.FindAbonents(
 						this.Family, settl, 
 						this.CurrentStreet, 
 						this.CurrentHouse, 

@@ -9,11 +9,13 @@
 		/// Создает экземпляр <see cref="Settlement"/>
 		/// </summary>
 		/// <param name="id">ID нас. пункта</param>
+		/// <param name="kind">Тип нас. пункта</param>
 		/// <param name="name">Название нас. пункта</param>
-		public Settlement(int id, string name)
+		public Settlement(int id, string kind, string name)
 		{
 			this.ID = id;
 			this.Name = name;
+			this.Kind = kind;
 		}
 
 		/// <summary>
@@ -27,19 +29,17 @@
 		public string Name { get; private set; }
 
 		/// <summary>
+		/// Тип нас. пункта
+		/// </summary>
+		public string Kind { get; private set; }
+
+		/// <summary>
 		/// Переопределяет строковое представления объкта
 		/// </summary>
 		/// <returns>Строковое представления объкта в формате (г. Мариуполь)</returns>
 		public override string ToString()
 		{
-			/*
-			int ind = this.Name.LastIndexOf(' ');
-
-			return this.Name.Substring(ind + 1).ToLower() +
-				" " +
-				this.Name.Substring(0, ind);
-			*/
-			return this.Name;
+			return this.Kind + " " +this.Name;
 		}
 	}
 }

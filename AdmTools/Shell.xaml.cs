@@ -7,6 +7,9 @@ namespace AdmTools
 	/// </summary>
 	public partial class Shell : Window
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public Shell()
 		{
 			InitializeComponent();

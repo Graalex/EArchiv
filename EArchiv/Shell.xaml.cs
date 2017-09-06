@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace Mariupolgaz.EArchiv
 {
@@ -18,11 +7,18 @@ namespace Mariupolgaz.EArchiv
 	/// </summary>
 	public partial class Shell : Window
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public Shell()
 		{
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="viewModel"></param>
 		public Shell(ShellViewModel viewModel)
 			:this()
 		{

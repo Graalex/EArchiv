@@ -13,7 +13,7 @@ namespace Mariupolgaz.EContract.Finder.Services
 	/// <summary>
 	/// Сервис поиска контрагентов и договоров в базе данных 1С
 	/// </summary>
-	public class ContractFinderService : IContractFinderService, IDisposable
+	public sealed class ContractFinderService : IContractFinderService, IDisposable
 	{
 		private OneSConnection _con;
     private IEventAggregator _aggr;
@@ -23,13 +23,11 @@ namespace Mariupolgaz.EContract.Finder.Services
 		/// </summary>
 		public ContractFinderService(IEventAggregator aggregator)
 		{
-			if (aggregator == null) throw new ArgumentNullException("aggregator");
-			
 			string conn = ConfigurationManager.ConnectionStrings["1C-Mariupolgaz"].ConnectionString;
-			_aggr = aggregator;
-			_con = new OneSConnection(conn);
-
+			_aggr = aggregator ?? throw new ArgumentNullException("aggregator");
 			_aggr.GetEvent<ServerConectEvent>().Publish("ПАО Мариупольгаз");
+
+			_con = new OneSConnection(conn);
 			_con.Open();
 			if (_con.State == ConnectionState.Open) _aggr.GetEvent<ServerConectedEvent>().Publish(true);
 
@@ -83,8 +81,9 @@ namespace Mariupolgaz.EContract.Finder.Services
 
 					if (reader.HasRows) {
 						IList<Contract> contracts = new List<Contract>();
-						var cmdContract = new OneSCommand(_con);
-						cmdContract.CommandText = qrConcract;
+						var cmdContract = new OneSCommand(_con) {
+							CommandText = qrConcract
+						};
 
 						while (reader.Read()) {
 							string code = reader.GetString(0).Trim();
@@ -141,5 +140,6 @@ namespace Mariupolgaz.EContract.Finder.Services
 		{
 			_con.Close();
 		}
+
 	}
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Windows;
 
 namespace Mariupolgaz.EArchiv
@@ -12,6 +8,10 @@ namespace Mariupolgaz.EArchiv
 	/// </summary>
 	public partial class App : Application
 	{
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);

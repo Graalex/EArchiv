@@ -62,10 +62,10 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			this.Address = address;
 		}
 
+		private int _ls = 0;
 		/// <summary>
 		/// Лицевой счет
 		/// </summary>
-		private int _ls = 0;
 		public int LS { 
 			get { return _ls; }
 			set
@@ -77,10 +77,10 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			}
 	 }
 
+		private string _fam = string.Empty;
 		/// <summary>
 		/// Фамилия абонента
 		/// </summary>
-		private string _fam = string.Empty;
 		public string Family { 
 			get { return _fam; } 
 			set {
@@ -88,48 +88,48 @@ namespace Mariupolgaz.EArchiv.Common.Models
 				if(_fam != value) {
 					_fam = value;
 					RaisePropertyChanged(() => Family);
+					RaisePropertyChanged(() => FullFamily);
 				}
 			}
 		}
 
+		private string _fnam = string.Empty;
 		/// <summary>
 		/// Имя абонента
 		/// </summary>
-		private string _fnam = string.Empty;
 		public string FirstName {
 			get { return _fnam; }
 			set {
-				if (value == null || value == string.Empty) throw new ArgumentException("Недопустимое значение свойства.", "FirstName");
 				if (_fnam != value) {
 					_fnam = value;
 					RaisePropertyChanged(() => FirstName);
+					RaisePropertyChanged(() => FullFamily);
 				}
 			}
 		}
 
+		private string _lnam = string.Empty;
 		/// <summary>
 		/// Отчество абонента
 		/// </summary>
-		private string _lnam = string.Empty;
 		public string LastName {
 			get { return _lnam; }
 			set {
-				if (value == null || value == string.Empty) throw new ArgumentException("Недопустимое значение свойства.", "LastName");
 				if (_lnam != value) {
 					_lnam = value;
 					RaisePropertyChanged(() => LastName);
+					RaisePropertyChanged(() => FullFamily);
 				}
 			}
 		}
 
+		private string _pasport = string.Empty;
 		/// <summary>
 		/// Серия и номер паспорта абонента
 		/// </summary>
-		private string _pasport = string.Empty;
 		public string Pasport {
 			get { return _pasport; }
 			set {
-				if (value == null || value == string.Empty) throw new ArgumentException("Недопустимое значение свойства.", "Pasport");
 				if (!Regex.IsMatch(value, @"\{2}[А-Я]\s\d{6}")) throw new ArgumentException("Недопустимый формат серии и номера паспорта.", "Pasport");
 				if (_pasport != value) {
 					_pasport = value;
@@ -139,10 +139,13 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		}
 
 
-		/// <summary
+		/// <summary>
 		/// ИНН абонента
-		/// </summary
+		/// </summary>
 		private int _inn = 0;
+		/// <summary>
+		/// 
+		/// </summary>
 		public int INN {
 			get { return _inn; }
 			set {
@@ -153,10 +156,10 @@ namespace Mariupolgaz.EArchiv.Common.Models
 			}
 		}
 
+		private Address _addr;
 		/// <summary>
 		/// Адрес абонента
 		/// </summary>
-		private Address _addr;
 		public Address Address { 
 			get { return _addr; } 
 			set {
@@ -173,7 +176,17 @@ namespace Mariupolgaz.EArchiv.Common.Models
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return this.LS.ToString() + " " + this.Family;
+			return this.LS.ToString() + " " + this.Family + " " + this.FirstName + " " + this.LastName;
+		}
+
+		/// <summary>
+		/// Полное имя абонента
+		/// </summary>
+		public string FullFamily
+		{
+			get {
+				return this.Family + " " + this.FirstName + " " + this.LastName;
+			}
 		}
 	}
 		

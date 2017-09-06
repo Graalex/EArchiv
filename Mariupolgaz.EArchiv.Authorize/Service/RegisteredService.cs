@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Mariupolgaz.EArchiv.Common.Servises;
 
 namespace Mariupolgaz.EArchiv.Security.Service
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class RegisteredService : IRegisteredService
 	{
 		private readonly string _conString =
@@ -17,6 +17,13 @@ namespace Mariupolgaz.EArchiv.Security.Service
 			.ConnectionStrings["Security"]
 			.ConnectionString;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="loginName"></param>
+		/// <param name="password"></param>
+		/// <param name="isActivity"></param>
+		/// <returns></returns>
 		public bool RegisteredUser(string loginName, string password, bool isActivity = false)
 		{
 			bool rslt = false;
